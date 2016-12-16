@@ -20,6 +20,8 @@ function mapBasicUser(user) {
         role: user.role,
         name: user.name,
         email: user.email,
+        money: user.money,
+        ieee: user.ieee,
         profilePic: baseFilesURL + user.slug + '/' + (user.profilePic || 'default.png'),
     }
 }
@@ -48,10 +50,19 @@ exports.checkAlias = function (req, res, next) {
 };
 
 exports.regUser = function (req, res, next) {
-    const email = req.body.email.trim();
+    
+    var alias = req.body.alias ? req.body.alias : null;
+    if (!alias || alias == "") return next(new CodedError("Invalid alias", 400));
+    
+    var name = req.body.name ? req.body.name : null;
+    if (!name || name == "") return next(new CodedError("Invalid name", 400));
+    
+    var email = req.body.email ? req.body.email.trim() : null;
     if (!email || email == "" || email.indexOf(" ") != -1 || email.indexOf("@") == -1) return next(new CodedError("Invalid email", 400));
+    
     var user;
     var image = req.files && req.files.image ? req.files.image[0] : null;
+    var ieee = req.body.ieee && req.body.ieee != "" ? req.body.ieee : "";
     authController.generateSaltedPassword(req.body.password.toLowerCase(), config.pwdIterations).then((saltedPassword) => {
         user = new User({
             alias: req.body.alias,
@@ -59,6 +70,7 @@ exports.regUser = function (req, res, next) {
             profilePic: image ? image.filename : undefined,
             email: email,
             name: name,
+            ieee: ieee,
             pwd: saltedPassword,
             hasPassword: true,
         });

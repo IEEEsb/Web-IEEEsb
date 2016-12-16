@@ -24,6 +24,8 @@ const userSchema = new Schema({
         salt: { type: String, default: "" },  
         iterations: { type: Number, default: 10000 }
     },
+    ieee: { type: String, default: "", index: { unique: true, dropDups: true }},
+    money : { type: Number, default: 0.0 },
     profilePic: { type: String, default: "" },
     role: { type: String, default: "user" }
 });
