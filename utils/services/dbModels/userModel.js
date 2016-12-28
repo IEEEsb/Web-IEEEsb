@@ -27,7 +27,7 @@ const userSchema = new Schema({
     ieee: { type: String, default: "", index: { unique: true, dropDups: true }},
     money : { type: Number, default: 0.0 },
     profilePic: { type: String, default: "" },
-    role: { type: String, default: "user" }
+    roles: [{ type: String, default: "user" }]
 });
 
 mongoose.model('UserModel', userSchema);

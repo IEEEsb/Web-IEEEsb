@@ -69,6 +69,13 @@ function auth(req, res, next) {
     return next();
 };
 
+function authRole(role) {
+    
+    return function(req, res, next) {
+        if(req.session.user !== req.session.user.role) return next(new CodedError("Not authorized", 403));
+        return next();
+    };
+};
 
 
 exports.SHA256 = SHA256;
@@ -77,3 +84,4 @@ exports.generateRandomPassword = generateRandomPassword;
 exports.generateToken = generateToken;
 exports.validateSaltedPassword = validateSaltedPassword;
 exports.auth = auth;
+exports.authRole = authRole;

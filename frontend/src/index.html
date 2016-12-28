@@ -1,39 +1,95 @@
 <head>
-  <base href="/">
-  <title>Angular 2 QuickStart</title>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="css/styles.css">
-  <link rel="stylesheet" href="assets/transformicons.css">
-  <link rel="stylesheet" href="lib/swipebox/src/css/swipebox.min.css">
-  <!-- 1. Load libraries -->
-  <!-- Polyfill(s) for older browsers -->
-  <script src="lib/shim.min.js"></script>
-  <script src="lib/zone.js"></script>
-  <script src="lib/Reflect.js"></script>
-  <script src="lib/system.src.js"></script>
-
-  <!-- 2. Configure SystemJS -->
-  <script src="systemjs.config.js"></script>
-
-  <script src="assets/transformicons.js"></script>
-  <script src="lib/jquery/dist/jquery.min.js"></script>
-  <script src="lib/swipebox/src/js/jquery.swipebox.js"></script>
-  <script>
-      System.import('app/main.js').catch(function(err){ console.error(err); });
+    <base href="/">
+    <title>Angular 2 QuickStart</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Mono" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="assets/transformicons.css">
+    <link rel="stylesheet" href="lib/swipebox/src/css/swipebox.min.css">
+    <!-- 1. Load libraries -->
+    <!-- Polyfill(s) for older browsers -->
+    <script src="lib/shim.min.js"></script>
+    <script src="lib/zone.js"></script>
+    <script src="lib/Reflect.js"></script>
+    <script src="lib/system.src.js"></script>
+    <script src="lib/crypto-js/crypto-js.js"></script>
+    <script>
+        Storage.prototype.setObject = function(key, value) {
+            this.setItem(key, JSON.stringify(value));
+        };
+        Storage.prototype.getObject = function(key) {
+            var value = this.getItem(key);
+            return value && JSON.parse(value);
+        };
     </script>
-  <script src="bundle/app/main.js"> </script>
-  <!-- Bootstrap! -->
-  <link rel="stylesheet" href="lib/bootstrap/dist/css/bootstrap.min.css">
+
+    <!-- 2. Configure SystemJS -->
+    <script src="systemjs.config.js"></script>
+
+    <script src="assets/transformicons.js"></script>
+    <script src="lib/jquery/dist/jquery.min.js"></script>
+    <script src="lib/swipebox/src/js/jquery.swipebox.js"></script>
+    <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+    <script>
+        System.import('app/main.js').catch(function(err) {
+            console.error(err);
+        });
+    </script>
+    <script src="bundle/app/main.js">
+    </script>
+    <!-- Bootstrap! -->
+    <link rel="stylesheet" href="lib/bootstrap/dist/css/bootstrap.min.css">
+    <script src="lib/bootstrap/dist/js/bootstrap.min.js"></script>
 </head>
 <!-- 3. Display the application -->
 
 <body>
-  <div class="container-fluid">
     <div class="">
-      <app>Preparing...</app>
+        <app>
+        <style type="text/css">
+                .loader {
+                    border: 16px solid #bfbfbf;
+                    /* Light grey */
+                    border-top: 16px solid #3498db;
+                    /* Blue */
+                    border-radius: 50%;
+                    width: 120px;
+                    height: 120px;
+                    animation: spin 2s linear infinite;
+                }
+                
+                @keyframes spin {
+                    0% {
+                        transform: rotate(0deg);
+                    }
+                    100% {
+                        transform: rotate(360deg);
+                    }
+                }
+                
+                #pluswrap {
+                    position: fixed;
+                    width: 100%;
+                    height: 100%;
+                    display: flex;
+                    align-items: center;
+                    top: 0;
+                }
+                
+                .plus {
+                    display: flex;
+                    margin: 0 auto;
+                }
+            </style>
+
+            <div id="pluswrap">
+                <div class="plus loader">
+                </div>
+            </div>
+        </app>
     </div>
-  </div>
 </body>
 
 </html>

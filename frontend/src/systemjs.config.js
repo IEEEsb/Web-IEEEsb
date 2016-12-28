@@ -11,6 +11,7 @@
     'ng2-interceptors': 'lib/ng2-interceptors',
     'crypto-js':'lib/crypto-js',
     'ng2-bootstrap':'lib/ng2-bootstrap',
+    'bootstrap-table':'lib/bootstrap-table',
     'moment':'lib/moment'
   };
   // packages tells the System loader how to load when no filename and/or no extension
@@ -55,6 +56,9 @@
   };
   packages['ng2-bootstrap']= {
     main: 'bundles/ng2-bootstrap.umd.min.js'
+  };
+  packages['bootstrap-table']= {
+    main: 'dist/bootstrap-table.js'
   };
   var config = {
     map: map,

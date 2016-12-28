@@ -1,0 +1,24 @@
+<div class="row">
+    <div class="col-xs-8 col-sm-7 col-md-6 col-lg-4">
+
+        <div class="input-group">
+            <input type="text" [(ngModel)]="params.search" (ngModelChange)="filter()" class="form-control" placeholder="Search for...">
+            <span class="input-group-btn">
+                <button class="btn btn-secondary" type="button"><span class="glyphicon glyphicon-search"></span>&#0;</button>
+            </span>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div *ngIf="!loading">
+        <div *ngIf="filteredItems.length > 0">
+            <item class="col-xs-4 col-sm-4 col-md-3 col-lg-2 item" *ngFor="let item of filteredItems" [item]="item" (click)="click(item)"></item>
+        </div>
+        <div *ngIf="!(filteredItems.length > 0)">
+            No hay resultados...
+        </div>
+    </div>
+    <div class="col-xs-12" *ngIf="loading">
+        Loading...
+    </div>
+</div>
