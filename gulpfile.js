@@ -1,21 +1,4 @@
 const gulp = require('gulp'),
-<<<<<<< HEAD
-mkdirp = require('mkdirp'),
-del = require('del'),
-typescript = require('gulp-typescript'),
-sourcemaps = require('gulp-sourcemaps'),
-fs = require('fs'),
-gulpTypings = require("gulp-typings"),
-mongoose = require('mongoose'),
-Promise = require('bluebird'),
-systemjsBuilder = require('gulp-systemjs-builder'),
-argv = require('yargs').argv,
-slug = require('slug');
-fileUtils = require('./utils/services/fileUtils.js'),
-tscConfig = require('./tsconfig.json');
-
-
-=======
 mkdirp = require('mkdirp'),
 del = require('del'),
 typescript = require('gulp-typescript'),
@@ -31,8 +14,6 @@ slug = require('slug');
 fileUtils = require('./utils/services/fileUtils.js'),
 tscConfig = require('./tsconfig.json');
 
-
->>>>>>> 2bec3e43d9e2da2273493142b4a19fa80b74d218
 function ensureExists(path) {
 	return new Promise(function (resolve, reject) {
 		mkdirp(path, function (err) {
