@@ -3,7 +3,7 @@
 
 
 const userSchema = new Schema({
-    alias: { type: String, default: "", index: { unique: true, dropDups: true } },
+    alias: { type: String, index: { unique: true, dropDups: true } },
     slug: { type: String, index: { unique: true, dropDups: true }},
     fb: {
         id: { type: String, default: "", index: true },
@@ -21,11 +21,11 @@ const userSchema = new Schema({
     name: { type: String, default: "" },
     pwd: {
         hash: { type: String, default: "" },
-        salt: { type: String, default: "" },  
+        salt: { type: String, default: "" },
         iterations: { type: Number, default: 10000 }
     },
     ieee: { type: String, default: "", index: { unique: true, dropDups: true }},
-    money : { type: Number, default: 0.0 },
+    money : { type: Number, min: 0, default: 0.0 },
     profilePic: { type: String, default: "" },
     roles: [{ type: String, default: "user" }]
 });

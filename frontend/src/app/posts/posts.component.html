@@ -1,0 +1,9 @@
+<div class="container-fluid main" *ngFor="let post of posts">
+    <div class="row" *ngIf="post.published">
+        <div class="col-xs-12">
+            <a [href]="'/post/' + post._id" [routerLink]="['/post/' + post._id]"><h4>{{post.title}}</h4></a>
+            <p [innerHTML]="sanitizer.bypassSecurityTrustHtml(post.excerpt)"></p>
+            <hr/>
+        </div>
+    </div>
+</div>

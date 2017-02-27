@@ -11,5 +11,9 @@ h2, h3 {
 }
 body {
   margin: 2em;
-  font-family: 'Roboto', 'Roboto Mono' !important;
+  font-family: 'Roboto Mono', 'Roboto' !important;
+}
+
+.root {
+	height: 100%;
 }

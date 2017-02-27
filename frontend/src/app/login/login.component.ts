@@ -1,27 +1,31 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
 
-import { User } from '../_models/user';
 import { UserService } from '../_services/user.service';
-import { LoginData } from '../_models/logindata';
 
 @Component({
 	selector: 'login',
 	templateUrl: 'app/login/login.component.html',
-    providers: [LoginData],
-    styleUrls: ['app/login/login.component.css']
+	styleUrls: ['app/login/login.component.css'],
+	providers: []
 })
 export class LoginComponent {
 
-	confirmedPassword: string;
+	alias: string = "";
+	password: string = "";
 
 	error: any;
 
-    login(): void {
-		console.log(JSON.stringify(this.loginData));
-        this.userService.login(this.loginData)
-			.then((user: boolean) => this.error = !user)
-			.catch((error: any) => this.error = error);
-    }
+	login(): void {
+		this.userService.login(this.alias, this.password);
+	}
 
-    constructor(private userService: UserService, private loginData: LoginData) { }
+	constructor(private router: Router, private userService: UserService) {
+
+		userService.userSubject.subscribe((user) => {
+			if(user){
+				this.router.navigate([this.userService.getRedirectUrl()]);
+			}
+		});
+	}
 }

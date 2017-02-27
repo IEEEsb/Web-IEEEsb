@@ -1,5 +1,10 @@
 export class User {
   _id: string;
   alias: string;
-  role: string;
+  roles: [string];
+  name: string;
+  email: string;
+  money: number;
+  ieee: string;
+  profilePic: string;
 }

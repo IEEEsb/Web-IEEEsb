@@ -12,11 +12,14 @@ router.route('/checkemail').post(userAccountController.checkEmail);
 router.route('/restorepassword').post(userAccountController.restoreUserPassword);
 router.route('/register').post(upload.fields([{ name: "image" }]), userAccountController.regUser);
 router.route('/login').post(userAccountController.login);
+router.route('/logout').post(userAccountController.logout);
 router.route('/fbregister').post(userAccountController.FBRegister);
 router.route('/fblogin').post(userAccountController.FBLogin);
 
 router.use(authController.auth);
 
+router.route('/').get(userController.getCurrentUser);
+router.route('/:user').get(userController.getUser);
 router.route('/changepassword').post(userAccountController.changePassword);
 router.route('/update').post(upload.fields([{ name: "image" }]), userAccountController.updateProfile);
 router.route('/fbmerge').post(userAccountController.FBMerge);

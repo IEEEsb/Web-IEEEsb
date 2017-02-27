@@ -1,23 +1,25 @@
-import { Component } from '@angular/core';
-import { Router }       from '@angular/router';
-
-import { LateralComponent } from '../lateral/lateral.component';
+import { Component, OnInit } from '@angular/core';
+declare var google: any;
 
 @Component({
 	selector: 'home',
 	templateUrl: 'app/home/home.component.html',
     styleUrls: ['app/home/home.component.css']
 })
-export class HomeComponent {
+export class HomeComponent implements OnInit {
 
-	config: any = {};
+	ngOnInit() {
+		let location = {lat: 40.451836, lng: -3.726562};
+		let map = new google.maps.Map(document.getElementById('map'), {
+          center: location,
+          scrollwheel: false,
+          zoom: 15
+        });
 
-	constructor(private router: Router) {}
-	
-	clicked(event, config) {
-		console.log(event);
-		console.log(config);
-		this.router.navigate(['/register']);
-		event.preventDefault();
+		let marker = new google.maps.Marker({
+          map: map,
+          position: location,
+          title: 'Hello World!'
+        });
 	}
 }

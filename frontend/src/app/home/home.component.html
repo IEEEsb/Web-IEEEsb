@@ -1,78 +1,40 @@
-<nav class="navbar navbar-default navbar-fixed-top">
-    <div class="container-fluid">
-
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span> 
-            </button>
-            <a class="navbar-brand" href="#" [routerLink]="['/']">
-                <span><img src="images/logo_ieee.png" width="40px" height="40px" alt="Logo IEEESB" /></span> IEEESB Madrid
-            </a>
-        </div>
-        <div class="collapse navbar-collapse" id="navbar">
-            <ul class="nav navbar-nav navbar-left">
-                <li class="active">
-                    <a href="#" [routerLink]="['/']"><span class="glyphicon glyphicon-home"></span> Inicio</a>
-                </li>
-                <li>
-                    <a href="https://trello.com/b/XIKmeaaT/madrid-upm-etsi-de-telecomunicacion" target="_blank">Trello</a>
-                </li>
-                <li>
-                    <a href="#" [routerLink]="['/login']" (click)="clicked($event, config)">Login</a>
-                </li>
-                <li class="dropdown active">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Inventario <span class="caret"></span></a>
-                    <ul class="dropdown-menu">
-                        <li class="active"><a href="#" [routerLink]="['/inventario']">Inventario</a></li>
-                    </ul>
-                </li>
-            </ul>
-            <ul class="nav navbar-nav navbar-right">
-                <li class="active">
-                    <a href="#" [routerLink]="['/login']"><span class="glyphicon glyphicon-home"></span> Inicio</a>
-                </li>
-                <li>
-                    <a href="https://trello.com/b/XIKmeaaT/madrid-upm-etsi-de-telecomunicacion" target="_blank">Trello</a>
-                </li>
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
-                    <ul class="dropdown-menu">
-                        <li><a href="#">Action</a></li>
-                        <li><a href="#">Another action</a></li>
-                        <li><a href="#">Something else here</a></li>
-                        <li role="separator" class="divider"></li>
-                        <li><a href="#">Separated link</a></li>
-                        <div *ngIf='appUser'>
-                            <li role="separator" class="divider"></li>
-                            <li><a href="#">One more separated link</a></li>
-                        </div>
-                    </ul>
-                </li>
-            </ul>
-        </div>
-    </div>
-</nav>
+<img class="image img-responsive" src="images/intro.jpg">
 <div class="container-fluid main">
-    <div class="row">
-        <div class="col-sm-9">
-            <router-outlet></router-outlet>
-        </div>
-        <div class="col-sm-3">
-            <lateral></lateral>
-        </div>
-    </div>
+	<div class="row">
+		<div class="col-xs-12 col-md-10 col-md-offset-1 col-lg-8 col-lg-offset-2">
+			<div class="row">
+				<div class="col-xs-12 col-sm-4 col-md-3 col-lg-4">
+					<h1 class="line-up">Noticias</h1>
+				</div>
+				<div class="col-xs-12 col-sm-8 col-md-9 col-lg-8">
+					<posts></posts>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="row who">
+		<div class="col-xs-12 col-sm-8 col-md-9 col-lg-6 col-lg-offset-2 who-text">
+			Lorem fistrum se calle ustée por la gloria de mi madre está la cosa muy malar ese hombree qué dise usteer torpedo a peich hasta luego Lucas pecador. Hasta luego Lucas de la pradera fistro por la gloria de mi madre me cago en tus muelas fistro. A gramenawer se calle ustée no puedor jarl por la gloria de mi madre ese pedazo de.
+		</div>
+		<div class="col-xs-12 col-sm-4 col-md-3 col-lg-4 who-title">
+			<h1 class="line-up">Quiénes Somos</h1>
+		</div>
+	</div>
+	<div class="row where">
+		<div class="col-xs-12 col-md-10 col-md-offset-1 col-lg-8 col-lg-offset-2">
+			<div class="row">
+				<div class="col-xs-12 col-sm-4 col-md-3 col-lg-5 where-map">
+					<div id="map"></div>
+				</div>
+				<div class="col-xs-12 col-sm-8 col-md-9 col-lg-6 col-lg-offset-1 where-text">
+					Lorem fistrum se calle ustée por la gloria de mi madre está la cosa muy malar ese hombree qué dise usteer torpedo a peich hasta luego Lucas pecador. Hasta luego Lucas de la pradera fistro por la gloria de mi madre me cago en tus muelas fistro. A gramenawer se calle ustée no puedor jarl por la gloria de mi madre ese pedazo de.
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-xs-12 col-sm-4 col-md-3 col-lg-5  where-title">
+					<h1 class="line-up-white">Dónde Estamos</h1>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
-<footer class="footer">
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-9">
-                One of three columns
-            </div>
-            <div class="col-md-3">
-                One of three columns
-            </div>
-        </div>
-    </div>
-</footer>

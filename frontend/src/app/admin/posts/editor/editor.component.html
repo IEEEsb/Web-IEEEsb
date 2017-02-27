@@ -1,0 +1,66 @@
+<h1>Editar</h1>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-xs-12 col-sm-8">
+            <div class="form-group">
+                <label for="title">Title:</label>
+                <input type="text" class="form-control" id="title" [(ngModel)]="post.title">
+            </div>
+            <div class="form-group">
+                <label for="content">Content:</label>
+                <ckeditor id="content" [(ngModel)]="post.content" [config]="{language: 'es', uiColor: '#4285f4'}">
+                </ckeditor>
+            </div>
+            <div class="form-group">
+                <label for="excerpt">Excerpt:</label>
+                <textarea class="form-control vresize" rows="5" id="excerpt" [(ngModel)]="excerpt"></textarea>
+            </div>
+			<div class="container-fluid">
+			    <div class="row">
+			        <div class="col-xs-12">
+			            <h1>{{post.title}}</h1>
+			            <div [innerHTML]="content" class="viewer"></div>
+			        </div>
+			    </div>
+			</div>
+        </div>
+        <div class="col-xs-12 col-sm-4">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-xs-6">
+							<a href="javascript:void(0)" (click)="save()">Guardar</a>
+                        </div>
+                        <div class="col-xs-6" *ngIf="post._id !== ''">
+							<a [href]="'/post/' + post._id" target="_blank">Preview</a>
+                        </div>
+                    </div>
+                    <div class="row meta">
+                        <div class="col-xs-12">
+                            <label for="exampleInputName2">Autor: </label>
+                            {{post.author.alias}}
+                        </div>
+						<div class="col-xs-12">
+                            <label for="exampleInputName2">Fecha de mod.: </label>
+                            {{post.modifiedDate | date}}
+                        </div>
+						<div *ngIf="post.publishedDate" class="col-xs-12">
+                            <label for="exampleInputName2">Fecha de pub.: </label>
+                            {{post.publishedDate | date}}
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-footer">
+                    <div class="row">
+                        <div class="col-xs-6">
+							<a href="javascript:void(0)" (click)="rem()">Eliminar</a>
+                        </div>
+                        <div class="col-xs-6">
+							<a href="javascript:void(0)" (click)="publish()">Publicar</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

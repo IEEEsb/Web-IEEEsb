@@ -17,16 +17,13 @@ export class RegisterComponent {
 	success: boolean;
 
     register(): void {
-		console.log(JSON.stringify(this.registerData));
         this.userService.register(this.registerData)
 		.then((success: boolean) => this.success = success)
 		.catch((error: any) => this.error = error);
     }
 
 	confirmPassword(): boolean {
-		console.log(JSON.stringify(this.registerData));
-		console.log(this.confirmedPassword);
-		return this.registerData.password != "" && this.confirmedPassword != "" && this.registerData.password == this.confirmedPassword;
+		return this.registerData.password !== "" && this.confirmedPassword !== "" && this.registerData.password === this.confirmedPassword;
 	}
     constructor(private userService: UserService, private registerData: RegisterData) { }
 }

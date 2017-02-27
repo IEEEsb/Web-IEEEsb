@@ -9,9 +9,11 @@ services.init().then(() => {
     var systemLogger = winston.loggers.get('system');
 
     services.fileUtils.ensureExists('./logs').then((err) => {
-        if (err) 
+        if (err)
             systemLogger.error(err.message)
     });
+
+    let router = express.Router();
 
     app.use(bodyParser.json({limit: '50mb'}));
 
@@ -22,26 +24,34 @@ services.init().then(() => {
             var user = {
                 username: "unknown"
             };
-            if (req.session && req.session.user) 
+            if (req.session && req.session.user)
                 var user = req.session.user;
-            var logLine = "[" + user.username + "] " + req.originalUrl;
+            var logLine = "[" + user.alias + "] " + req.originalUrl;
             systemLogger.debug(logLine);
             next();
         });
     }
-    
-    var users = require('./routes/users.js');
-    app.use("/api/users", users);
-    
-    var inventory = require('./routes/inventory.js');
-    app.use("/api/inventory", inventory);
-    
-    app.use('/files', express.static( __dirname + "/uploaded", {fallthrough: false}));
-    app.use(express.static(__dirname + "/frontend/dist", {fallthrough: false}));
 
+    var users = require('./routes/users.js');
+    router.use("/api/users", users);
+
+	var media = require('./routes/media.js');
+    router.use("/api/media", media);
+
+    var inventory = require('./routes/inventory.js');
+    router.use("/api/inventory", inventory);
+
+    var content = require('./routes/content.js');
+    router.use("/api/post", content);
+
+    router.use('/media', express.static( __dirname + "/uploaded/media", {fallthrough: false}));
+	router.use('/users', express.static( __dirname + "/uploaded/users", {fallthrough: false}));
+    router.use(express.static(__dirname + "/frontend/dist", {fallthrough: false}));
+
+    app.use(services.config.mountPoint, router);
     app.use(function (err, req, res, next) {
-        if (!(err && err.code === "ENOENT" && !(/\/(\w+\.)+[a-zA-Z]+$/g.test(req.path)))) 
-            return next();
+        if (!(err && err.code === "ENOENT" && !(/\/(\w+\.)+[a-zA-Z]+$/g.test(req.path))))
+            return next(err);
         res.sendFile('frontend/dist/index.html', {"root": __dirname});
     });
 

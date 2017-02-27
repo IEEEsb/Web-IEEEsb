@@ -9,82 +9,87 @@ import 'rxjs/add/operator/toPromise';
 
 import { User } from '../_models/user';
 import { RegisterData } from '../_models/regdata';
-import { LoginData } from '../_models/logindata';
 
 declare var CryptoJS: any;
 
 @Injectable()
 export class UserService {
 
+	public user: User;
+	public redirectUrl: string = '/';
+	public userSubject: BehaviorSubject<User>;
 
-    private userSubject: BehaviorSubject<User>;
 
-    userSource$: Observable<User>;
+	constructor(private http: Http) {
+		this.userSubject = new BehaviorSubject<User>(null);
+		this.http.get('api/users/')
+		.toPromise()
+		.then((response: Response) => {
+			this.user = response.json() as User;
+			this.userSubject.next(response.json() as User);
+		})
+		.catch((error: any) => {
+			this.user = null;
+			this.userSubject.next(null);
+			return this.handleError(error);
+		});
+	}
 
-    constructor(private http: Http) {
-        this.userSubject = new BehaviorSubject<User>(localStorage.getObject('user'));
-        this.userSource$ = this.userSubject.asObservable();
-        let user = this.userSubject.getValue();
-        console.log('user');
-        if(user){
-            this.http.get('api/users/getuser/' + user._id)
-    			.toPromise()
-    			.then((response: Response) => {
-                    this.userSubject.next(response.json() as User);
-                })
-    			.catch((error: any) => {
-                    localStorage.removeItem('user');
-                    this.userSubject.next(null);
-                    return this.handleError(error);
-                });
-        }
-    }
+	getRedirectUrl() {
+		let url = this.redirectUrl;
+		this.redirectUrl = '/';
 
-    register(regData: RegisterData): Promise<boolean> {
-        let data = Object.assign({}, regData);
-        data.password = CryptoJS.SHA256(data.password).toString();
-        console.log(JSON.stringify(data));
-        let headers = new Headers({ 'enctype': 'multipart/form-data' });
-		let options = new RequestOptions({ headers: headers });
-        return this.http.post('api/users/register', data)
-			.toPromise()
-			.then((response: Response) => {
-                this.userSubject.next(response.json() as User);
-                return true;
-            })
-			.catch(this.handleError);
-    }
+		return url;
+	}
 
-    login(loginData: LoginData): Promise<boolean> {
+	setRedirectUrl(url: string) {
+		this.redirectUrl = url;
+	}
 
-        let data = Object.assign({}, loginData);
-        data.password = CryptoJS.SHA256(data.password).toString();
+	register(regData: RegisterData): Promise<boolean> {
+		let data = Object.assign({}, regData);
+		data.password = CryptoJS.SHA256(data.password).toString();
+		return this.http.post('api/users/register', data)
+		.toPromise()
+		.then((response: Response) => {
+			this.user = response.json() as User;
+			this.userSubject.next(response.json() as User);
+			return true;
+		})
+		.catch(this.handleError);
+	}
 
-        let headers = new Headers({ 'enctype': 'multipart/form-data' });
-		let options = new RequestOptions({ headers: headers });
-        return this.http.post('api/users/login', data)
-			.toPromise()
-			.then((response: Response) => {
-                localStorage.setObject('user', response.json() as User);
-                this.userSubject.next(localStorage.getObject('user'));
-                return true;
-			})
-			.catch(this.handleError);
-    }
+	login(alias: string, password: string): Promise<boolean> {
 
-    logout(): Promise<boolean> {
+		password = CryptoJS.SHA256(password).toString();
 
-        return this.http.post('api/users/logout', '')
-			.toPromise()
-			.then((response: Response) => {
-                localStorage.removeItem('user');
-                this.userSubject.next(localStorage.getObject('user'));
-                return true;
-			})
-			.catch(this.handleError);
-    }
+		return this.http.post('api/users/login', {alias: alias, password: password})
+		.toPromise()
+		.then((response: Response) => {
+			this.user = response.json() as User;
+			this.userSubject.next(response.json() as User);
+			return true;
+		})
+		.catch((error: any) => {
+			this.user = null;
+			this.userSubject.next(null);
+			return this.handleError(error);
+		});
+	}
 
-    private handleError(error: any): Promise<any> {
+	logout(): Promise<boolean> {
+
+		return this.http.post('api/users/logout', '')
+		.toPromise()
+		.then((response: Response) => {
+			this.user = response.json() as User;
+			this.userSubject.next(null);
+			return true;
+		})
+		.catch(this.handleError);
+	}
+
+	private handleError(error: any): Promise<any> {
 		console.error('An error occurred', error); // for demo purposes only
 		return Promise.reject(error.message || error);
 	}

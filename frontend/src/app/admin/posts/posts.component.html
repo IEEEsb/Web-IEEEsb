@@ -1,0 +1,40 @@
+<div class="container-fluid">
+	<div class="row top">
+		<div class="col-xs-12">
+			<div class="title">
+				<h3>Noticias</h3>
+			</div>
+			<div class="back">
+				<a href="/admin/posts/post" routerLink="/admin/posts/post">Nuevo</a>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-xs-4">
+			<h2>Título</h2>
+		</div>
+		<div class="col-xs-2">
+			<h2>Autor</h2>
+		</div>
+		<div class="col-xs-3">
+			<h2>Fecha</h2>
+		</div>
+	</div>
+	<div *ngFor="let post of posts" class="row post">
+		<div class="col-xs-4">
+			<a [href]="'/post/' + post._id" [routerLink]="['/post/' + post._id]">
+				<p>{{post.title}}</p>
+			</a>
+		</div>
+		<div class="col-xs-2">
+			<p>{{post.author.alias}}</p>
+		</div>
+		<div class="col-xs-3">
+			<p>{{post.createDate}}</p>
+		</div>
+		<div class="col-xs-3">
+			<a [href]="'/admin/posts/post/' + post._id" [routerLink]="['/admin/posts/post/' + post._id]">Editar</a>
+			<a href="javascript:void(0)" (click)="delete(post._id)">Eliminar</a>
+		</div>
+	</div>
+</div>
