@@ -1,4 +1,5 @@
 const gulp = require('gulp'),
+<<<<<<< HEAD
 mkdirp = require('mkdirp'),
 del = require('del'),
 typescript = require('gulp-typescript'),
@@ -14,6 +15,24 @@ fileUtils = require('./utils/services/fileUtils.js'),
 tscConfig = require('./tsconfig.json');
 
 
+=======
+mkdirp = require('mkdirp'),
+del = require('del'),
+typescript = require('gulp-typescript'),
+sourcemaps = require('gulp-sourcemaps'),
+fs = require('fs'),
+gulpTypings = require("gulp-typings"),
+mongoose = require('mongoose'),
+Promise = require('bluebird'),
+systemjsBuilder = require('gulp-systemjs-builder'),
+argv = require('yargs').argv,
+less = require('gulp-less'),
+slug = require('slug');
+fileUtils = require('./utils/services/fileUtils.js'),
+tscConfig = require('./tsconfig.json');
+
+
+>>>>>>> 2bec3e43d9e2da2273493142b4a19fa80b74d218
 function ensureExists(path) {
 	return new Promise(function (resolve, reject) {
 		mkdirp(path, function (err) {
@@ -93,8 +112,8 @@ gulp.task('copy:foldlibs', () => {
 	'node_modules/ng2-file-upload/**/*',
 	'node_modules/ng2-auto-complete/**/*'
 ],
-	{ base: "./node_modules/" })
-	.pipe(gulp.dest('frontend/dist/lib'));
+{ base: "./node_modules/" })
+.pipe(gulp.dest('frontend/dist/lib'));
 });
 
 gulp.task('copy:indlibs', () => {
@@ -108,7 +127,7 @@ gulp.task('copy:indlibs', () => {
 });
 
 gulp.task('copy:assets', () => {
-	return gulp.src(['frontend/src/**/*', 'frontend/src/index.html', '!frontend/src/**/*.ts', '!frontend/src/typings.json'], { base: './frontend/src/' })
+	return gulp.src(['frontend/src/**/*', 'frontend/src/index.html', '!frontend/src/**/*.less','!frontend/src/**/*.ts', '!frontend/src/typings.json'], { base: './frontend/src/' })
 	.pipe(gulp.dest('frontend/dist'))
 });
 
@@ -187,15 +206,22 @@ gulp.task('config:mail', () => {
 	return gulp.src('initialData/mail/**/*').pipe(gulp.dest('uploaded/mail'));
 });
 
+gulp.task('less', function() {
+	return gulp.src('frontend/src/**/*.less', { base: './frontend/src/' })
+	.pipe(less())
+	.pipe(gulp.dest('frontend/dist'))
+});
+
 
 gulp.task('watch:frontend', function () {
+	gulp.watch(['frontend/src/**/*.less'], gulp.series('less'));
 	gulp.watch(['frontend/src/**/*', '!frontend/src/**/*.ts'], gulp.series('copy:assets'));
 	gulp.watch('frontend/src/**/*.ts', gulp.series('compile'));
 });
 
 
-gulp.task('build:dev', gulp.series('clean', 'downloadTypings', "copyTypings", gulp.parallel('compile', 'copy:indlibs', 'copy:assets', 'copy:foldlibs'), 'emptybundle'));
+gulp.task('build:dev', gulp.series('clean', 'downloadTypings', "copyTypings", gulp.parallel('compile', 'copy:indlibs', 'copy:assets','less' ,'copy:foldlibs'), 'emptybundle'));
 
-gulp.task('build:prod', gulp.series('clean', 'downloadTypings', "copyTypings", gulp.parallel('compile', 'copy:indlibs', 'copy:assets', 'copy:foldlibs'), 'bundle'));
+gulp.task('build:prod', gulp.series('clean', 'downloadTypings', "copyTypings", gulp.parallel('compile', 'copy:indlibs', 'copy:assets', 'less' ,'copy:foldlibs'), 'bundle'));
 
 
