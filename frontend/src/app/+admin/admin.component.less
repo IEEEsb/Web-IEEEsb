@@ -1,0 +1,65 @@
+.main {
+	min-height: 100%;
+
+	& .sidebar {
+		background-color: #006df0;
+		padding: 5px 0px;
+
+		@media (min-width: 768px) {
+			height: 100%;
+			z-index: 10;
+			position: fixed;
+		}
+
+
+		& li {
+			width: 100%;
+
+			& a {
+				color: white;
+			}
+		}
+
+		& .navbar-header {
+			& .navbar-toggle {
+				margin-top: 0px;
+				margin-bottom: 0px;
+				& span {
+					background-color: white;
+				}
+			}
+
+			& .navbar-brand {
+				height: 40px;
+				padding: 0px 15px;
+				z-index: 10;
+			}
+		}
+
+		& #navbar {
+			padding-right: 0px;
+			padding-left: 0px;
+
+			& .nav {
+				width: 100%;
+				padding-top: 10px;
+				padding: 0px;
+
+				& .active a{
+					background-color: #188BFF;
+				}
+			}
+
+			& .navbar-nav {
+				margin: 0px;
+			}
+		}
+	}
+
+	& .wrapper {
+		border-left: 1px solid #e7e7e7;
+		min-height: 100%;
+		background-color: #efefef;
+		padding: 15px;
+	}
+}

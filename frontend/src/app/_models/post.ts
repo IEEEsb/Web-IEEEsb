@@ -8,6 +8,7 @@ export class PostData {
     public tags: string[];
 	public createDate: Date;
 	public modifiedDate: Date;
+	
 	constructor() {
 		this._id = "";
 		this.title = "Title";

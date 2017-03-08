@@ -1,0 +1,95 @@
+.main {
+  background-color: #e7e7e7;
+}
+.top {
+  margin-bottom: 10px;
+}
+.top .title {
+  border-top: solid 1px #006df0;
+  line-height: 40px;
+  float: left;
+  display: inline-block;
+}
+.top .right {
+  line-height: 40px;
+  float: right;
+}
+.top a {
+  padding-right: 10px;
+}
+.top a:not(:last-child) {
+  border-right: solid 1px grey;
+}
+.nav {
+  margin-bottom: 20px;
+}
+.item {
+  padding-bottom: 10px;
+}
+.item .bin {
+  display: none;
+}
+.item:hover .bin {
+  display: block;
+  position: absolute;
+  bottom: 5px;
+  right: 5px;
+  width: 30px;
+  height: 30px;
+  padding: 5px;
+  background-color: #006DF0;
+  border-radius: 5px;
+}
+.file-over {
+  border: dotted 3px red !important;
+}
+.drop-zone {
+  border: dotted 3px lightgray;
+  height: 300px;
+  margin-bottom: 0px;
+}
+.preview {
+  height: 150px;
+  width: 150px;
+}
+.center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-right: -50%;
+  transform: translate(-50%, -50%);
+}
+.responsive-square {
+  text-align: left;
+  position: relative;
+  width: 100%;
+  border-radius: 5px;
+  background-color: white;
+}
+.responsive-square:after {
+  content: "";
+  display: block;
+  padding-bottom: 100%;
+}
+.responsive-square .square-content {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  padding: 5px;
+}
+.img-responsive {
+  height: 100%;
+  border-radius: 5px;
+}
+.file-name {
+  position: absolute;
+  bottom: 0px;
+  width: 100%;
+  text-align: center;
+  background-color: white;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+.selected {
+  border: solid 2px #006DF0;
+}

@@ -8,10 +8,14 @@ let router = express.Router();
 
 router.route('/all').get(contentController.getPosts);
 router.route('/:id').get(contentController.getPost);
+
 router.use(authController.auth);
 router.use(authController.authRole('ieee'));
+
 router.route('/').post(contentController.savePost);
+
 router.use(authController.authRole('admin'));
+
 router.route('/remove/:id').post(contentController.removePost);
 router.route('/publish/:id').post(contentController.publishPost);
 

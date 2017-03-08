@@ -22,6 +22,10 @@ export class UserService {
 
 	constructor(private http: Http) {
 		this.userSubject = new BehaviorSubject<User>(null);
+		this.update();
+	}
+
+	update() {
 		this.http.get('api/users/')
 		.toPromise()
 		.then((response: Response) => {
@@ -31,7 +35,7 @@ export class UserService {
 		.catch((error: any) => {
 			this.user = null;
 			this.userSubject.next(null);
-			return this.handleError(error);
+			return this.handleError(error, true);
 		});
 	}
 
@@ -46,14 +50,43 @@ export class UserService {
 		this.redirectUrl = url;
 	}
 
-	register(regData: RegisterData): Promise<boolean> {
+	toIEEE(id: string): Promise<boolean>{
+
+		return this.http.post('api/users/toieee/' + id)
+		.toPromise()
+		.then((response: Response) => {
+			return response.json();
+		})
+		.catch(this.handleError);
+	}
+
+	getUser(id: string): Promise<User>{
+
+		return this.http.get('api/users/user/' + id)
+		.toPromise()
+		.then((response: Response) => {
+			return response.json() as User;
+		})
+		.catch(this.handleError);
+	}
+
+	getAll(): Promise<User[]>{
+
+		return this.http.get('api/users/all')
+		.toPromise()
+		.then((response: Response) => {
+			return response.json() as User[];
+		})
+		.catch(this.handleError);
+	}
+
+	register(regData: any): Promise<boolean> {
 		let data = Object.assign({}, regData);
 		data.password = CryptoJS.SHA256(data.password).toString();
 		return this.http.post('api/users/register', data)
 		.toPromise()
 		.then((response: Response) => {
-			this.user = response.json() as User;
-			this.userSubject.next(response.json() as User);
+			this.update();
 			return true;
 		})
 		.catch(this.handleError);
@@ -61,35 +94,56 @@ export class UserService {
 
 	login(alias: string, password: string): Promise<boolean> {
 
-		password = CryptoJS.SHA256(password).toString();
+		let body = {};
+		if(arguments.length === 1){
+			body.code = alias;
+		} else if(arguments.length === 2) {
+			body.alias = alias;
+			body.password = CryptoJS.SHA256(password).toString();
+		}
 
-		return this.http.post('api/users/login', {alias: alias, password: password})
+		return this.http.post('api/users/login', body)
 		.toPromise()
 		.then((response: Response) => {
-			this.user = response.json() as User;
-			this.userSubject.next(response.json() as User);
-			return true;
-		})
-		.catch((error: any) => {
-			this.user = null;
-			this.userSubject.next(null);
-			return this.handleError(error);
-		});
-	}
-
-	logout(): Promise<boolean> {
-
-		return this.http.post('api/users/logout', '')
-		.toPromise()
-		.then((response: Response) => {
-			this.user = response.json() as User;
-			this.userSubject.next(null);
+			this.update();
 			return true;
 		})
 		.catch(this.handleError);
 	}
 
-	private handleError(error: any): Promise<any> {
+	loginAdmin(password): Promise<boolean> {
+		password = CryptoJS.SHA256(password).toString();
+		return this.http.post('api/inventory/loginAdmin', {password: password})
+		.toPromise()
+		.then((response: Response) => {
+			return response.json();
+		});
+	}
+
+	logout(): Promise<boolean> {
+
+		return this.http.post('api/users/logout', {})
+		.toPromise()
+		.then((response: Response) => {
+			this.update();
+			return true;
+		})
+		.catch(this.handleError);
+	}
+
+	addMoney(id: string, money): Promise<boolean> {
+		let content = { user: id, money: money }
+		return this.http.post('api/users/addmoney', content)
+		.toPromise()
+		.then((response: Response) => {
+			this.update();
+			return response.json();
+		})
+		.catch(this.handleError);
+	}
+
+	private handleError(error: any, notUpdate: boolean): Promise<any> {
+		if(!notUpdate) this.update();
 		console.error('An error occurred', error); // for demo purposes only
 		return Promise.reject(error.message || error);
 	}

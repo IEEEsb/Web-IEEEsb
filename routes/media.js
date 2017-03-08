@@ -7,10 +7,15 @@ let router = express.Router();
 
 
 router.route('/').get(mediaController.getMedia);
+
 router.use(authController.auth);
 router.use(authController.authRole('ieee'));
+
 router.route('/').post(mediaController.uploadMedia);
+
 router.use(authController.authRole('admin'));
+
+router.route('/remove/:id').post(mediaController.removeMedia);
 
 
 

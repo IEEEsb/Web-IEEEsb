@@ -18,7 +18,7 @@ export class InventoryItem {
 		this._id = "";
 		this.code = "";
 		this.name = "";
-		this.location = new LocationData
+		this.location = new LocationData();
 		this.tags = [];
 		this.goodState = true;
 		this.type = "consumable";

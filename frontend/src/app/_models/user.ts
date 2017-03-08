@@ -1,10 +1,21 @@
 export class User {
-  _id: string;
-  alias: string;
-  roles: [string];
-  name: string;
-  email: string;
-  money: number;
-  ieee: string;
-  profilePic: string;
+	public _id: string;
+	public alias: string;
+	public roles: [string];
+	public name: string;
+	public email: string;
+	public money: number;
+	public ieee: string;
+	public profilePic: string;
+
+	constructor() {
+		this._id = "";
+		this.alias = "";
+		this.roles = [""];
+        this.name = "";
+        this.email = "";
+        this.money = 0;
+        this.ieee = "";
+        this.profilePic = "";
+	}
 }

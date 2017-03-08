@@ -1,0 +1,53 @@
+.main {
+  min-height: 100%;
+}
+.main .sidebar {
+  background-color: #006df0;
+  padding: 5px 0px;
+}
+@media (min-width: 768px) {
+  .main .sidebar {
+    height: 100%;
+    z-index: 10;
+    position: fixed;
+  }
+}
+.main .sidebar li {
+  width: 100%;
+}
+.main .sidebar li a {
+  color: white;
+}
+.main .sidebar .navbar-header .navbar-toggle {
+  margin-top: 0px;
+  margin-bottom: 0px;
+}
+.main .sidebar .navbar-header .navbar-toggle span {
+  background-color: white;
+}
+.main .sidebar .navbar-header .navbar-brand {
+  height: 40px;
+  padding: 0px 15px;
+  z-index: 10;
+}
+.main .sidebar #navbar {
+  padding-right: 0px;
+  padding-left: 0px;
+}
+.main .sidebar #navbar .nav {
+  width: 100%;
+  padding-top: 10px;
+  padding: 0px;
+}
+.main .sidebar #navbar .nav .active a {
+  background-color: #188BFF;
+}
+.main .sidebar #navbar .navbar-nav {
+  margin: 0px;
+}
+.main .wrapper {
+  border-left: 1px solid #e7e7e7;
+  min-height: 100%;
+  background-color: #efefef;
+  padding: 15px;
+}

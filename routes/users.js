@@ -19,11 +19,17 @@ router.route('/fblogin').post(userAccountController.FBLogin);
 router.use(authController.auth);
 
 router.route('/').get(userController.getCurrentUser);
-router.route('/:user').get(userController.getUser);
+router.route('/user/:user').get(userController.getUser);
 router.route('/changepassword').post(userAccountController.changePassword);
 router.route('/update').post(upload.fields([{ name: "image" }]), userAccountController.updateProfile);
 router.route('/fbmerge').post(userAccountController.FBMerge);
 router.route('/fbunmerge').post(userAccountController.FBUnMerge);
+
+router.use(authController.authRole('admin'));
+
+router.route('/addmoney').post(userAccountController.addMoney);
+router.route('/all').get(userController.getUsers);
+router.route('/toieee/:id').post(userAccountController.toIEEE);
 
 
 module.exports = router;

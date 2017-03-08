@@ -1,0 +1,43 @@
+<div class="container-fluid">
+	<div class="row top">
+		<div class="col-xs-12">
+			<div class="title">
+				<h3>Usuarios</h3>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-xs-3">
+			<h2>Nombre</h2>
+		</div>
+		<div class="col-xs-3">
+			<h2>E-mail</h2>
+		</div>
+		<div class="col-xs-3">
+			<h2>Código IEEE</h2>
+		</div>
+		<div class="col-xs-3">
+			<h2>Roles</h2>
+		</div>
+	</div>
+	<div *ngFor="let user of users" class="row user">
+		<div class="col-xs-3">
+			<a [href]="'/admin/users/editor/' + user._id" [routerLink]="['/admin/users/editor/' + user._id]">
+				<p>{{user.name}}</p>
+			</a>
+		</div>
+		<div class="col-xs-3">
+			<p>{{user.email}}</p>
+		</div>
+		<div class="col-xs-3">
+			<p>{{user.ieee}}</p>
+		</div>
+		<div class="col-xs-3">
+			<p>{{user.roles}}</p>
+		</div>
+		<div class="col-xs-3">
+			<a [href]="'/admin/users/editor/' + user._id" [routerLink]="['/admin/users/editor/' + user._id]">Editar</a>
+			<a href="javascript:void(0)" (click)="delete(user._id)">Eliminar</a>
+		</div>
+	</div>
+</div>

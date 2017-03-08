@@ -1,0 +1,149 @@
+<div class="container-fluid">
+	<div class="row top">
+		<div class="col-xs-12">
+			<div class="title">
+				<b>Insertar Compra</b>
+			</div>
+			<div class="right">
+				<a href="javascript:void(0)" (click)="clean()">Limpiar</a>
+				<a href="/admin/inventory" [routerLink]="['/admin/inventory']">Atrás</a>
+			</div>
+		</div>
+	</div>
+	<div class="row" *ngIf="!newItem">
+		<div class="col-xs-12 col-sm-3">
+			<img [src]="icon" class="img-responsive">
+		</div>
+		<div class="col-xs-12 col-sm-9">
+			<form class="form-horizontal" role="form">
+				<div class="form-group">
+					<label class="control-label col-xs-3" for="code">Código:</label>
+					<div class="col-xs-9">
+						<input id="0" (keyup.enter)="search($event)" [(ngModel)]='item.code' name='code' class='form-control' autofocus>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label col-xs-12">Precio:</label>
+					<div class="col-xs-12">
+						<div class="form-group">
+							<label class="control-label col-xs-offset-1 col-xs-2" for="buyPrice">Compra:</label>
+							<div class="col-xs-7">
+								<input id="1" (keyup.enter)="next($event)" (keyup.control.enter)="back($event)" type="number" [(ngModel)]='item.buyPrice' name='buyPrice' step="0.01" class='form-control'>
+							</div>
+						</div>
+					</div>
+					<div class="col-xs-12">
+						<div class="form-group">
+							<label class="control-label col-xs-offset-1 col-xs-2" for="sellPrice">Venta:</label>
+							<div class="col-xs-7">
+								<input id="2" (keyup.enter)="next($event)" (keyup.control.enter)="back($event)" type="number" [(ngModel)]='item.sellPrice' name='sellPrice' step="0.01" class='form-control'>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label col-xs-3" for="quantity">Cantidad:</label>
+					<div class="col-xs-9">
+						<input id="3" (keyup.enter)="next($event)" (keyup.control.enter)="back($event)" type="number" [(ngModel)]='item.quantity' name='quantity' class='form-control'>
+					</div>
+				</div>
+				<div class="checkbox">
+					<label class="control-label">
+						<input id="4" type="checkbox" (keyup.enter)="next($event)" (keyup.control.enter)="back($event)" [(ngModel)]='reset' name='reset'> Reiniciar Cantidad
+					</label>
+				</div>
+				<button id="5" class="btn btn-lg btn-primary" (click)='update($event)' (keyup.enter)="update($event)" (keyup.control.enter)="back($event)" type='submit' [disabled]="disabled">Guardar</button>
+			</form>
+		</div>
+	</div>
+	<div class="row" *ngIf="newItem">
+		<div class="col-xs-12 col-sm-3">
+			<img [src]="icon" class="img-responsive">
+			<br>
+			<a (click)="selectMedia()" href='javascript:void(0)' class="edit">Editar</a>
+		</div>
+		<div class="col-xs-12 col-sm-9">
+			<form class="form-horizontal" role="form" (ngSubmit)="save()" #itemForm="ngForm">
+				<div class="form-group">
+					<label class="control-label col-xs-3" for="code">Código:</label>
+					<div class="col-xs-9">
+						<input [(ngModel)]='item.code' name='code' class='form-control'>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label col-xs-3" for="name">Nombre:</label>
+					<div class="col-xs-9">
+						<input [(ngModel)]='item.name' name='name' class='form-control'>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label col-xs-3" for="location">Localización:</label>
+					<div class="col-xs-9">
+						<input [(ngModel)]='item.location.main' name='location' class='form-control'>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label col-xs-3" for="sublocation">Sublocalización:</label>
+					<div class="col-xs-9">
+						<input [(ngModel)]='item.location.sub' name='sublocation' class='form-control'>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-3" for="goodState">En Buen Estado: </label>
+					<div class="col-xs-9">
+						<input type="checkbox" name="goodState" [(ngModel)]="item.goodState">
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label col-xs-3" for="type">Tipo:</label>
+					<div class="col-xs-9">
+						<select class="form-control" [(ngModel)]="item.type" name="type">
+							<option value="consumable">Consumible</option>
+							<option value="lendable">Prestable</option>
+							<option value="static">Estático</option>
+						</select>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label col-xs-12">Precio:</label>
+					<div class="col-xs-12">
+						<div class="form-group">
+							<label class="control-label col-xs-offset-1 col-xs-2" for="buyPrice">Compra:</label>
+							<div class="col-xs-7">
+								<input type="number" [(ngModel)]='item.buyPrice' name='buyPrice' step="0.01" class='form-control'>
+							</div>
+						</div>
+					</div>
+					<div class="col-xs-12">
+						<div class="form-group">
+							<label class="control-label col-xs-offset-1 col-xs-2" for="sellPrice">Venta:</label>
+							<div class="col-xs-7">
+								<input type="number" [(ngModel)]='item.sellPrice' name='sellPrice' step="0.01" class='form-control'>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label col-xs-3" for="quantity">Cantidad:</label>
+					<div class="col-xs-9">
+						<input type="number" [(ngModel)]='item.quantity' name='quantity' class='form-control'>
+					</div>
+				</div>
+				<button class="btn btn-lg btn-primary" type='submit'>Guardar</button>
+			</form>
+		</div>
+	</div>
+</div>
+<div class="modal fade" id="media" role="dialog">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title">Seleccionar Imagen</h4>
+			</div>
+			<div class="modal-body">
+				<media-uploader (onSelect)='selectedMedia($event)'></media-uploader>
+			</div>
+		</div><!-- /.modal-content -->
+	</div><!-- /.modal-dialog -->
+</div>

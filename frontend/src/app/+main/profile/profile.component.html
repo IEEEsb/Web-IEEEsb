@@ -1,0 +1,85 @@
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-xs-8 col-xs-offset-2">
+			<div class="row top">
+				<div class="col-xs-12">
+					<div class="title">
+						<b>Mi Perfil</b>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-xs-12">
+					<div class="form-group row">
+						<label class="control-label col-xs-offset-1 col-xs-3" for="sellPrice">Alias:</label>
+						<div class="col-xs-7">
+							{{user.alias}}
+						</div>
+					</div>
+					<div class="form-group row">
+						<label class="control-label col-xs-offset-1 col-xs-3" for="sellPrice">Nombre:</label>
+						<div class="col-xs-7">
+							{{user.name}}
+						</div>
+					</div>
+					<div class="form-group row">
+						<label class="control-label col-xs-offset-1 col-xs-3" for="sellPrice">E-mail:</label>
+						<div class="col-xs-7">
+							{{user.email}}
+						</div>
+					</div>
+					<div class="form-group row" *ngIf="user.roles.indexOf('ieee') > 0">
+						<label class="control-label col-xs-offset-1 col-xs-3" for="sellPrice">Código del IEEE:</label>
+						<div class="col-xs-7">
+							{{user.ieee}}
+						</div>
+					</div>
+				</div>
+			</div>
+
+
+		</div>
+	</div>
+	<div class="row history">
+		<div class="col-xs-12 col-md-10 col-md-offset-1">
+			<h4>Historial de Compras</h4>
+			<div class="row">
+				<div class="col-xs-3">
+					<p>Nombre</p>
+				</div>
+				<div class="col-xs-1">
+					<p>Precio</p>
+				</div>
+				<div class="col-xs-2">
+					<p>Cantidad</p>
+				</div>
+				<div class="col-xs-4">
+					<p>Fecha</p>
+				</div>
+				<div class="col-xs-2">
+					<p>Acciones</p>
+				</div>
+			</div>
+			<div *ngFor="let purchase of displayPurchases" class="row purchase"  [ngClass]="{'cancelled': (purchase.options && purchase.options.cancelled)}">
+				<div class="col-xs-3">
+					<a [href]="'/inventory/item/' + purchase.item._id" [routerLink]="['/inventory/item/' + purchase.item._id]">
+						<p>{{purchase.item.name}}</p>
+					</a>
+				</div>
+				<div class="col-xs-1">
+					<p>{{purchase.item.sellPrice | currency:'EUR':true:'1.2-2'}}</p>
+				</div>
+				<div class="col-xs-2">
+					<p>{{purchase.quantity}}</p>
+				</div>
+				<div class="col-xs-4">
+					<p>{{purchase.date | date:'y/MM/dd, HH:mm:ss'}}</p>
+				</div>
+				<div class="col-xs-2">
+					<a *ngIf="!(purchase.options && purchase.options.cancelled)" href="javascript:void(0)" (click)="cancel(purchase._id)">Cancelar</a>
+				</div>
+			</div>
+		</div>
+		<pagination [itemsPerPage]="perPage" [totalItems]="sortedPurchases.length" [(ngModel)]="currentPage" [boundaryLinks]="true" [maxSize]="5" ellipses="true" previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;"></pagination>
+	</div>
+</div>

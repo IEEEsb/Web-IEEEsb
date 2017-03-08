@@ -1,0 +1,12 @@
+.top {
+  margin-top: 5px;
+}
+.top .back {
+  height: 50px;
+}
+.viewer {
+  margin-top: 10px;
+}
+.viewer /deep/ img {
+  vertical-align: initial;
+}

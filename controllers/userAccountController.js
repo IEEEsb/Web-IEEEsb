@@ -1,5 +1,7 @@
 const services = require("../utils/services.js"),
 config = services.config,
+logger = services.inventoryLogger,
+smartlock = services.smartlock,
 mongoose = require('mongoose'),
 User = mongoose.model('UserModel'),
 authController = require('./authController.js'),
@@ -15,7 +17,7 @@ const baseFilesURL = config.fileServer + '/files/users/';
 
 function mapBasicUser(user) {
 	return {
-		_id: user.id,
+		_id: user._id,
 		alias: user.alias,
 		roles: user.roles,
 		name: user.name,
@@ -49,6 +51,18 @@ exports.checkAlias = function (req, res, next) {
 	});
 };
 
+exports.addMoney = function (req, res, next) {
+	let money = req.body.money;
+	let user = req.body.user;
+	if(isNaN(money)) return next(new CodedError("Not a number", 403));
+
+	User.update({ _id: user }, { $inc: { money: money } }, function(err) {
+		if (err) return next(new CodedError("User not exist", 403));
+		logger.logAddMoney(user, money);
+		return res.status(200).send(true);
+	});
+};
+
 exports.regUser = function (req, res, next) {
 
 	var alias = req.body.alias ? req.body.alias : null;
@@ -64,28 +78,34 @@ exports.regUser = function (req, res, next) {
 	var image = req.files && req.files.image ? req.files.image[0] : null;
 	var ieee = req.body.ieee && req.body.ieee != "" ? req.body.ieee : "";
 	authController.generateSaltedPassword(req.body.password.toLowerCase(), config.pwdIterations).then((saltedPassword) => {
-		user = new User({
-			alias: req.body.alias,
-			slug: slug(req.body.alias),
+		user = {
+			alias: req.body.alias.toLowerCase(),
+			slug: slug(req.body.alias.toLowerCase()),
 			profilePic: image ? image.filename : undefined,
 			email: email,
 			name: name,
-			ieee: ieee,
 			pwd: saltedPassword,
 			hasPassword: true,
 			roles: ['user']
-		});
+		};
+
+		if(ieee !== ""){
+			user.ieee = ieee;
+			user.code = ieee;
+		}
+		console.log(user);
 		var tasks = [];
 		if (image) {
 			tasks.push(services.fileUtils.ensureExists(storagePath + '/' + user.slug).then(() => {
 				return services.fileUtils.moveFile(config.uploadedBase + '/' + image.filename, storagePath + '/' + user.slug + '/' + image.filename);
 			}));
 		}
-		tasks.push(user.save());
+		tasks.push(User.create(user));
 		return Promise.all(tasks);
 	}).then(() => {
 		var userToSend = mapBasicUser(user);
 		req.session.user = userToSend;
+		logger.logRegister(user._id);
 		return res.status(200).send(userToSend);
 	}).catch((err) => {
 		return next(err);
@@ -93,31 +113,58 @@ exports.regUser = function (req, res, next) {
 };
 
 exports.login = function (req, res, next) {
-	var user;
-	User.findOne({ alias: req.body.alias.toLowerCase() }).then((storedUser) => {
-		user = storedUser;
-		if (!user) return res.status(404).send("Alias not found");
-		return authController.validateSaltedPassword(req.body.password, user.pwd.salt, user.pwd.hash, user.pwd.iterations);
-	}).then((result) => {
-		if (!result) return next(new CodedError("Incorrect password", 403));
-		var userToSend = mapBasicUser(user);
-		req.session.user = userToSend;
-		return res.status(200).jsonp(userToSend);
-	}).catch((err) => {
-		return next(err);
-	});
+	let user;
+	let search = {};
+	if(req.body.code){
+		User.findOne({ code: req.body.code }).then((storedUser) => {
+			user = storedUser;
+			if (!user) return res.status(404).send("Code not found");
+			var userToSend = mapBasicUser(user);
+			req.session.user = userToSend;
+			return res.status(200).jsonp(userToSend);
+		}).catch((err) => {
+			return next(err);
+		});
+	} else {
+		User.findOne({ alias: req.body.alias.toLowerCase() }).then((storedUser) => {
+			user = storedUser;
+			if (!user) return res.status(404).send("Alias not found");
+			return authController.validateSaltedPassword(req.body.password, user.pwd.salt, user.pwd.hash, user.pwd.iterations);
+		}).then((result) => {
+			if (!result) return next(new CodedError("Incorrect password", 403));
+			var userToSend = mapBasicUser(user);
+			req.session.user = userToSend;
+			return res.status(200).jsonp(userToSend);
+		}).catch((err) => {
+			return next(err);
+		});
+	}
+
 };
 
 exports.logout = function (req, res, next) {
 
-	console.log(req.session);
 	req.session.destroy(err => {
-		console.log(req.session);
 		if(err){
 			res.status(500).send(err);
 		} else {
 			res.status(200).send(true);
 		}
+
+	});
+
+};
+
+exports.toIEEE = function (req, res, next) {
+
+	User.update({_id: req.params.id}, {$push: {roles: 'ieee'}}, (err) => {
+		if (err) return next(new CodedError("User not exist", 403));
+
+		smartlock.registerUser(req.params.id).then(function () {
+			res.status(200).send(true);
+		}).catch(function (err) {
+			return next(err);
+		});
 
 	});
 

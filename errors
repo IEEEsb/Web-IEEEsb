@@ -1,0 +1,87 @@
+Error at /home/qq/Workspace/IEEE/Web-IEEEsb/frontend/src/app/_services/inventory.service.ts:51:10: Supplied parameters do not match any signature of call target.
+Error at /home/qq/Workspace/IEEE/Web-IEEEsb/frontend/src/app/_services/inventory.service.ts:81:10: Supplied parameters do not match any signature of call target.
+Error at /home/qq/Workspace/IEEE/Web-IEEEsb/frontend/src/app/_services/user.service.ts:55:10: Supplied parameters do not match any signature of call target.
+Error at /home/qq/Workspace/IEEE/Web-IEEEsb/frontend/src/app/_services/user.service.ts:70:10: Argument of type '(error: any, notUpdate: boolean) => Promise<any>' is not assignable to parameter of type '(reason: any) => any'.
+Error at /home/qq/Workspace/IEEE/Web-IEEEsb/frontend/src/app/_services/user.service.ts:80:10: Argument of type '(error: any, notUpdate: boolean) => Promise<any>' is not assignable to parameter of type '(reason: any) => any'.
+Error at /home/qq/Workspace/IEEE/Web-IEEEsb/frontend/src/app/_services/user.service.ts:92:10: Argument of type '(error: any, notUpdate: boolean) => Promise<any>' is not assignable to parameter of type '(reason: any) => any'.
+Error at /home/qq/Workspace/IEEE/Web-IEEEsb/frontend/src/app/_services/user.service.ts:99:9: Property 'code' does not exist on type '{}'.
+Error at /home/qq/Workspace/IEEE/Web-IEEEsb/frontend/src/app/_services/user.service.ts:101:9: Property 'alias' does not exist on type '{}'.
+Error at /home/qq/Workspace/IEEE/Web-IEEEsb/frontend/src/app/_services/user.service.ts:102:9: Property 'password' does not exist on type '{}'.
+Error at /home/qq/Workspace/IEEE/Web-IEEEsb/frontend/src/app/_services/user.service.ts:111:10: Argument of type '(error: any, notUpdate: boolean) => Promise<any>' is not assignable to parameter of type '(reason: any) => any'.
+Error at /home/qq/Workspace/IEEE/Web-IEEEsb/frontend/src/app/_services/user.service.ts:114:13: Parameter 'password' implicitly has an 'any' type.
+Error at /home/qq/Workspace/IEEE/Web-IEEEsb/frontend/src/app/_services/user.service.ts:131:10: Argument of type '(error: any, notUpdate: boolean) => Promise<any>' is not assignable to parameter of type '(reason: any) => any'.
+Error at /home/qq/Workspace/IEEE/Web-IEEEsb/frontend/src/app/_services/user.service.ts:134:23: Parameter 'money' implicitly has an 'any' type.
+Error at /home/qq/Workspace/IEEE/Web-IEEEsb/frontend/src/app/_services/user.service.ts:142:10: Argument of type '(error: any, notUpdate: boolean) => Promise<any>' is not assignable to parameter of type '(reason: any) => any'.
+Error at /home/qq/Workspace/IEEE/Web-IEEEsb/frontend/src/app/+barcode/inventory/inventory.component.ts:40:2: Member 'userSubject' implicitly has an 'any' type.
+Error at /home/qq/Workspace/IEEE/Web-IEEEsb/frontend/src/app/+barcode/inventory/inventory.component.ts:41:2: Member 'inventorySubject' implicitly has an 'any' type.
+Error at /home/qq/Workspace/IEEE/Web-IEEEsb/frontend/src/app/+barcode/inventory/inventory.component.ts:43:2: Member 'timer' implicitly has an 'any' type.
+Error at /home/qq/Workspace/IEEE/Web-IEEEsb/frontend/src/app/+barcode/inventory/inventory.component.ts:90:14: Parameter 'element' implicitly has an 'any' type.
+Error at /home/qq/Workspace/IEEE/Web-IEEEsb/frontend/src/app/+barcode/inventory/inventory.component.ts:118:16: Parameter 'element' implicitly has an 'any' type.
+Error at /home/qq/Workspace/IEEE/Web-IEEEsb/frontend/src/app/+barcode/inventory/inventory.component.ts:128:6: Parameter 'item' implicitly has an 'any' type.
+Error at /home/qq/Workspace/IEEE/Web-IEEEsb/frontend/src/app/+barcode/inventory/inventory.component.ts:128:12: Parameter 'quantity' implicitly has an 'any' type.
+Error at /home/qq/Workspace/IEEE/Web-IEEEsb/frontend/src/app/+barcode/login/login.component.ts:17:2: Member 'userSubject' implicitly has an 'any' type.
+Error at /home/qq/Workspace/IEEE/Web-IEEEsb/frontend/src/app/+barcode/login/login.component.ts:18:2: Member 'inventorySubject' implicitly has an 'any' type.
+Error at /home/qq/Workspace/IEEE/Web-IEEEsb/frontend/src/app/+barcode/login/login.component.ts:65:3: Supplied parameters do not match any signature of call target.
+Error at /home/qq/Workspace/IEEE/Web-IEEEsb/frontend/src/app/+barcode/login/login.component.ts:66:10: Parameter 'user' implicitly has an 'any' type.
+Error at /home/qq/Workspace/IEEE/Web-IEEEsb/frontend/src/app/+barcode/login/login.component.ts:69:11: Parameter 'error' implicitly has an 'any' type.
+Error at /home/qq/Workspace/IEEE/Web-IEEEsb/frontend/src/app/+main/login/login.component.ts:20:2: Member 'subscription' implicitly has an 'any' type.
+Error at /home/qq/Workspace/IEEE/Web-IEEEsb/frontend/src/app/+main/profile/profile.component.ts:47:12: Parameter 'a' implicitly has an 'any' type.
+Error at /home/qq/Workspace/IEEE/Web-IEEEsb/frontend/src/app/+main/profile/profile.component.ts:47:15: Parameter 'b' implicitly has an 'any' type.
+Error at /home/qq/Workspace/IEEE/Web-IEEEsb/frontend/src/app/+main/profile/profile.component.ts:51:9: Parameter 'purchaseId' implicitly has an 'any' type.
+Error at /home/qq/Workspace/IEEE/Web-IEEEsb/frontend/src/app/+main/register/register.component.ts:27:20: Property 'password' does not exist on type 'User'.
+Error at /home/qq/Workspace/IEEE/Web-IEEEsb/frontend/src/app/+main/register/register.component.ts:27:80: Property 'password' does not exist on type 'User'.
+Error at /home/qq/Workspace/IEEE/Web-IEEEsb/frontend/src/app/+main/inventory/inventory.component.ts:53:14: Parameter 'element' implicitly has an 'any' type.
+Error at /home/qq/Workspace/IEEE/Web-IEEEsb/frontend/src/app/+main/inventory/inventory.component.ts:75:13: Argument of type 'InventoryItem' is not assignable to parameter of type 'string'.
+Error at /home/qq/Workspace/IEEE/Web-IEEEsb/frontend/src/app/+main/inventory/inventory.component.ts:81:16: Parameter 'element' implicitly has an 'any' type.
+Error at /home/qq/Workspace/IEEE/Web-IEEEsb/frontend/src/app/+main/inventory/inventory.component.ts:91:20: Parameter 'quantity' implicitly has an 'any' type.
+Error at /home/qq/Workspace/IEEE/Web-IEEEsb/frontend/src/app/+main/navbar/navbar.component.ts:25:5: Cannot find name '$'.
+Error at /home/qq/Workspace/IEEE/Web-IEEEsb/frontend/src/app/+main/navbar/navbar.component.ts:27:6: Cannot find name '$'.
+Error at /home/qq/Workspace/IEEE/Web-IEEEsb/frontend/src/app/+main/navbar/navbar.component.ts:28:19: Cannot find name '$'.
+Error at /home/qq/Workspace/IEEE/Web-IEEEsb/frontend/src/app/_services/content.service.ts:43:16: Supplied parameters do not match any signature of call target.
+Error at /home/qq/Workspace/IEEE/Web-IEEEsb/frontend/src/app/_services/content.service.ts:52:16: Supplied parameters do not match any signature of call target.
+Error at /home/qq/Workspace/IEEE/Web-IEEEsb/frontend/src/app/+main/posts/posts.component.ts:16:2: Member 'perPage' implicitly has an 'any' type.
+Error at /home/qq/Workspace/IEEE/Web-IEEEsb/frontend/src/app/_guards/ieee.guard.ts:12:59: Property 'includes' does not exist on type '[string]'.
+Error at /home/qq/Workspace/IEEE/Web-IEEEsb/frontend/src/app/_guards/ieee.guard.ts:23:59: Property 'includes' does not exist on type '[string]'.
+Error at /home/qq/Workspace/IEEE/Web-IEEEsb/frontend/src/app/+main/main.routing.ts:6:10: Duplicate identifier 'RegisterComponent'.
+Error at /home/qq/Workspace/IEEE/Web-IEEEsb/frontend/src/app/+main/main.routing.ts:9:10: Duplicate identifier 'RegisterComponent'.
+Error at /home/qq/Workspace/IEEE/Web-IEEEsb/frontend/src/app/+admin/admin.component.ts:17:5: Cannot find name '$'.
+Error at /home/qq/Workspace/IEEE/Web-IEEEsb/frontend/src/app/+admin/admin.component.ts:19:6: Cannot find name '$'.
+Error at /home/qq/Workspace/IEEE/Web-IEEEsb/frontend/src/app/+admin/admin.component.ts:20:19: Cannot find name '$'.
+Error at /home/qq/Workspace/IEEE/Web-IEEEsb/frontend/src/app/+admin/inventory/inventory.component.ts:47:9: Parameter 'id' implicitly has an 'any' type.
+Error at /home/qq/Workspace/IEEE/Web-IEEEsb/frontend/src/app/+admin/inventory/editor/editor.component.ts:35:3: Supplied parameters do not match any signature of call target.
+Error at /home/qq/Workspace/IEEE/Web-IEEEsb/frontend/src/app/+admin/inventory/editor/editor.component.ts:42:3: Cannot find name '$'.
+Error at /home/qq/Workspace/IEEE/Web-IEEEsb/frontend/src/app/+admin/inventory/editor/editor.component.ts:45:16: Parameter 'files' implicitly has an 'any' type.
+Error at /home/qq/Workspace/IEEE/Web-IEEEsb/frontend/src/app/+admin/inventory/editor/editor.component.ts:47:3: Cannot find name '$'.
+Error at /home/qq/Workspace/IEEE/Web-IEEEsb/frontend/src/app/+admin/inventory/insert/insert.component.ts:15:14: Class 'InsertItemComponent' incorrectly implements interface 'OnInit'.
+  Property 'ngOnInit' is missing in type 'InsertItemComponent'.
+Error at /home/qq/Workspace/IEEE/Web-IEEEsb/frontend/src/app/+admin/inventory/insert/insert.component.ts:31:3: Cannot find name '$'.
+Error at /home/qq/Workspace/IEEE/Web-IEEEsb/frontend/src/app/+admin/inventory/insert/insert.component.ts:34:16: Parameter 'files' implicitly has an 'any' type.
+Error at /home/qq/Workspace/IEEE/Web-IEEEsb/frontend/src/app/+admin/inventory/insert/insert.component.ts:36:3: Cannot find name '$'.
+Error at /home/qq/Workspace/IEEE/Web-IEEEsb/frontend/src/app/+admin/inventory/automatic-editor/automatic-editor.component.ts:18:17: Cannot find name 'IntentoryItem'.
+Error at /home/qq/Workspace/IEEE/Web-IEEEsb/frontend/src/app/+admin/inventory/automatic-editor/automatic-editor.component.ts:36:9: Parameter 'event' implicitly has an 'any' type.
+Error at /home/qq/Workspace/IEEE/Web-IEEEsb/frontend/src/app/+admin/inventory/automatic-editor/automatic-editor.component.ts:61:28: Argument of type '0' is not assignable to parameter of type 'string'.
+Error at /home/qq/Workspace/IEEE/Web-IEEEsb/frontend/src/app/+admin/inventory/automatic-editor/automatic-editor.component.ts:66:52: Property 'reset' does not exist on type 'ItemAutomaticEditorComponent'.
+Error at /home/qq/Workspace/IEEE/Web-IEEEsb/frontend/src/app/+admin/inventory/automatic-editor/automatic-editor.component.ts:69:28: Argument of type '0' is not assignable to parameter of type 'string'.
+Error at /home/qq/Workspace/IEEE/Web-IEEEsb/frontend/src/app/+admin/inventory/automatic-editor/automatic-editor.component.ts:73:7: Parameter 'event' implicitly has an 'any' type.
+Error at /home/qq/Workspace/IEEE/Web-IEEEsb/frontend/src/app/+admin/inventory/automatic-editor/automatic-editor.component.ts:74:27: Argument of type 'number' is not assignable to parameter of type 'string'.
+Error at /home/qq/Workspace/IEEE/Web-IEEEsb/frontend/src/app/+admin/inventory/automatic-editor/automatic-editor.component.ts:77:7: Parameter 'event' implicitly has an 'any' type.
+Error at /home/qq/Workspace/IEEE/Web-IEEEsb/frontend/src/app/+admin/inventory/automatic-editor/automatic-editor.component.ts:78:27: Argument of type 'number' is not assignable to parameter of type 'string'.
+Error at /home/qq/Workspace/IEEE/Web-IEEEsb/frontend/src/app/+admin/inventory/automatic-editor/automatic-editor.component.ts:82:3: Cannot find name '$'.
+Error at /home/qq/Workspace/IEEE/Web-IEEEsb/frontend/src/app/+admin/inventory/automatic-editor/automatic-editor.component.ts:85:16: Parameter 'files' implicitly has an 'any' type.
+Error at /home/qq/Workspace/IEEE/Web-IEEEsb/frontend/src/app/+admin/inventory/automatic-editor/automatic-editor.component.ts:87:3: Cannot find name '$'.
+Error at /home/qq/Workspace/IEEE/Web-IEEEsb/frontend/src/app/_services/media.service.ts:26:10: Supplied parameters do not match any signature of call target.
+Error at /home/qq/Workspace/IEEE/Web-IEEEsb/frontend/src/app/_services/media.service.ts:38:12: Generic type 'Promise<T>' requires 1 type argument(s).
+Error at /home/qq/Workspace/IEEE/Web-IEEEsb/frontend/src/app/_services/media.service.ts:38:19: Type argument list cannot be empty.
+Error at /home/qq/Workspace/IEEE/Web-IEEEsb/frontend/src/app/+admin/media-uploader/media-uploader.component.ts:28:21: Property 'mediaSubject' is private and only accessible within class 'MediaService'.
+Error at /home/qq/Workspace/IEEE/Web-IEEEsb/frontend/src/app/+admin/media-uploader/media-uploader.component.ts:44:25: Property 'mimeType' does not exist on type 'string'.
+Error at /home/qq/Workspace/IEEE/Web-IEEEsb/frontend/src/app/+admin/media-uploader/media-uploader.component.ts:45:28: Property '_id' does not exist on type 'string'.
+Error at /home/qq/Workspace/IEEE/Web-IEEEsb/frontend/src/app/+admin/media-uploader/media-uploader.component.ts:49:12: Parameter 'id' implicitly has an 'any' type.
+Error at /home/qq/Workspace/IEEE/Web-IEEEsb/frontend/src/app/+admin/media-uploader/media-uploader.component.ts:70:14: Parameter 'bytes' implicitly has an 'any' type.
+Error at /home/qq/Workspace/IEEE/Web-IEEEsb/frontend/src/app/+admin/media-uploader/media-uploader.component.ts:73:20: Argument of type 'number' is not assignable to parameter of type 'string'.
+Error at /home/qq/Workspace/IEEE/Web-IEEEsb/frontend/src/app/+admin/media-uploader/media-uploader.component.ts:77:9: Parameter 'id' implicitly has an 'any' type.
+Error at /home/qq/Workspace/IEEE/Web-IEEEsb/frontend/src/app/+admin/posts/editor/editor.component.ts:49:33: Cannot find name 'params'.
+Error at /home/qq/Workspace/IEEE/Web-IEEEsb/frontend/src/app/+admin/posts/editor/editor.component.ts:70:32: Cannot find name 'params'.
+Error at /home/qq/Workspace/IEEE/Web-IEEEsb/frontend/src/app/+admin/users/editor/editor.component.ts:38:9: Parameter 'id' implicitly has an 'any' type.
+Error at /home/qq/Workspace/IEEE/Web-IEEEsb/frontend/src/app/+admin/users/editor/editor.component.ts:49:8: Property 'insertDisabled' does not exist on type 'UserEditorComponent'.
+Error at /home/qq/Workspace/IEEE/Web-IEEEsb/frontend/src/app/_guards/admin.guard.ts:12:59: Property 'includes' does not exist on type '[string]'.
+Error at /home/qq/Workspace/IEEE/Web-IEEEsb/frontend/src/app/_guards/admin.guard.ts:23:59: Property 'includes' does not exist on type '[string]'.

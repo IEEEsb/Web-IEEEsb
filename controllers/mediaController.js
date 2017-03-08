@@ -5,7 +5,8 @@ Media = mongoose.model('MediaModel'),
 CodedError = require('../utils/CodedError.js'),
 Promise = require('bluebird'),
 winston = require('winston'),
-multer = require('multer');
+multer = require('multer'),
+fs = require('fs');
 
 const systemLogger = winston.loggers.get("system");
 const sessionLogger = winston.loggers.get("session");
@@ -48,7 +49,23 @@ exports.uploadMedia = function (req, res, next) {
 		}
 
 		return res.status(200).send(uploadedMedia);
-
-		res.end('File Uploaded');
 	});
 };
+
+exports.removeMedia = function (req, res, next) {
+
+	Media.findById(req.params.id, function(err, file) {
+		if (err){
+			return next(new CodedError(err, 403));
+		}
+		Media.remove({_id: req.params.id}, function (err) {
+			fs.unlink(storagePath + "/" + file._id, function (err) {
+				if (err){
+					return next(new CodedError(err, 500));
+				}
+				res.status(200).send(true);
+			});
+		});
+
+	});
+}
