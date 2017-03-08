@@ -30,27 +30,6 @@ function mapBasicUser(user) {
 
 exports.mapBasicUser = mapBasicUser;
 
-exports.checkEmail = function (req, res, next) {
-	if (!req.query.email || req.query.email == "" || req.query.email.indexOf(" ") != -1 || req.query.email.indexOf("@") == -1) return next(new CodedError("Invalid email", 400));
-	User.findOne({ email: req.query.email }).exec().then((user) => {
-		if (user) return next(new CodedError("Duplicated email", 403));
-		return res.status(200).send("Ok");
-	}).catch((err) => {
-		return next(err);
-	});
-};
-
-exports.checkAlias = function (req, res, next) {
-	var slug = slug(req.query.alias);
-	if (!slug) return next(new CodedError("Invalid alias", 400));
-	User.findOne({ $or: [{ slug: slug }, { alias: req.query.alias }] }).exec().then((user) => {
-		if (user) return next(new CodedError("Duplicated alias", 403));
-		return res.status(200).send("Ok");
-	}).catch((err) => {
-		return next(err);
-	});
-};
-
 exports.addMoney = function (req, res, next) {
 	let money = req.body.money;
 	let user = req.body.user;
@@ -62,7 +41,6 @@ exports.addMoney = function (req, res, next) {
 		return res.status(200).send(true);
 	});
 };
-
 exports.regUser = function (req, res, next) {
 
 	var alias = req.body.alias ? req.body.alias : null;
@@ -145,126 +123,34 @@ exports.login = function (req, res, next) {
 exports.logout = function (req, res, next) {
 
 	req.session.destroy(err => {
-		if(err){
-			res.status(500).send(err);
-		} else {
-			res.status(200).send(true);
-		}
-
+		if(err) return next(err);
+		return res.status(200).send(true);
 	});
 
 };
 
 exports.toIEEE = function (req, res, next) {
-
 	User.update({_id: req.params.id}, {$push: {roles: 'ieee'}}, (err) => {
 		if (err) return next(new CodedError("User not exist", 403));
 
 		smartlock.registerUser(req.params.id).then(function () {
-			res.status(200).send(true);
 		}).catch(function (err) {
+			res.status(200).send(true);
 			return next(err);
 		});
 
 	});
 
 };
-
-exports.FBRegister = function (req, res, next) {
-	if (!req.body.fb) return next(new CodedError("Bad request", 400));
-	var user;
-	User.find({ 'fb.id': req.body.fb.id }).exec().then((users) => {
-		if (users.length != 0) return next(new CodedError("Already registered", 400));
-		return services.facebook.checkAccessToken(req.body.fb.accessToken, req.body.fb.id);
-	}).then((isTokenValid) => {
-		if (!isTokenValid) return next(new CodedError("Not authorized", 403));
-		user = new User({
-			alias: req.body.alias,
-			slug: slug(req.body.alias),
-			fb: req.body.fb,
-			mergedWithFB: true,
-			hasPassword: false,
-			name: req.body.fb.name
-		});
-		return user.save();
-	}).then((user) => {
-		return res.status(200).jsonp(mapBasicUser(user));
-	}).catch((err) => {
-		return next(err);
-	});
-};
-
-exports.FBLogin = function (req, res, next) {
-	var user;
-	User.findOne({ 'fb.id': req.body.fb.id }).exec().then((storedUser) => {
-		user = storedUser;
-		if (!user) return next(new CodedError("Not found", 404));
-		if (!user.mergedWithFB) return next(new CodedError("Not merged", 400));
-		return services.facebook.checkAccessToken(req.body.fb.accessToken, req.body.fb.id);
-	}).then((isTokenValid) => {
-		if (!isTokenValid) return next(new CodedError("Not authorized", 403));
-		var userToSend = mapBasicUser(user);
-		req.session.user = userToSend;
-		return res.status(200).jsonp(userToSend);
-	}).catch((err) => {
-		return next(err);
-	});
-};
-
-exports.FBMerge = function (req, res, next) {
-	var user = req.user;
-	if (!user) return next(new CodedError("Not found", 404));
-	if (user.mergedWithFB) return next(new CodedError("Already merged", 400));
-	if (!req.body.fb) return next(new CodedError("Bad request", 400));
-	User.find({ 'fb.id': req.body.fb.id }).exec().then((users) => {
-		if (users.length != 0) return next(new CodedError("Already merged", 400));
-		return authController.validateSaltedPassword(req.body.password.toLowerCase(), user.pwd.salt, user.pwd.hash, user.pwd.iterations);
-	}).then((result) => {
-		if (!result) return next(new CodedError("Not authorized", 403));
-		return services.facebook.checkAccessToken(req.body.fb.accessToken, req.body.fb.id);
-	}).then((isTokenValid) => {
-		if (err || !isTokenValid) return res.status(403).send("Not authorized");
-		user.fb = req.body.fb;
-		user.name = user.fb.name;
-		user.mergedWithFB = true;
-		user.hasPassword = true;
-		return user.save();
-	}).then((err) => {
-		return res.status(200).send("Success");
-	}, function (err) {
-		return next(err);
-	});
-};
-
-exports.FBUnMerge = function (req, res, next) {
-	var user = req.user;
-	if (!user) return next(new CodedError("Not found", 404));
-	if (!user.pwd || !user.mergedWithFB) return next(new CodedError("Not merged", 400));
-	if (!req.body.fb) return next(new CodedError("Bad request", 400));
-	if (req.body.fb.id != user.fb.id) return next(new CodedError("Bad request", 400));
-	authController.validateSaltedPassword(req.body.password, user.pwd.salt, user.pwd.hash, user.pwd.iterations).then((result) => {
-		if (!result) return next(new CodedError("Not authorized", 403));
-		return services.facebook.checkAccessToken(req.body.fb.accessToken, req.body.fb.id);
-	}).then((isTokenValid) => {
-		if (!isTokenValid) return next(new CodedError("Not authorized", 403));
-		user.fb = undefined;
-		user.mergedWithFB = false;
-		user.hasPassword = true;
-		user.save();
-	}).then(() => {
-		return res.status(200).send("Success");
-	}, function (err) {
-		return next(err);
-	});
-};
-
 exports.updateProfile = function (req, res, next) {
-	let user = req.user;
-	user.name = req.body.name;
-	user.email = req.body.email;
-	if (!user.name || user.name == "") user.name = user.alias;
-	if (!user.mergedWithFB && (!user.email || user.email == "")) return next(new CodedError("Not valid user", 400));
-	user.save().then(() => {
+	User.findOne({ alias: req.body.alias.toLowerCase() }).then((storedUser) => {
+		user = storedUser;
+		if (!user) return res.status(404).send("Alias not found");
+		user.name = req.body.name;
+		user.email = req.body.email;
+		if (!user.name || user.name == "") user.name = user.alias;
+		return user.save();
+	}).then(() => {
 		return res.status(200).send("Profile updated");
 	}).catch((err) => {
 		return next(err);
@@ -292,7 +178,7 @@ exports.changePassword = function (req, res, next) {
 	});
 };
 
-exports.restoreUserPassword = function (req, res) {
+exports.restoreUserPassword = function (req, res, next) {
 	var user;
 	User.findOne({ alias: req.body.alias.toLowerCase() }).exec().then((storedUser) => {
 		user = storedUser;
@@ -306,14 +192,7 @@ exports.restoreUserPassword = function (req, res) {
 		user.pwd = saltedPassword;
 		return user.save();
 	}).then(() => {
-		var body = '<p style="color: white; font-family: \'Verdana\'; font-weight: 100; font-size: 12px; margin-left: 20px; line-height: 60%;">' + newPassword + "</p>";
-		var mailOptions = {
-			from: 'Another Coffee For Me <noreply@anothercoffeefor.me>',
-			to: user.email,
-			subject: 'Password recovery',
-			html: services.email.generator('New password for ' + user.alias + ' is:', body)
-		};
-		return services.email.sendMail(mailOptions);
+		return services.email.sendRecoverPasswordEmail(mailOptions);
 	}).then((info) => {
 		systemLogger.info("Message sent: " + info.response);
 		return res.status(200).send("Success");

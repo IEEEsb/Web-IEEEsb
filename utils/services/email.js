@@ -1,33 +1,40 @@
- var mail = require('nodemailer'),
-    fs = require('fs'),
-    Promise = require('bluebird'),
-    config = require('../services.js').config,
-    winston = require('winston');
-    
+var Promise = require('bluebird'),
+    services = require('../services.js'),
+    config = services.config,
+    winston = require('winston'),
+    mailcomposer = require('mailcomposer');
+
+var mailgun = require('mailgun-js')({ apiKey: config.mailApiKey, domain: config.mailDomain });
+
 const servicesLogger = winston.loggers.get('services');
 
 servicesLogger.info("Loading email services");
 
-var transporter = mail.createTransport('smtps://'+ config.mailUser.replace('@gmail.com', '%40gmail.com:') + config.mailPass +'@smtp.gmail.com');
-
-exports.generator = function (title, content) {
-    var body = fs.readFileSync(config.uploadedBase + '/mail/template.html').toString();
-    body = body.replace('$title', title);
-    body = body.replace('$content', content);
-    body = body.replace(/\$fileServer/g, config.fileServer + '/files/mail');
-    return body;
-};
-
-exports.sendMail = function(options) {
+exports.sendRecoverPasswordEmail = function (pilot) {
     return new Promise((resolve, reject) => {
-        transporter.sendMail(options, (err, result) => {
-            if(err) return reject(err);
-            return resolve(result);
+        services.fileUtils.readFile(config.uploadedBase + '/email/welcomeEmail.html').then((data) => {
+            var html = data.toString().replace("%subject%", 'Bienvenido a la LDU').replace("%recipient_email%", pilot.email).replace("%recipient_name%", pilot.name + " " + pilot.surname).replace("%recipient.callSign%", pilot.callSign);
+            var mail = mailcomposer({
+                from: config.mailList,
+                to: pilot.email,
+                subject: 'Bienvenido a la LDU',
+                html: html
+            });
+            mail.build((mailBuildError, message) => {
+                var dataToSend = {
+                    to: pilot.email,
+                    message: message.toString('ascii')
+                };
+                mailgun.messages().sendMime(dataToSend, (err, body) => {
+                    if (err) return reject(err);
+                    else return resolve(body);
+                });
+            });
         });
     });
 }
 
-exports.init = function(){
+exports.init = function () {
     return new Promise((resolve, reject) => {
         return resolve();
     });

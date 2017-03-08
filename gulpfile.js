@@ -17,6 +17,8 @@ fileUtils = require('./utils/services/fileUtils.js'),
 tsConfigAOT = require('./tsconfig-aot.json'),
 tscConfig = require('./tsconfig.json');
 
+mongoose.Promise = Promise;
+
 function ensureExists(path) {
 	return new Promise(function (resolve, reject) {
 		mkdirp(path, function (err) {
@@ -125,8 +127,8 @@ gulp.task('config:example', (done) => {
 		"dbUser": "root",
 		"dbPoolSize": 5,
 		"pwdIterations": 10000,
-		"mailUser": "asdf@asdg.com",
-		"mailPass": "asdf",
+		"mailApiKey": "xxxx",
+		"mailDomain": "xxxx",
 		"sessionSecret": "asdf",
 		"logLevel": "debug"
 	}

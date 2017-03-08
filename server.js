@@ -14,50 +14,36 @@ services.init().then(() => {
 		systemLogger.error(err.message)
 	});
 
-	let router = express.Router();
+    app.use(bodyParser.json({ limit: '50mb' }));
 
-	app.use(cookieParser());
-
-	app.use(bodyParser.json({limit: '50mb'}));
+    app.use(services.session.store);
 
 	app.use(services.session.store);
 
-	if (services.config.logLevel == "debug") {
-		app.use((req, res, next) => {
-			var user = {
-				username: "unknown"
-			};
-			if (req.session && req.session.user)
-			var user = req.session.user;
-			var logLine = "[" + user.alias + "] " + req.originalUrl;
-			systemLogger.debug(logLine);
-			services.inventoryLogger.setUser(user);
-			next();
-		});
-	}
 
-	var users = require('./routes/users.js');
-	router.use("/api/users", users);
+    services.fileUtils.listFiles('./routes').then((routes) => {
+        routes.forEach((route) => {
+            app.use(config.mountPoint + '/api/' + route.replace('.js', ''), require('./routes/' + route));
+        });
+    });
 
-	var media = require('./routes/media.js');
-	router.use("/api/media", media);
 
-	var inventory = require('./routes/inventory.js');
-	router.use("/api/inventory", inventory);
+    app.get(config.mountPoint + '/files/*', (req, res, next) => { //for media and users
+        var location = path.resolve(config.uploadedBase + req.url.replace('files/', ''));
+        services.fileUtils.access(location).then(() => {
+            return res.sendFile(location);
+        }, (err) => {
+            return next(new CodedError("Not found", 404));
+        });
+    });
 
-	var content = require('./routes/content.js');
-	router.use("/api/post", content);
+    app.use(config.mountPoint + "/", express.static(__dirname + "/frontend/dist", { fallthrough: false }));
 
-	router.use('/media', express.static( __dirname + "/uploaded/media", {fallthrough: false}));
-	router.use('/users', express.static( __dirname + "/uploaded/users", {fallthrough: false}));
-	router.use(express.static(__dirname + "/frontend/dist", {fallthrough: false}));
-
-	app.use(services.config.mountPoint, router);
-	app.use(function (err, req, res, next) {
-		if (!(err && err.code === "ENOENT" && !(/\/(\w+\.)+[a-zA-Z]+$/g.test(req.path))))
-		return next(err);
-		res.sendFile('frontend/dist/index.html', {"root": __dirname});
-	});
+    app.use(function (err, req, res, next) {
+        if (!(err && err.code === "ENOENT" && !(/\/(\w+\.)+[a-zA-Z]+$/g.test(req.path))))
+            return next(err);
+        res.sendFile('frontend/dist/index.html', { "root": __dirname });
+    });
 
 	var resultController = require('./controllers/resultController.js');
 
