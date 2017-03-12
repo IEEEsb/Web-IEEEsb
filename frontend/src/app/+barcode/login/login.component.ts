@@ -14,10 +14,10 @@ export class BarcodeLoginComponent implements OnDestroy, OnInit, AfterViewInit {
     private _passwordInput: ElementRef;
 
 	adminLogged = false;
-	userSubject = null;
-	inventorySubject = null;
-	password = "";
-	code = "";
+	userSubject: any = null;
+	inventorySubject: any = null;
+	password: string = "";
+	code: string = "";
 
 	constructor(private router: Router, private userService: UserService) {
 		let cookies = document.cookie;

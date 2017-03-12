@@ -5,6 +5,8 @@ import { InventoryService } from '../../../_services/inventory.service';
 
 import { InventoryItem } from '../../../_models/inventory-item';
 
+declare var $: any;
+
 @Component({
 	moduleId: module.id,
 	selector: 'item-editor',
@@ -31,7 +33,7 @@ export class InsertItemComponent {
 		$('#media').modal('show');
 	}
 
-	selectedMedia(files) {
+	selectedMedia(files: any) {
 		this.item.icon = files[0]._id;
 		$('#media').modal('hide');
 	}

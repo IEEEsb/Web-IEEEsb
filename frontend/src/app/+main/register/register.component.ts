@@ -14,7 +14,7 @@ export class RegisterComponent {
 
 	confirmedPassword: string;
 	success: boolean;
-	data: User = new User();
+	data: any = new User();
 
     register(): void {
         this.userService.register(this.data)

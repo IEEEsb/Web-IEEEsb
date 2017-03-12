@@ -37,10 +37,10 @@ export class BarcodeInventoryComponent implements OnInit, OnDestroy, AfterViewIn
 	}
 	quantity: number = 1;
 	messages: string[] = [];
-	userSubject = null;
-	inventorySubject = null;
-	user = new User();
-	timer = null;
+	userSubject: any = null;
+	inventorySubject: any = null;
+	user: User = new User();
+	timer: any = null;
 
 	constructor(private router: Router, private inventoryService: InventoryService, private userService: UserService) {}
 
@@ -87,7 +87,7 @@ export class BarcodeInventoryComponent implements OnInit, OnDestroy, AfterViewIn
 		this.filteredItems = this.items.filter(this.arrayFilter, this);
 	}
 
-	arrayFilter(element) {
+	arrayFilter(element: any) {
 		let find = false;
 		for(let key in element) {
 			if(['code', 'name'].indexOf(key) >= 0) {
@@ -115,7 +115,7 @@ export class BarcodeInventoryComponent implements OnInit, OnDestroy, AfterViewIn
 		}
 	}
 
-	codeIsOnArray(element) {
+	codeIsOnArray(element: any) {
 		return element.code == this.params.search;
 	}
 
@@ -125,7 +125,7 @@ export class BarcodeInventoryComponent implements OnInit, OnDestroy, AfterViewIn
 		return "/images/profile_icon.png";
 	}
 
-	buy(item, quantity) {
+	buy(item: any, quantity: any) {
 		this.inventoryService.buyItem(item, quantity)
 		.then(
 			(item: InventoryItem) => {

@@ -40,13 +40,13 @@ export class MediaUploaderComponent implements OnInit {
 		this.onSelect.emit(selected);
 	}
 
-	getMediaURL(file: string){
-		if( this.isImage(file.mimeType) )
-			return "/media/" + file._id;
+	getMediaURL(file: any){
+		if( this.isImage(String(file.mimeType)) )
+			return "/media/" + String(file._id);
 		return "/images/profile_icon.png";
 	}
 
-	selectTab(id) {
+	selectTab(id: any) {
 		console.log(this.tab);
 		this.tab = id;
 	}
@@ -67,14 +67,14 @@ export class MediaUploaderComponent implements OnInit {
 		return '/images/profile_icon.png';
 	}
 
-	bytesToSize(bytes) {
+	bytesToSize(bytes: any) {
 		var sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
 		if (bytes == 0) return '0 Byte';
-		var i = parseInt(Math.floor(Math.log(bytes) / Math.log(1024)));
+		var i = Math.floor(Math.log(bytes) / Math.log(1024));
 		return (bytes / Math.pow(1024, i)).toFixed(2) + ' ' + sizes[i];
 	}
 
-	remove(id) {
+	remove(id: any) {
 		window.confirm('¿Seguro de que lo quieres borrar?') ? this.mediaService.removeMedia(id) : false;
 	}
 

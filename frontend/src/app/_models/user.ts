@@ -1,7 +1,7 @@
 export class User {
 	public _id: string;
 	public alias: string;
-	public roles: [string];
+	public roles: string[];
 	public name: string;
 	public email: string;
 	public money: number;

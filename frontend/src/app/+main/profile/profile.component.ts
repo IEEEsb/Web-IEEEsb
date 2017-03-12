@@ -12,7 +12,7 @@ import { InventoryPurchase } from '../../_models/inventory-purchase';
 	selector: 'profile',
 	templateUrl: './profile.component.html',
 	styleUrls: ['./profile.component.css'],
-	
+
 })
 export class ProfileComponent {
 
@@ -44,11 +44,11 @@ export class ProfileComponent {
 		this.sortedPurchases = this.purchases.sort(this.arraySort);
 	}
 
-	arraySort(a, b) {
+	arraySort(a: any, b: any) {
 		return new Date(b.date).getTime() - new Date(a.date).getTime();
 	}
 
-	cancel(purchaseId) {
+	cancel(purchaseId: any) {
 		this.inventoryService.cancelPurchase(purchaseId).then((ok) => {
 			this.userService.update();
 		});

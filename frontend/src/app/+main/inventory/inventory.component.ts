@@ -50,7 +50,7 @@ export class InventoryComponent implements OnInit {
 		this.filteredItems = this.items.filter(this.arrayFilter, this);
 	}
 
-	arrayFilter(element) {
+	arrayFilter(element: any) {
 		let find = false;
 		for(let key in element) {
 			if(['code', 'name'].indexOf(key) >= 0) {
@@ -78,7 +78,7 @@ export class InventoryComponent implements OnInit {
 		}
 	}
 
-	codeIsOnArray(element) {
+	codeIsOnArray(element: any) {
 		return element.code == this.params.search;
 	}
 
@@ -88,7 +88,7 @@ export class InventoryComponent implements OnInit {
 		return "/images/profile_icon.png";
 	}
 
-	buy(item: string, quantity) {
+	buy(item: any, quantity: any) {
 		this.inventoryService.buyItem(item, quantity)
 		.then(
 			(item: InventoryItem) => {

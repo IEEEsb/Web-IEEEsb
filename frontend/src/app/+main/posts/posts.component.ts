@@ -13,10 +13,10 @@ import { PostData } from '../../_models/post';
 })
 export class PostsComponent implements OnInit {
 
-	@Input() perPage;
+	@Input() perPage: any;
 
 	private posts: PostData[] = [];
-	private currentPage = 1;
+	private currentPage: number = 1;
 
 	ngOnInit() {
 		this.contentService.getPosts()

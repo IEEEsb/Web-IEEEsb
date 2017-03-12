@@ -12,6 +12,8 @@ exports.resultSender = function(req, res, next) {
 
 exports.genericErrorHandler = function(err, req, res, next){
     systemLogger.error(err.message);
+	console.log(err);
     if (!err.code || isNaN(err.code) || err.code < 400) err.code = 500;
+	if(err.code == 404) return res.redirect('/');
     return res.status(err.code).send(err.message);
 }

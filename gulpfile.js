@@ -10,14 +10,9 @@ Promise = require('bluebird'),
 systemjsBuilder = require('gulp-systemjs-builder'),
 argv = require('yargs').argv,
 less = require('gulp-less'),
-gutil = require('gulp-util'),
-ngc = require('gulp-ngc'),
 slug = require('slug');
 fileUtils = require('./utils/services/fileUtils.js'),
-tsConfigAOT = require('./tsconfig-aot.json'),
 tscConfig = require('./tsconfig.json');
-
-mongoose.Promise = Promise;
 
 function ensureExists(path) {
 	return new Promise(function (resolve, reject) {
@@ -74,6 +69,7 @@ gulp.task("bundle", function () {
 	.pipe(gulp.dest('./frontend/dist/bundle'));
 });
 
+
 gulp.task('compile', () => {
 	return gulp
 	.src(['frontend/src/**/*.ts', 'node_modules/typescript/lib/lib.es6.d.ts'])
@@ -127,8 +123,8 @@ gulp.task('config:example', (done) => {
 		"dbUser": "root",
 		"dbPoolSize": 5,
 		"pwdIterations": 10000,
-		"mailApiKey": "xxxx",
-		"mailDomain": "xxxx",
+		"mailUser": "asdf@asdg.com",
+		"mailPass": "asdf",
 		"sessionSecret": "asdf",
 		"logLevel": "debug"
 	}
@@ -198,10 +194,6 @@ gulp.task('less', function() {
 });
 
 
-gulp.task('ngc', () => {
-    return ngc('tsconfig-aot.json');
-});
-
 gulp.task('watch:frontend', function () {
 	gulp.watch(['frontend/src/**/*.less'], gulp.series('less'));
 	gulp.watch(['frontend/src/**/*', '!frontend/src/**/*.ts'], gulp.series('copy:assets'));
@@ -209,8 +201,7 @@ gulp.task('watch:frontend', function () {
 });
 
 
-gulp.task('build:dev', gulp.series('clean', 'downloadTypings', "copyTypings", gulp.parallel('compile', 'copy:indlibs', 'copy:assets', 'less', 'copy:foldlibs'), 'emptybundle'));
+gulp.task('build:dev', gulp.series('clean', 'downloadTypings', "copyTypings", gulp.parallel('compile', 'copy:indlibs', 'copy:assets','less' ,'copy:foldlibs'), 'emptybundle'));
 
-gulp.task('build:prod', gulp.series('clean', 'downloadTypings', "copyTypings", 'less', gulp.parallel('compile', 'copy:indlibs', 'copy:assets', 'copy:foldlibs'), 'bundle'));
-
+gulp.task('build:prod', gulp.series('clean', 'downloadTypings', "copyTypings", gulp.parallel('compile', 'copy:indlibs', 'copy:assets', 'less' ,'copy:foldlibs'), 'bundle'));
 

@@ -46,7 +46,7 @@ export class PostEditorComponent implements OnInit {
 		this.contentService.savePost(this.post)
 		.then((post: PostData) => {
 			if(this.post._id){
-				this.contentService.getPost(params['id'])
+				this.contentService.getPost(this.post._id)
 				.then((post: PostData) => {
 					this.post = post;
 				});
@@ -67,7 +67,7 @@ export class PostEditorComponent implements OnInit {
 	publish() {
 		this.contentService.publishPost(this.post._id)
 		.then(() => {
-			this.contentService.getPost(params['id'])
+			this.contentService.getPost(this.post._id)
 			.then((post: PostData) => {
 				this.post = post;
 			});

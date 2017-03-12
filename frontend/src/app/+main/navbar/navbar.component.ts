@@ -3,6 +3,8 @@ import { Router, NavigationEnd } from '@angular/router';
 
 import { UserService } from '../../_services/user.service';
 
+declare var $: any;
+
 @Component({
 	moduleId: module.id,
 	selector: 'navbar',

@@ -48,7 +48,7 @@ export class InventoryService {
 	}
 
 	removeItem(id: String): Promise<boolean> {
-		return this.http.post('api/inventory/remove/' + id)
+		return this.http.post('api/inventory/remove/' + id, {})
 		.toPromise()
 		.then((response: Response) => {
 			this.update();
@@ -78,7 +78,7 @@ export class InventoryService {
 
 	cancelPurchase(id: string): Promise<boolean> {
 
-		return this.http.post('api/inventory/purchases/cancel/' + id)
+		return this.http.post('api/inventory/purchases/cancel/' + id, {})
 		.toPromise()
 		.then((response: Response) => {
 			this.update();

@@ -7,45 +7,47 @@ import 'rxjs/add/operator/toPromise';
 @Injectable()
 export class MediaService {
 
-	private mediaSubject: BehaviorSubject<any[]> = new BehaviorSubject<any[]>([]);
+	mediaSubject: BehaviorSubject<any[]> = new BehaviorSubject<any[]>([]);
 
 	constructor(private http: Http) {
 		this.update();
 	}
 
-    getMedia(): Promise<any[]> {
+	getMedia(): Promise<any[]> {
 
-        return this.http.get('/api/media').toPromise()
-			.then((response: Response) => {
-                return response.json();
-            })
-			.catch(this.handleError);
-    }
+		return this.http.get('/api/media')
+		.toPromise()
+		.then((response: Response) => {
+			return response.json();
+		})
+		.catch(this.handleError);
+	}
 
 	removeMedia(id: string): Promise<boolean> {
-		return this.http.post('/api/media/remove/' + id).toPromise()
-			.then((response: Response) => {
-				this.update();
-                return response.json();
-            })
-			.catch(this.handleError);
+		return this.http.post('/api/media/remove/' + id, {})
+		.toPromise()
+		.then((response: Response) => {
+			this.update();
+			return response.json();
+		})
+		.catch(this.handleError);
 	}
 
 	getRelativeUrl(id: string): string {
 		return "/media/" + id;
 	}
 
-	update(): Promise<> {
+	update() {
 
 		this.http.get('/api/media').toPromise()
-			.then((response: Response) => {
-				this.mediaSubject.next(response.json());
-                return response.json();
-            })
-			.catch(this.handleError);
-    }
+		.then((response: Response) => {
+			this.mediaSubject.next(response.json());
+			return response.json();
+		})
+		.catch(this.handleError);
+	}
 
-    private handleError(error: any): Promise<any> {
+	private handleError(error: any): Promise<any> {
 		console.error('An error occurred', error);
 		return Promise.reject(error.message || error);
 	}

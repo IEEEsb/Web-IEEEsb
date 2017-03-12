@@ -9,7 +9,7 @@ import { InventoryItem } from '../../_models/inventory-item';
 	selector: 'inventory-admin',
 	templateUrl: 'inventory.component.html',
 	styleUrls: ['inventory.component.css'],
-	
+
 })
 export class InventoryAdminComponent {
 
@@ -44,7 +44,7 @@ export class InventoryAdminComponent {
 		}
 	}
 
-	remove(id) {
+	remove(id: any) {
 		window.confirm('¿Seguro de que lo quieres borrar?') ? this.inventoryService.removeItem(id) : false;
 	}
 

@@ -6,7 +6,6 @@ import { LoginComponent }		from './login/login.component';
 import { RegisterComponent }	from './register/register.component';
 import { ProfileComponent }		from './profile/profile.component';
 import { HomeComponent }		from './home/home.component';
-import { RegisterComponent }	from './register/register.component';
 import { InventoryComponent }		from './inventory/inventory.component';
 import { ItemDetailsComponent }		from './inventory/details/details.component';
 import { PostComponent }		from './post/post.component';

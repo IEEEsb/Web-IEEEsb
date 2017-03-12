@@ -35,7 +35,7 @@ export class UserEditorComponent implements OnInit {
 		return this.user.roles.indexOf('ieee') > 0;
 	}
 
-	toIEEE(id) {
+	toIEEE(id: any) {
 		this.userService.toIEEE(id)
 		.then(() => {
 			this.userService.getUser(this.user._id)
@@ -46,7 +46,6 @@ export class UserEditorComponent implements OnInit {
 	}
 
 	addMoney() {
-		this.insertDisabled = true;
 		this.userService.addMoney(this.user._id, this.money)
 		.then(() => {
 			alert("Dinero Insertado");

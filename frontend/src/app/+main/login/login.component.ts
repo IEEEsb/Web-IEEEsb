@@ -8,7 +8,7 @@ import { UserService } from '../../_services/user.service';
 	selector: 'login',
 	templateUrl: './login.component.html',
 	styleUrls: ['./login.component.css'],
-	
+
 })
 export class LoginComponent implements OnDestroy {
 
@@ -17,7 +17,7 @@ export class LoginComponent implements OnDestroy {
 
 	error: any;
 
-	subscription = null;
+	subscription: any = null;
 
 	login(): void {
 		this.userService.login(this.alias, this.password);

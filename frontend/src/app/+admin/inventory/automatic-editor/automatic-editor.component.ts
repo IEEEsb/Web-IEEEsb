@@ -5,19 +5,22 @@ import { InventoryService } from '../../../_services/inventory.service';
 
 import { InventoryItem } from '../../../_models/inventory-item';
 
+declare var $: any;
+
 @Component({
 	moduleId: module.id,
 	selector: 'item-editor',
 	templateUrl: 'automatic-editor.component.html',
 	styleUrls: ['automatic-editor.component.css'],
-	
+
 })
 export class ItemAutomaticEditorComponent implements OnInit {
 
 	private newItem: boolean = false;
-	private items: IntentoryItem[] = [];
+	private items: InventoryItem[] = [];
 	private item: InventoryItem = new InventoryItem();
 	private disabled: boolean = true;
+	private reset: boolean = false;
 
 	constructor(private inventoryService: InventoryService) {}
 
@@ -33,7 +36,7 @@ export class ItemAutomaticEditorComponent implements OnInit {
 		this.disabled = true;
 	}
 
-	search(event) {
+	search(event: any) {
 		let code = this.item.code;
 		for (let item of this.items) {
 			if(item.code == code){
@@ -58,7 +61,7 @@ export class ItemAutomaticEditorComponent implements OnInit {
 		this.inventoryService.insertItem(this.item)
 		.then((item: InventoryItem) => {
 			this.clean();
-			document.getElementById(0).focus();
+			document.getElementById('0').focus();
 		});
 	}
 
@@ -66,23 +69,23 @@ export class ItemAutomaticEditorComponent implements OnInit {
 		this.inventoryService.updateItem(this.item, this.reset)
 		.then((item: InventoryItem) => {
 			this.clean();
-			document.getElementById(0).focus();
+			document.getElementById('0').focus();
 		});
 	}
 
-	back(event){
-		document.getElementById(parseInt(event.currentTarget.id) - 1).focus();
+	back(event: any){
+		document.getElementById((parseInt(event.currentTarget.id) - 1) + '').focus();
 	}
 
-	next(event){
-		document.getElementById(parseInt(event.currentTarget.id) + 1).focus();
+	next(event: any){
+		document.getElementById((parseInt(event.currentTarget.id) + 1) + '').focus();
 	}
 
 	selectMedia() {
 		$('#media').modal('show');
 	}
 
-	selectedMedia(files) {
+	selectedMedia(files: any[]) {
 		this.item.icon = files[0]._id;
 		$('#media').modal('hide');
 	}

@@ -52,7 +52,7 @@ export class UserService {
 
 	toIEEE(id: string): Promise<boolean>{
 
-		return this.http.post('api/users/toieee/' + id)
+		return this.http.post('api/users/toieee/' + id, {})
 		.toPromise()
 		.then((response: Response) => {
 			return response.json();
@@ -92,9 +92,9 @@ export class UserService {
 		.catch(this.handleError);
 	}
 
-	login(alias: string, password: string): Promise<boolean> {
+	login(alias: string, password?: string): Promise<boolean> {
 
-		let body = {};
+		let body: any = {};
 		if(arguments.length === 1){
 			body.code = alias;
 		} else if(arguments.length === 2) {
@@ -111,7 +111,7 @@ export class UserService {
 		.catch(this.handleError);
 	}
 
-	loginAdmin(password): Promise<boolean> {
+	loginAdmin(password: any): Promise<boolean> {
 		password = CryptoJS.SHA256(password).toString();
 		return this.http.post('api/inventory/loginAdmin', {password: password})
 		.toPromise()
@@ -131,7 +131,7 @@ export class UserService {
 		.catch(this.handleError);
 	}
 
-	addMoney(id: string, money): Promise<boolean> {
+	addMoney(id: string, money: any): Promise<boolean> {
 		let content = { user: id, money: money }
 		return this.http.post('api/users/addmoney', content)
 		.toPromise()
@@ -142,7 +142,7 @@ export class UserService {
 		.catch(this.handleError);
 	}
 
-	private handleError(error: any, notUpdate: boolean): Promise<any> {
+	private handleError(error: any, notUpdate?: boolean): Promise<any> {
 		if(!notUpdate) this.update();
 		console.error('An error occurred', error); // for demo purposes only
 		return Promise.reject(error.message || error);
