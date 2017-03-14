@@ -42,6 +42,7 @@ export class InventoryService {
 		return this.http.post('api/inventory/update', body)
 		.toPromise()
 		.then((response: Response) => {
+			this.update();
 			return response.json() as InventoryItem;
 		})
 		.catch(this.handleError);

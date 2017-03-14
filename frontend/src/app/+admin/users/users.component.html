@@ -8,16 +8,16 @@
 	</div>
 	<div class="row">
 		<div class="col-xs-3">
-			<h2>Nombre</h2>
+			<h4>Nombre</h4>
 		</div>
 		<div class="col-xs-3">
-			<h2>E-mail</h2>
+			<h4>E-mail</h4>
 		</div>
 		<div class="col-xs-3">
-			<h2>Código IEEE</h2>
+			<h4>Roles</h4>
 		</div>
 		<div class="col-xs-3">
-			<h2>Roles</h2>
+			<h4>Acciones</h4>
 		</div>
 	</div>
 	<div *ngFor="let user of users" class="row user">
@@ -30,14 +30,10 @@
 			<p>{{user.email}}</p>
 		</div>
 		<div class="col-xs-3">
-			<p>{{user.ieee}}</p>
-		</div>
-		<div class="col-xs-3">
 			<p>{{user.roles}}</p>
 		</div>
 		<div class="col-xs-3">
 			<a [href]="'/admin/users/editor/' + user._id" [routerLink]="['/admin/users/editor/' + user._id]">Editar</a>
-			<a href="javascript:void(0)" (click)="delete(user._id)">Eliminar</a>
 		</div>
 	</div>
 </div>

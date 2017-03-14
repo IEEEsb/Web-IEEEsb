@@ -1,19 +1,17 @@
 <div class="row block">
     <div class="jumbotron col-xs-12 col-lg-3 center-block">
-        <h1>Login</h1>
+        <h3 class="title">Login</h3>
         <div *ngIf='error' class="alert alert-danger">
             <strong>{{error.status}}</strong> {{error._body}}.
         </div>
         <form class="" role="form" (ngSubmit)="login()" #loginForm="ngForm">
             <div class="form-group">
-                <label class="control-label" for="alias">Alias:</label>
-                <input [(ngModel)]='alias' name='alias' class='form-control'>
+                <input [(ngModel)]='alias' name='alias' class='form-control' placeholder="Alias o E-mail">
             </div>
             <div class="form-group" style="margin-bottom:10px">
-                <label class="control-label" for="password">Password:</label>
-                <input type='password' [(ngModel)]="password" name='password' class='form-control'>
+                <input type='password' [(ngModel)]="password" name='password' class='form-control' placeholder="Contraseña">
             </div>
-            <button class="btn btn-lg btn-primary" type='submit'>Login</button>
+            <a type="submit" href="javascript:void(0)" (click)="login()" class="submit">Acceder</a>
             <div class="row separator"></div>
 
             <div class="row">

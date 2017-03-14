@@ -15,9 +15,9 @@ services.init().then(() => {
 		systemLogger.error(err.message)
 	});
 
-    app.use(bodyParser.json({ limit: '50mb' }));
+	app.use(bodyParser.json({ limit: '50mb' }));
 
-    app.use(services.session.store);
+	app.use(services.session.store);
 
 	if (services.config.logLevel == "debug") {
 		app.use((req, res, next) => {
@@ -33,40 +33,39 @@ services.init().then(() => {
 		});
 	}
 
-    services.fileUtils.listFiles('./routes').then((routes) => {
-        routes.forEach((route) => {
-            app.use(config.mountPoint + '/api/' + route.replace('.js', ''), require('./routes/' + route));
-        });
-    });
+	services.fileUtils.listFiles('./routes').then((routes) => {
+		routes.forEach((route) => {
+			app.use(config.mountPoint + '/api/' + route.replace('.js', ''), require('./routes/' + route));
+		});
 
-    app.get(config.mountPoint + '/files/*', (req, res, next) => { //for media and users
-        var location = app.path.resolve(config.uploadedBase + req.url.replace('files/', ''));
-		services.fileUtils.access(location).then(() => {
-            return res.sendFile(location);
-        }, (err) => {
-            return next(new CodedError("Not found", 404));
-        });
-    });
+		return services.fileUtils.listFiles(config.uploadedBase);
+	}).then((dirs) => {
+		dirs.forEach((dir) => {
+			app.get(config.mountPoint + '/' + dir + '/:file', (req, res, next) => {
+				var location = __dirname + '/' + config.uploadedBase + '/' + dir + '/' + req.params.file;
+				services.fileUtils.access(location).then(() => {
+					return res.sendFile(location);
+				}, (err) => {
+					return next(new CodedError("Not found", 404));
+				});
+			});
+		});
+	}).then(()=>{
+		app.use(config.mountPoint + "/", express.static(__dirname + "/frontend/dist", {fallthrough: false}));
 
-    /*app.use(function (err, req, res, next) {
-        if (!(err && err.code === "ENOENT" && !(/\/(\w+\.)+[a-zA-Z]+$/g.test(req.path))))
-            return next(err);
-        res.sendFile('frontend/dist/index.html', { "root": __dirname });
-    });*/
+		app.use(function (err, req, res, next) {
+			if (!(err && err.code === "ENOENT" && !(/\/(\w+\.)+[a-zA-Z]+$/g.test(req.path))))
+			return next(err);
+			res.sendFile('frontend/dist/index.html', { "root": __dirname });
+		});
 
-    app.use(config.mountPoint + "/", express.static(__dirname + "/frontend/dist"));
+		var resultController = require('./controllers/resultController.js');
 
-	/*app.use(/(?!\/api)\/.*$/i, (req, res, next) => {
-		console.log(req.path);
-		return res.sendFile('frontend/dist/index.html', { "root": __dirname });
-	});*/
+		app.use(resultController.genericErrorHandler);
 
-	var resultController = require('./controllers/resultController.js');
-
-	app.use(resultController.genericErrorHandler);
-
-	app.listen(services.config.port, () => {
-		systemLogger.info(services.config.serverName + " worker running");
+		app.listen(services.config.port, () => {
+			systemLogger.info(services.config.serverName + " worker running");
+		});
 	});
 
 	//copy();

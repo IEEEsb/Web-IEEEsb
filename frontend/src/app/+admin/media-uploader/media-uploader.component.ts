@@ -28,6 +28,10 @@ export class MediaUploaderComponent implements OnInit {
 		this.mediaService.mediaSubject.subscribe((media) => {
 			this.media = media;
 		});
+		this.uploader.onCompleteItem = (item:any, response:any, status:any, headers:any) => {
+			this.mediaService.update();
+            this.tab = 2;
+        };
 	}
 
 	select() {

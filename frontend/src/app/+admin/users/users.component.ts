@@ -8,7 +8,7 @@ import { User } from '../../_models/user';
 	moduleId: module.id,
 	selector: 'users-admin',
 	templateUrl: './users.component.html',
-    styleUrls: ['./users.component.css']
+	styleUrls: ['./users.component.css']
 })
 export class UsersAdminComponent implements OnInit {
 
@@ -16,10 +16,9 @@ export class UsersAdminComponent implements OnInit {
 
 	ngOnInit() {
 		this.userService.getAll()
-			.then((users: User[]) => {
-				console.log(users);
-				this.users = users;
-			});
+		.then((users: User[]) => {
+			this.users = users;
+		});
 	}
 
 	constructor(private userService: UserService) {}

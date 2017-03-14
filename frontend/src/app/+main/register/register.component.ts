@@ -24,7 +24,7 @@ export class RegisterComponent {
     }
 
 	confirmPassword(): boolean {
-		return this.data.password != "" && this.confirmedPassword != "" && this.data.password === this.confirmedPassword;
+		return this.data.password && this.confirmedPassword && this.data.password === this.confirmedPassword;
 	}
     constructor(private userService: UserService) { }
 }

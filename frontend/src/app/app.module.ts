@@ -8,7 +8,6 @@ import { AppComponent }		from './app.component';
 import { AppRoutingModule }	from './app.routing';
 
 import { UserService }  from './_services/user.service';
-import { StorageService }  from './_services/storage.service';
 import { ContentService }  from './_services/content.service';
 import { MediaService }  from './_services/media.service';
 import { InventoryService }  from './_services/inventory.service';
@@ -25,6 +24,6 @@ import { IEEEGuard }  from './_guards/ieee.guard';
 	],
 	declarations: [AppComponent],
 	bootstrap: [AppComponent],
-	providers: [UserService, StorageService, ContentService, MediaService, InventoryService, LoggedGuard, IEEEGuard, AdminGuard]
+	providers: [UserService, ContentService, MediaService, InventoryService, LoggedGuard, IEEEGuard, AdminGuard]
 })
 export class AppModule { }
