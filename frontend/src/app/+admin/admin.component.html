@@ -14,13 +14,13 @@
 			<div class="collapse navbar-collapse" id="navbar">
 				<ul class="nav navbar-nav navbar-left">
 					<li>
-						<a href="/admin/posts" [routerLink]="['/admin/posts']">Noticias</a>
+						<a *ngIf="user && user.roles.includes('ieee')" href="/admin/posts" [routerLink]="['/admin/posts']">Noticias</a>
 					</li>
 					<li>
-						<a href="/admin/inventory" [routerLink]="['/admin/inventory']">Inventario</a>
+						<a *ngIf="user && user.roles.includes('admin')" href="/admin/inventory" [routerLink]="['/admin/inventory']">Inventario</a>
 					</li>
 					<li>
-						<a href="/admin/users" [routerLink]="['/admin/users']">Usuarios</a>
+						<a *ngIf="user && user.roles.includes('admin')" href="/admin/users" [routerLink]="['/admin/users']">Usuarios</a>
 					</li>
 				</ul>
 			</div>

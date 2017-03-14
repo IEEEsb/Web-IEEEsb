@@ -40,7 +40,7 @@
 
 		</div>
 	</div>
-	<div class="row history">
+	<div *ngIf="user && user.roles.includes('ieee')" class="row history">
 		<div class="col-xs-12 col-md-10 col-md-offset-1">
 			<h4 class="title">Historial de Compras</h4>
 			<div class="row header">
