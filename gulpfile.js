@@ -199,7 +199,7 @@ gulp.task('less', function() {
 gulp.task('ejs', function () {
 	return gulp.src("frontend/src/**/*.ejs")
 	.pipe(ejs({
-		mountPoint: config.mountPoint
+		mountPoint: config.mountPoint + '/'
 	}, {}, {ext: ".html"}))
 	.pipe(gulp.dest("frontend/dist"))
 });
