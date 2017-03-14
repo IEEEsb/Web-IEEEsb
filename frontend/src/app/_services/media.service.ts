@@ -34,7 +34,7 @@ export class MediaService {
 	}
 
 	getRelativeUrl(id: string): string {
-		return "/media/" + id;
+		return "./media/" + id;
 	}
 
 	update() {

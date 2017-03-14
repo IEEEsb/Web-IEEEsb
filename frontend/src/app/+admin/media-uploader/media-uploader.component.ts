@@ -54,8 +54,8 @@ export class MediaUploaderComponent implements OnInit {
 
 	getMediaURL(file: any){
 		if( this.isImage(String(file.mimeType)) )
-			return "/media/" + String(file._id);
-		return "/images/profile_icon.png";
+			return "./media/" + String(file._id);
+		return "./images/profile_icon.png";
 	}
 
 	selectTab(id: any) {
@@ -76,7 +76,7 @@ export class MediaUploaderComponent implements OnInit {
 		if (this.isImage(this.uploader.queue[0].file.type) ) {
 			return this.sanitizer.bypassSecurityTrustUrl(window.URL.createObjectURL(this.uploader.queue[0]._file));
 		}
-		return '/images/profile_icon.png';
+		return './images/profile_icon.png';
 	}
 
 	bytesToSize(bytes: any) {
