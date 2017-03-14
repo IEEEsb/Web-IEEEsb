@@ -5,14 +5,6 @@ import { DomSanitizer, SafeHtml} from '@angular/platform-browser';
 
 import { MediaService } from '../../_services/media.service';
 
-var bases = document.getElementsByTagName('base');
-var baseHref = null;
-
-if (bases.length > 0) {
-    baseHref = bases[0].href;
-}
-const URL = baseHref + 'api/media/';
-
 @Component({
 	moduleId: module.id,
 	selector: 'media-uploader',
@@ -24,13 +16,23 @@ export class MediaUploaderComponent implements OnInit {
 	@Output() onSelect = new EventEmitter();
 
 	private tab: number = 2;
-	public uploader:FileUploader = new FileUploader({url: URL, itemAlias: "avatar", queueLimit: 1});
+	private url: string = "";
+	public uploader:FileUploader;
 	public hasBaseDropZoneOver:boolean = false;
 	media: any[];
 
 	constructor(private sanitizer: DomSanitizer, private mediaService: MediaService) {}
 
 	ngOnInit() {
+		var bases = document.getElementsByTagName('base');
+		var baseHref = null;
+
+		if (bases.length > 0) {
+		    baseHref = bases[0].href;
+		}
+		this.url = baseHref + 'api/media/';
+		console.log(this.url);
+		this.uploader = new FileUploader({url: this.url, itemAlias: "avatar", queueLimit: 1});
 		this.mediaService.mediaSubject.subscribe((media) => {
 			this.media = media;
 		});
