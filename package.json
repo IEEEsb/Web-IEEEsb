@@ -31,6 +31,7 @@
     "crypto-js": "^3.1.9-1",
     "express": "^4.15.2",
     "express-session": "^1.15.1",
+    "gulp-ejs": "^3.0.0",
     "gulp-less": "^3.3.0",
     "gulp-ngc": "^0.2.0",
     "gulp-systemjs-builder": "^0.15.0",

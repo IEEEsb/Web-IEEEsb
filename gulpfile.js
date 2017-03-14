@@ -10,9 +10,12 @@ Promise = require('bluebird'),
 systemjsBuilder = require('gulp-systemjs-builder'),
 argv = require('yargs').argv,
 less = require('gulp-less'),
+ejs = require("gulp-ejs"),
 slug = require('slug');
 fileUtils = require('./utils/services/fileUtils.js'),
 tscConfig = require('./tsconfig.json');
+
+var config = JSON.parse(fs.readFileSync('./config.cnf', 'utf8').toString());
 
 function ensureExists(path) {
 	return new Promise(function (resolve, reject) {
@@ -108,7 +111,7 @@ gulp.task('copy:indlibs', () => {
 });
 
 gulp.task('copy:assets', () => {
-	return gulp.src(['frontend/src/**/*', 'frontend/src/index.html', '!frontend/src/**/*.less','!frontend/src/**/*.ts', '!frontend/src/typings.json'], { base: './frontend/src/' })
+	return gulp.src(['frontend/src/**/*', '!frontend/src/**/*.less','!frontend/src/**/*.ts', '!frontend/src/typings.json'], { base: './frontend/src/' })
 	.pipe(gulp.dest('frontend/dist'))
 });
 
@@ -116,7 +119,7 @@ gulp.task('config:example', (done) => {
 	var example = {
 		"serverName": "Test",
 		"fileServer": "http://localhost",
-		"mountPoint": "",
+		"mountPoint": "/",
 		"port": 3000,
 		"uploadedBase": "./uploaded",
 		"dbAddress": "mongodb://localhost/test",
@@ -193,15 +196,24 @@ gulp.task('less', function() {
 	.pipe(gulp.dest('frontend/dist'))
 });
 
+gulp.task('ejs', function () {
+	return gulp.src("frontend/src/**/*.ejs")
+	.pipe(ejs({
+		mountPoint: config.mountPoint
+	}, {}, {ext: ".html"}))
+	.pipe(gulp.dest("frontend/dist"))
+});
+
 
 gulp.task('watch:frontend', function () {
 	gulp.watch(['frontend/src/**/*.less'], gulp.series('less'));
+	gulp.watch(['frontend/src/**/*.ejs'], gulp.series('ejs'));
 	gulp.watch(['frontend/src/**/*', '!frontend/src/**/*.ts'], gulp.series('copy:assets'));
 	gulp.watch('frontend/src/**/*.ts', gulp.series('compile'));
 });
 
 
-gulp.task('build:dev', gulp.series('clean', 'downloadTypings', "copyTypings", gulp.parallel('compile', 'copy:indlibs', 'copy:assets','less' ,'copy:foldlibs'), 'emptybundle'));
+gulp.task('build:dev', gulp.series('clean', 'downloadTypings', "copyTypings", gulp.parallel('compile', 'copy:indlibs', 'copy:assets', 'less', 'ejs', 'copy:foldlibs'), 'emptybundle'));
 
-gulp.task('build:prod', gulp.series('clean', 'downloadTypings', "copyTypings", gulp.parallel('compile', 'copy:indlibs', 'copy:assets', 'less' ,'copy:foldlibs'), 'bundle'));
+gulp.task('build:prod', gulp.series('clean', 'downloadTypings', "copyTypings", gulp.parallel('compile', 'copy:indlibs', 'copy:assets', 'less', 'ejs', 'copy:foldlibs'), 'bundle'));
 
