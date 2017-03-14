@@ -5,7 +5,13 @@ import { DomSanitizer, SafeHtml} from '@angular/platform-browser';
 
 import { MediaService } from '../../_services/media.service';
 
-const URL = './api/media/';
+var bases = document.getElementsByTagName('base');
+var baseHref = null;
+
+if (bases.length > 0) {
+    baseHref = bases[0].href;
+}
+const URL = baseHref + 'api/media/';
 
 @Component({
 	moduleId: module.id,
