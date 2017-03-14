@@ -1,6 +1,7 @@
 var express = require("express"),
 cookieParser = require('cookie-parser'),
 app = express(),
+CodedError = require('./utils/CodedError.js'),
 bodyParser = require("body-parser"),
 services = require("./utils/services.js"),
 winston = require('winston');
