@@ -15,7 +15,7 @@ export class MediaService {
 
 	getMedia(): Promise<any[]> {
 
-		return this.http.get('/api/media')
+		return this.http.get('api/media')
 		.toPromise()
 		.then((response: Response) => {
 			return response.json();
@@ -24,7 +24,7 @@ export class MediaService {
 	}
 
 	removeMedia(id: string): Promise<boolean> {
-		return this.http.post('/api/media/remove/' + id, {})
+		return this.http.post('api/media/remove/' + id, {})
 		.toPromise()
 		.then((response: Response) => {
 			this.update();
@@ -39,7 +39,7 @@ export class MediaService {
 
 	update() {
 
-		this.http.get('/api/media').toPromise()
+		this.http.get('api/media').toPromise()
 		.then((response: Response) => {
 			this.mediaSubject.next(response.json());
 			return response.json();
