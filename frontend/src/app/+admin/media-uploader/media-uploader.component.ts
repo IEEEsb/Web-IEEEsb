@@ -5,7 +5,7 @@ import { DomSanitizer, SafeHtml} from '@angular/platform-browser';
 
 import { MediaService } from '../../_services/media.service';
 
-const URL = '/api/media/';
+const URL = './api/media/';
 
 @Component({
 	moduleId: module.id,
@@ -51,12 +51,12 @@ export class MediaUploaderComponent implements OnInit {
 	}
 
 	selectTab(id: any) {
-		console.log(this.tab);
+		//console.log(this.tab);
 		this.tab = id;
 	}
 
 	fileOverBase(e:any):void {
-		console.log(e);
+		//console.log(e);
 		this.hasBaseDropZoneOver = e;
 	}
 

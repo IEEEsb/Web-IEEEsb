@@ -19,16 +19,12 @@ export class AppComponent{
 
 	navigationInterceptor(event: RouterEvent): void {
 		if (event instanceof NavigationStart) {
-			console.log("start");
 			this.loading = true;
 		} else if (event instanceof NavigationEnd) {
-			console.log("end");
 			this.loading = false;
 		} else if (event instanceof NavigationCancel) {
-			console.log("cancel");
 			this.loading = false;
 		} else if (event instanceof NavigationError) {
-			console.log(error);
 			this.loading = false;
 		}
 	}
