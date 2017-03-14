@@ -50,7 +50,7 @@ export class InventoryAdminComponent {
 
 	getItemIcon(item: any){
 		if( item.icon !== "" )
-			return "/media/" + item.icon;
-		return "/images/profile_icon.png";
+			return "./media/" + item.icon;
+		return "./images/profile_icon.png";
 	}
 }
