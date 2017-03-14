@@ -56,7 +56,7 @@ export class MediaUploaderComponent implements OnInit {
 	}
 
 	fileOverBase(e:any):void {
-		//console.log(e);
+		console.log(e);
 		this.hasBaseDropZoneOver = e;
 	}
 

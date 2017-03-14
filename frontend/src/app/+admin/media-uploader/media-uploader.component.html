@@ -12,17 +12,13 @@
 	</div>
 	<div *ngIf="tab === 1" class="row">
 		<div class="col-xs-12 col-md-9">
-			<div ng2FileDrop [ngClass]="{'nfile-over': hasBaseDropZoneOver}" (fileOver)="fileOverBase($event)" [uploader]="uploader" class="well drop-zone" (onFileDrop)="fileDrop($event)">
+			<div ng2FileDrop [ngClass]="{'file-over': hasBaseDropZoneOver}" (fileOver)="fileOverBase($event)" [uploader]="uploader" class="well drop-zone">
 				<div *ngIf="uploader.queue.length === 0" class="center">
 					Arrastra aquí tu archivo o seleccionalo:
 					<input type="file" ng2FileSelect [uploader]="uploader" />
 				</div>
 				<div *ngIf="uploader.queue.length > 0" class="center">
-					<div class="row">
-						<div class="col-xs-12">
-							<img [src]="uploaderImage" class="preview">
-						</div>
-					</div>
+					<img [src]="uploaderImage" class="preview">
 					<div class="row">
 						<div class="col-xs-12">
 							{{ uploader.queue[0].file.name }}
