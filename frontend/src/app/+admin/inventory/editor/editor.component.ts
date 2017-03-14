@@ -23,11 +23,11 @@ export class ItemEditorComponent implements OnInit {
 		this.route.params.subscribe(params => {
 			if (params['id']) {
 				this.inventoryService.getItem(params['id'])
-					.then((item: InventoryItem) => {
-						this.item = item;
-					}).catch(err => {
-						this.router.navigate(["/admin/inventory/editor"]);
-					});
+				.then((item: InventoryItem) => {
+					this.item = item;
+				}).catch(err => {
+					this.router.navigate(["/admin/inventory/editor"]);
+				});
 			}
 		});
 	}
@@ -35,9 +35,9 @@ export class ItemEditorComponent implements OnInit {
 	save() {
 		console.log(this.item);
 		this.inventoryService.updateItem(this.item, false)
-			.then((item: InventoryItem) => {
-				this.item = item;
-			});
+		.then((item: InventoryItem) => {
+			this.item = item;
+		});
 	}
 
 	selectMedia() {
@@ -51,7 +51,7 @@ export class ItemEditorComponent implements OnInit {
 
 	get icon() {
 		if( this.item.icon !== "" )
-			return "/media/" + this.item.icon;
-		return "/images/profile_icon.png";
+		return "./media/" + this.item.icon;
+		return "./images/profile_icon.png";
 	}
 }

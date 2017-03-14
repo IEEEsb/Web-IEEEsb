@@ -23,10 +23,10 @@ export class InsertItemComponent {
 
 	save() {
 		this.inventoryService.insertItem(this.item)
-			.then((item: InventoryItem) => {
-				this.item = item;
-				this.router.navigate(["/admin/inventory/editor/" + item._id]);
-			});
+		.then((item: InventoryItem) => {
+			this.item = item;
+			this.router.navigate(["/admin/inventory/editor/" + item._id]);
+		});
 	}
 
 	selectMedia() {
@@ -40,7 +40,7 @@ export class InsertItemComponent {
 
 	get icon() {
 		if( this.item.icon !== "" )
-			return "/media/" + this.item.icon;
-		return "/images/profile_icon.png";
+		return "./media/" + this.item.icon;
+		return "./images/profile_icon.png";
 	}
 }
