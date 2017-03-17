@@ -1,14 +1,15 @@
 var async = require("async"),
-mongoose = require('mongoose'),
-model = mongoose.model('DistributedLock');
+	mongoose = require('mongoose'),
+	model = mongoose.model('DistributedLock'),
+	Promise = require('bluebird');
 
-module.exports = function(name, opts) {
+module.exports = function (name, opts) {
 	return new Lock(name, opts)
 }
 
 // the Lock object itself
 function Lock(name, opts) {
-	if ( !name ) {
+	if (!name) {
 		throw new Error("missing_name")
 	}
 	opts = opts || {}
@@ -23,7 +24,7 @@ function Lock(name, opts) {
 	self.probeMaxAttempts = (self.timeout / self.pollInterval) + 2 // (timeout / probe interaval) + 2
 }
 
-Lock.prototype.acquire = function(callback) {
+Lock.prototype.acquire = function (callback) {
 	var self = this
 
 	if (self.lockId) {
@@ -34,22 +35,22 @@ Lock.prototype.acquire = function(callback) {
 
 	// firstly, remove any locks if they have timed out
 	var q1 = {
-		name : self.name,
-		expire : { $lt : self.timeAquired },
+		name: self.name,
+		expire: { $lt: self.timeAquired },
 	}
-	model.findOneAndRemove(q1, function(err) {
+	model.findOneAndRemove(q1, function (err) {
 		if (err) return callback(err)
 
 		// now, try and insert a new lock
 		var doc = {
-			name : self.name,
-			expire : self.timeAquired + self.timeout,
-			inserted : self.timeAquired
+			name: self.name,
+			expire: self.timeAquired + self.timeout,
+			inserted: self.timeAquired
 		}
 
-		model.create(doc, function(err, lock) {
+		model.create(doc, function (err, lock) {
 			if (err) {
-				if (err.code === 11000 ) {
+				if (err.code === 11000) {
 					// there is currently a valid lock in the datastore
 					return callback(null, false)
 				}
@@ -63,32 +64,33 @@ Lock.prototype.acquire = function(callback) {
 	})
 }
 
-Lock.prototype.pollAcquire = function(callback) {
-	var self = this
+Lock.prototype.pollAcquire = function () {
+	return new Promise((resolve, reject) => {
+		var self = this
+		var attempts = 0
+		async.forever(function (next) {
+			attempts++
+			self.acquire(function (err, lockAquired) {
+				if (err) return next(err)
 
-	var attempts = 0
-	async.forever(function(next) {
-		attempts ++
-		self.acquire(function (err, lockAquired) {
-			if (err) return next(err)
-
-			if (lockAquired) return next(new Error("lockAquired"))
-			if (attempts >= self.probeMaxAttempts) return next(new Error("timeout"))
-			return setTimeout(next, self.pollInterval)
+				if (lockAquired) return next(new Error("lockAquired"))
+				if (attempts >= self.probeMaxAttempts) return next(new Error("timeout"))
+				return setTimeout(next, self.pollInterval)
+			})
+		}, function (err) {
+			if (err && err.message === "lockAquired") return resolve(true)
+			if (err && err.message === "timeout") return reject(new Error("timeout in pollAquire for lock name" + self.name))
+			else if (err) return reject(err)
+			// just a safety callback although this function can never be called without an error
+			return reject(new Error("missing error in async.forever for name lock " + self.name))
 		})
-	}, function (err) {
-		if (err && err.message === "lockAquired") return callback(null, true)
-		if (err && err.message === "timeout") return callback(new Error("timeout in pollAquire for lock name" + self.name), false)
-		else if (err) return callback(err)
-		// just a safety callback although this function can never be called without an error
-		return callback(new Error("missing error in async.forever for name lock " + self.name))
-	})
+	});
 }
 
-Lock.prototype.release = function(callback) {
+Lock.prototype.release = function (callback) {
 	var self = this
-	callback = callback ? callback : function () {};
-	
+	callback = callback ? callback : function () { };
+
 	if (!self.lockId) {
 		return callback(new Error("releasing_not_aquired_lock"))
 	}
@@ -97,16 +99,16 @@ Lock.prototype.release = function(callback) {
 
 	// remove this lock if it is still valid
 	var q1 = {
-		_id : self.lockId,
-		expire : { $gt : now }
+		_id: self.lockId,
+		expire: { $gt: now }
 	}
-	model.findOneAndRemove(q1, function(err, oldLock) {
+	model.findOneAndRemove(q1, function (err, oldLock) {
 		if (err) return callback(err)
 
 		self.lockId = null
 		self.timeAquired = null
 
-		if ( !oldLock ) {
+		if (!oldLock) {
 			// there was nothing to unlock
 			return callback(null, true)
 		}
