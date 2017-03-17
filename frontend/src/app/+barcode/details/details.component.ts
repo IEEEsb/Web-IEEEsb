@@ -32,7 +32,7 @@ export class BarcodeDetailsComponent implements OnInit {
 
 	get icon() {
 		if( this.item.icon !== "" )
-			return "/media/" + this.item.icon;
-		return "/images/profile_icon.png";
+			return "./media/" + this.item.icon;
+		return "./images/profile_icon.png";
 	}
 }

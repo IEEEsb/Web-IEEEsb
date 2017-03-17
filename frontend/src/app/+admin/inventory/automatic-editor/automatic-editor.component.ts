@@ -65,12 +65,14 @@ export class ItemAutomaticEditorComponent implements OnInit {
 		});
 	}
 
-	update(){
-		this.inventoryService.updateItem(this.item, this.reset)
-		.then((item: InventoryItem) => {
-			this.clean();
-			document.getElementById('0').focus();
-		});
+	update(event: any){
+		if(event.currentTarget.id == '5'){
+			this.inventoryService.updateItem(this.item, this.reset)
+			.then((item: InventoryItem) => {
+				this.clean();
+				document.getElementById('0').focus();
+			});
+		}
 	}
 
 	back(event: any){
@@ -78,6 +80,8 @@ export class ItemAutomaticEditorComponent implements OnInit {
 	}
 
 	next(event: any){
+		console.log("holaa");
+		console.log(event.currentTarget.id);
 		document.getElementById((parseInt(event.currentTarget.id) + 1) + '').focus();
 	}
 

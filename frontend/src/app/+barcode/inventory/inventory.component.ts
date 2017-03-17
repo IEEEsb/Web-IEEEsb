@@ -121,8 +121,8 @@ export class BarcodeInventoryComponent implements OnInit, OnDestroy, AfterViewIn
 
 	getItemIcon(item: any) {
 		if( item.icon !== "" )
-		return "/media/" + item.icon;
-		return "/images/profile_icon.png";
+		return "./media/" + item.icon;
+		return "./images/profile_icon.png";
 	}
 
 	buy(item: any, quantity: any) {

@@ -33,6 +33,7 @@ export class InventoryComponent implements OnInit {
 	}
 	quantity: number = 1;
 	messages: string[] = [];
+	loading: boolean = false;
 
 	constructor(private inventoryService: InventoryService, private userService: UserService) {
 
@@ -89,18 +90,19 @@ export class InventoryComponent implements OnInit {
 	}
 
 	buy(item: any, quantity: any) {
+		this.loading = true;
 		this.inventoryService.buyItem(item, quantity)
-		.then(
-			(item: InventoryItem) => {
-				this.quantity = 1;
-				this.userService.update();
-				this.messages.push(item.name + ' comprado');
-				setTimeout(() => {
-					this.messages.shift();
-				}, 2500);
-			},
-			(error) => {
-				alert('No se ha podido realizar la compra')
-			});
-		}
+		.then((item: InventoryItem) => {
+			this.loading = false;
+			this.quantity = 1;
+			this.userService.update();
+			this.messages.push(item.name + ' comprado');
+			setTimeout(() => {
+				this.messages.shift();
+			}, 2500);
+		}).catch((error) => {
+			this.loading = false;
+			alert('No se ha podido realizar la compra')
+		});
+
 	}
