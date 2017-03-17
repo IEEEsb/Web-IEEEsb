@@ -65,8 +65,8 @@ Lock.prototype.acquire = function (callback) {
 }
 
 Lock.prototype.pollAcquire = function () {
+	var self = this;
 	return new Promise((resolve, reject) => {
-		var self = this
 		var attempts = 0
 		async.forever(function (next) {
 			attempts++
