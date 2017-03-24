@@ -11,61 +11,47 @@ fs = require('fs');
 const systemLogger = winston.loggers.get("system");
 const sessionLogger = winston.loggers.get("session");
 
-const storagePath = config.uploadedBase + '/media';
+const mediaPath = config.uploadedBase + '/media';
 
-exports.getMedia = function (req, res, next) {
+exports.getAllMedia = function (req, res, next) {
 
 	Media.find().exec().then((items) => {
 		return res.status(200).send(items);
-	}).catch((err) => {
-		return next(err);
+	}).catch((reason) => {
+		return next(new CodedError(reason, 400));
 	});
 }
 
 exports.uploadMedia = function (req, res, next) {
-	let uploadedMedia;
-	let storage = multer.diskStorage({
-		destination: function (req, file, cb) {
-			services.fileUtils.ensureExists(storagePath).then(() => {
-				cb(null, storagePath);
-			});
-		},
-		filename: function (req, file, cb){
-			let media = new Media({
-				name: file.originalname,
-				createdOn: Date.now(),
-				mimeType: file.mimetype
-			});
-			media.save().then(function(err) {
-				uploadedMedia = media;
-				cb(null, media._id.toString());
-			});
-		}
-	});
-	let upload = multer({ storage: storage }).any();
-	upload(req, res, function (err) {
-		if (err) {
-			return next(new CodedError(err.message, 403));
-		}
 
-		return res.status(200).send(uploadedMedia);
+	if (!req.files) return next(new CodedError("No files given", 400));
+
+	let file = req.files[0];
+	console.log(file);
+	let media = new Media({
+		name: file.filename,
+		createdOn: Date.now(),
+		mimeType: file.mimetype
+	});
+
+	media.save().then(function(err) {
+		services.fileUtils.ensureExists(mediaPath);
+	}).then(() => {
+		return services.fileUtils.moveFile(config.uploadedBase + '/tmp/' + file.filename, mediaPath + '/' + media._id.toString());
+	}).then(() => {
+		return res.status(200).send(media);
+	}).catch(reason => {
+		return next(new CodedError(reason, 400));
 	});
 };
 
 exports.removeMedia = function (req, res, next) {
 
-	Media.findById(req.params.id, function(err, file) {
-		if (err){
-			return next(new CodedError(err, 403));
-		}
-		Media.remove({_id: req.params.id}, function (err) {
-			fs.unlink(storagePath + "/" + file._id, function (err) {
-				if (err){
-					return next(new CodedError(err, 500));
-				}
-				res.status(200).send(true);
-			});
-		});
-
+	Media.findOneAndRemove({_id: req.params.id}).exec().then(file => {
+		return fs.unlink(mediaPath + "/" + file._id);
+	}).then(() => {
+		res.status(200).send(true);
+	}).catch(reason => {
+		return next(new CodedError(reason, 400));
 	});
 }

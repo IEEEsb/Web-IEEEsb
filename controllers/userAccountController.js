@@ -35,10 +35,11 @@ exports.addMoney = function (req, res, next) {
 	let user = req.body.user;
 	if(isNaN(money)) return next(new CodedError("Not a number", 403));
 
-	User.update({ _id: user }, { $inc: { money: money } }, function(err) {
-		if (err) return next(new CodedError("User not exist", 403));
+	User.update({ _id: user }, { $inc: { money: money } }).exec().then(() => {
 		logger.logAddMoney(user, money);
 		return res.status(200).send(true);
+	}).catch(reason => {
+		return next(new CodedError(reason, 400));
 	});
 };
 exports.regUser = function (req, res, next) {
@@ -71,7 +72,6 @@ exports.regUser = function (req, res, next) {
 			user.ieee = ieee;
 			user.code = ieee;
 		}
-		console.log(user);
 		var tasks = [];
 		if (image) {
 			tasks.push(services.fileUtils.ensureExists(storagePath + '/' + user.slug).then(() => {
@@ -85,8 +85,8 @@ exports.regUser = function (req, res, next) {
 		req.session.user = userToSend;
 		logger.logRegister(user._id);
 		return res.status(200).send(userToSend);
-	}).catch((err) => {
-		return next(err);
+	}).catch((reason) => {
+		return next(new CodedError(reason, 400));
 	});
 };
 
@@ -96,25 +96,25 @@ exports.login = function (req, res, next) {
 	if(req.body.code){
 		User.findOne({ code: req.body.code }).then((storedUser) => {
 			user = storedUser;
-			if (!user) return res.status(404).send("Code not found");
+			if (!user) throw new CodedError("Code not found", 400);
 			var userToSend = mapBasicUser(user);
 			req.session.user = userToSend;
 			return res.status(200).jsonp(userToSend);
-		}).catch((err) => {
-			return next(err);
+		}).catch((reason) => {
+			return next(new CodedError(reason, 400));
 		});
 	} else {
 		User.findOne({ alias: req.body.alias.toLowerCase() }).then((storedUser) => {
 			user = storedUser;
-			if (!user) return res.status(404).send("Alias not found");
+			if (!user) throw new CodedError("Alias not found", 400);
 			return authController.validateSaltedPassword(req.body.password, user.pwd.salt, user.pwd.hash, user.pwd.iterations);
 		}).then((result) => {
-			if (!result) return next(new CodedError("Incorrect password", 403));
+			if (!result) throw new CodedError("Incorrect password", 400);
 			var userToSend = mapBasicUser(user);
 			req.session.user = userToSend;
 			return res.status(200).jsonp(userToSend);
-		}).catch((err) => {
-			return next(err);
+		}).catch((reason) => {
+			return next(new CodedError(reason, 400));
 		});
 	}
 
@@ -123,37 +123,35 @@ exports.login = function (req, res, next) {
 exports.logout = function (req, res, next) {
 
 	req.session.destroy(err => {
-		if(err) return next(err);
+		if(err) next(new CodedError(err, 400));
 		return res.status(200).send(true);
 	});
 
 };
 
 exports.toIEEE = function (req, res, next) {
-	User.update({_id: req.params.id}, {$push: {roles: 'ieee'}}, (err) => {
-		if (err) return next(new CodedError("User not exist", 403));
-
-		smartlock.registerUser(req.params.id).then(function () {
-		}).catch(function (err) {
-			res.status(200).send(true);
-			return next(err);
-		});
-
+	User.update({_id: req.params.id}, {$push: {roles: 'ieee'}}).then(() => {
+		return smartlock.registerUser(req.params.id)
+	}).then( () => {
+		res.status(200).send(true);
+	}).catch(reason => {
+		return next(new CodedError(reason, 400));
 	});
 
 };
+
 exports.updateProfile = function (req, res, next) {
 	User.findOne({ alias: req.body.alias.toLowerCase() }).then((storedUser) => {
 		user = storedUser;
-		if (!user) return res.status(404).send("Alias not found");
+		if (!user) throw new CodedError("Alias not found", 400);
 		user.name = req.body.name;
 		user.email = req.body.email;
 		if (!user.name || user.name == "") user.name = user.alias;
 		return user.save();
 	}).then(() => {
 		return res.status(200).send("Profile updated");
-	}).catch((err) => {
-		return next(err);
+	}).catch(reason => {
+		return next(new CodedError(reason, 400));
 	});
 };
 

@@ -64,17 +64,6 @@ function validateSaltedPassword(password, salt, hash, iterations) {
     });
 };
 
-function or(fun1, fun2) {
-	let falseNext = function (param) {
-		return param;
-	}
-	return function (req, res, next) {
-		let error;
-		if((error = fun1(req, res, falseNext)) == Error && (error = fun2(req, res, falseNext)) == Error) return next(err);
-		return next(err);
-	}
-};
-
 function auth(req, res, next) {
     if(!req.session.user) return next(new CodedError("Not authorized", 403));
     return next();
