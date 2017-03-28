@@ -26,7 +26,6 @@ export class InventoryComponent implements OnInit {
 
 	items: InventoryItem[] = [];
 	filteredItems: InventoryItem[] = [];
-	loading: boolean = true;
 	params: any = {
 		search: "",
 		order: "asc"
@@ -100,3 +99,4 @@ export class InventoryComponent implements OnInit {
 		});
 
 	}
+}
