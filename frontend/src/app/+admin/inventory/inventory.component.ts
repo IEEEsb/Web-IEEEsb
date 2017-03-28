@@ -47,10 +47,4 @@ export class InventoryAdminComponent {
 	remove(id: any) {
 		window.confirm('¿Seguro de que lo quieres borrar?') ? this.inventoryService.removeItem(id) : false;
 	}
-
-	getItemIcon(item: any){
-		if( item.icon !== "" )
-			return "./media/" + item.icon;
-		return "./images/profile_icon.png";
-	}
 }

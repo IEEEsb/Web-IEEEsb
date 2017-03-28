@@ -29,8 +29,9 @@ exports.savePost = function (req, res, next) {
 };
 
 exports.getPost = function (req, res, next) {
-
-	Post.findById(req.params.id).populate('author', 'alias').exec(post => {
+	console.log(req.params.id);
+	Post.findById(req.params.id).populate('author', 'alias').exec().then(post => {
+		console.log(post);
 		return res.send(post);
 	}).catch(reason => {
 		return next(new CodedError(reason, 500));

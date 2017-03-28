@@ -83,12 +83,6 @@ export class InventoryComponent implements OnInit {
 		return element.code == this.params.search;
 	}
 
-	getItemIcon(item: any) {
-		if( item.icon !== "" )
-		return "./media/" + item.icon;
-		return "./images/profile_icon.png";
-	}
-
 	buy(item: any, quantity: any) {
 		this.loading = true;
 		this.inventoryService.buyItem(item, quantity)

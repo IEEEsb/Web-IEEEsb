@@ -52,12 +52,6 @@ export class MediaUploaderComponent implements OnInit {
 		this.onSelect.emit(selected);
 	}
 
-	getMediaURL(file: any){
-		if( this.isImage(String(file.mimeType)) )
-			return "./media/" + String(file._id);
-		return "./images/profile_icon.png";
-	}
-
 	selectTab(id: any) {
 		//console.log(this.tab);
 		this.tab = id;

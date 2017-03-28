@@ -30,7 +30,7 @@
 								<div class="responsive-square">
 									<div class="square-content">
 										<a [href]="'/inventory/item/' + item._id" [routerLink]="['/inventory/item/' + item._id]">
-											<img class="img-responsive" [src]="getItemIcon(item)">
+											<img class="img-responsive" [src]="'./' + item.icon">
 										</a>
 									</div>
 								</div>

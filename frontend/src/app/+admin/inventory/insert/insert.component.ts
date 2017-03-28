@@ -37,10 +37,4 @@ export class InsertItemComponent {
 		this.item.icon = files[0]._id;
 		$('#media').modal('hide');
 	}
-
-	get icon() {
-		if( this.item.icon !== "" )
-		return "./media/" + this.item.icon;
-		return "./images/profile_icon.png";
-	}
 }
