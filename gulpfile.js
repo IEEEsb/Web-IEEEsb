@@ -15,8 +15,6 @@ slug = require('slug');
 fileUtils = require('./utils/services/fileUtils.js'),
 tscConfig = require('./tsconfig.json');
 
-var config = JSON.parse(fs.readFileSync('./config.cnf', 'utf8').toString());
-
 function ensureExists(path) {
 	return new Promise(function (resolve, reject) {
 		mkdirp(path, function (err) {
@@ -197,6 +195,13 @@ gulp.task('less', function() {
 });
 
 gulp.task('ejs', function () {
+	try {
+		var config = JSON.parse(fs.readFileSync('./config.cnf', 'utf8').toString());
+	} catch (err) {
+		console.error("No config");
+		process.exit(-1);
+	}
+
 	return gulp.src("frontend/src/**/*.ejs")
 	.pipe(ejs({
 		mountPoint: config.mountPoint + '/'
