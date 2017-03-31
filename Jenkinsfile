@@ -4,6 +4,7 @@ pipeline{
         stage('Jenkins TEST'){
             steps{
                 sh 'echo "Hello, this is my first pipeline"'
+                sh 'pwd'
             }
         }
         
