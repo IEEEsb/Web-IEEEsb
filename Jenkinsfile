@@ -3,12 +3,7 @@ node{
         try{
             stage ('Jenkins TEST'){
                 sh 'echo "Hello, this is my first pipeline"'
-                nodejs(nodeJSInstallationName: '7.7.4') {
-                    echo $PATH
-                    node --version
-                    nvm --version
-                    gulp --version
-                }
+                
                 echo 'It was finished succesfully'
             }
         } catch(e){
