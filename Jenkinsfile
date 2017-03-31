@@ -1,5 +1,6 @@
 pipeline{
     agent any
+    ws("/home/web/test")
     stages{
         stage('Jenkins TEST'){
             steps{
