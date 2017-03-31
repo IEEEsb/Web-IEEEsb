@@ -4,12 +4,10 @@ pipeline{
         stage('Jenkins TEST'){
             steps{
                 sh'echo "Hello, this is my first pipeline"'
-                nodejs(nodeJSInstallationName: '7.7.4', configId: '7.7.4') {
-                    sh 'echo $PATH'
-                    sh 'node --version'
-                    sh 'nvm --version'
-                    sh 'gulp --version'
-                }
+                sh 'echo $PATH'
+                sh 'node --version'
+                sh 'nvm --version'
+                sh 'gulp --version'
             }
         }
         
