@@ -1,23 +1,23 @@
-pipeline{
-    agent any
-    stages{
-        stage('Jenkins TEST'){
-            steps{
+node{
+    ws("/home/web/test") {
+        try{
+            stage ('Jenkins TEST'){
                 sh 'echo "Hello, this is my first pipeline"'
-                sh 'pwd'
+                nodejs(nodeJSInstallationName: '7.7.4') {
+                    echo $PATH
+                    node --version
+                    nvm --version
+                    gulp --version
+                }
+                echo 'It was finished succesfully'
             }
+        } catch(e){
+            echo 'This will run only if failed'
+            throw e
+        } finally{
+            echo 'Finished pipeline'
         }
         
-    }
-    post {
-        always {
-           echo 'Finished pipeline'
-        }
-        success {
-            echo 'It was finished succesfully'
-        }
-        failure {
-            echo 'It was a failure'
-        }
+
     }
 }
