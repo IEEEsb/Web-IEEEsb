@@ -11,7 +11,6 @@ pipeline{
     stages{
         stage('Jenkins TEST'){
             steps{
-                customWorkspace '/home/web/test'
                 echo "Hello, this is my first pipeline"                
                 echo $PATH
                 sh 'node --version'
