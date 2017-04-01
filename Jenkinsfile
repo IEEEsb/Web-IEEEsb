@@ -12,7 +12,10 @@ pipeline{
         stage('Jenkins TEST'){
             steps{
                 echo "Hello, this is my first pipeline"                
-                sh 'node --version'
+                sh 'echo "test"'
+                sh 'echo "test"'
+                sh 'echo "test"'
+                sh 'echo "test"'
             }
         }
         
