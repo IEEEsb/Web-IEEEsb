@@ -12,10 +12,7 @@ pipeline{
         stage('Jenkins TEST'){
             steps{
                 echo "Hello, this is my first pipeline"                
-                echo "Hello, this is my first pipeline"                
-                echo "Hello, this is my first pipeline"                
-                echo "Hello, this is my first pipeline"                
-                
+                sh "echo Hello, this is my first pipeline"                
             }
         }
         
