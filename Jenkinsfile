@@ -1,7 +1,6 @@
 pipeline{
     agent {
         node{
-            label 'ieeesb-web'
             customWorkspace '/home/web/test'
         }
     }
