@@ -8,6 +8,10 @@ pipeline{
             steps{
                 echo "Hello, this is my first pipeline"                
                 sh "echo Hello, this is my first pipeline"                
+                sh "ls -la"                
+                sh "node --version"                
+                sh "nvm --version"                
+                sh "gulp --version"                
             }
         }
         
