@@ -1,13 +1,10 @@
 pipeline{
-    agent {
-        node{
-            customWorkspace '/home/web/test'
-        }
-    }
+    agent any
     tools{
         nodejs '7.7.4'
     }
     stages{
+        customWorkspace '/home/web/test'
         stage('Jenkins TEST'){
             steps{
                 echo "Hello, this is my first pipeline"                
