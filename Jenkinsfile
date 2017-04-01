@@ -1,10 +1,5 @@
 pipeline{
-    agent {
-        node{
-            label 'main'
-            customWorkspace '/home/web/test'
-        }
-    }
+    agent any
     tools{
         nodejs 'NodeJS 7.7.4'
     }
