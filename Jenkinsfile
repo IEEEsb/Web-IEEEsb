@@ -9,8 +9,9 @@ pipeline{
                 echo "Hello, this is my first pipeline"                
                 sh "echo Hello, this is my first pipeline"                
                 sh "ls -la"                
+                sh "pwd"                
                 sh "node --version"                
-                sh "nvm --version"                
+                sh "npm --version"                
                 sh "gulp --version"                
             }
         }
