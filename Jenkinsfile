@@ -1,33 +1,13 @@
-pipeline{
-    agent {
-        node{
-            label 'main'
-            customWorkspace '/home/web/test'
-        }
-    }
-    tools{
-        nodejs '7.7.4'
-    }
-    stages{
-        stage('Jenkins TEST'){
-            steps{
-                echo "Hello, this is my first pipeline"                
-                sh 'node --version'
-                sh 'nvm --version'
-                sh 'gulp --version'
+
+pipeline {
+    agent any
+    stages {
+        stage('Example') {
+            steps {
+                nodejs(nodeJSInstallationName: '7.7.4') {
+                    sh 'npm config ls'
+                }
             }
-        }
-        
-    }
-   post {
-        always {
-           echo 'Finished pipeline'
-        }
-        success {
-            echo 'It was finished succesfully'
-        }
-        failure {
-            echo 'It was a failure'
         }
     }
 }
