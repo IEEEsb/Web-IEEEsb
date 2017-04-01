@@ -12,9 +12,8 @@ pipeline{
         stage('Jenkins TEST'){
             steps{
                 echo "Hello, this is my first pipeline"                
-                sh 'node --version'
-                sh 'nvm --version'
-                sh 'gulp --version'
+                echo "Hello, this is my first pipeline"                
+                echo "Hello, this is my first pipeline"                
             }
         }
         
