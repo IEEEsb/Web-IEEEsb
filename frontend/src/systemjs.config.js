@@ -67,7 +67,7 @@
 		main: 'bundles/Rx.js'
 	};
 	packages['ng2-bootstrap'] = {
-		main: 'bundles/ng2-bootstrap.umd.min.js'
+		main: 'bundles/ngx-bootstrap.umd.min.js'
 	};
 	packages['bootstrap-table'] = {
 		main: 'dist/bootstrap-table.js'
