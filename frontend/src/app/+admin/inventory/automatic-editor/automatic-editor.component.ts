@@ -21,6 +21,7 @@ export class ItemAutomaticEditorComponent implements OnInit {
 	private item: InventoryItem = new InventoryItem();
 	private disabled: boolean = true;
 	private reset: boolean = false;
+	private loading: boolean = false;
 
 	constructor(private inventoryService: InventoryService) {}
 
@@ -58,19 +59,23 @@ export class ItemAutomaticEditorComponent implements OnInit {
 	}
 
 	save() {
+		this.loading = true;
 		this.inventoryService.insertItem(this.item)
 		.then((item: InventoryItem) => {
 			this.clean();
 			document.getElementById('0').focus();
+			this.loading = false;
 		});
 	}
 
 	update(event: any){
+		this.loading = true;
 		if(event.currentTarget.id == '5'){
 			this.inventoryService.updateItem(this.item, this.reset)
 			.then((item: InventoryItem) => {
 				this.clean();
 				document.getElementById('0').focus();
+				this.loading = false;
 			});
 		}
 	}

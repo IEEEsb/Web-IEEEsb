@@ -16,6 +16,7 @@ declare var $: any;
 export class ItemEditorComponent implements OnInit {
 
 	private item: InventoryItem = new InventoryItem();
+	private loading: boolean = false;
 
 	constructor(private router: Router, private route: ActivatedRoute, private inventoryService: InventoryService) {}
 
@@ -33,10 +34,11 @@ export class ItemEditorComponent implements OnInit {
 	}
 
 	save() {
-		console.log(this.item);
+		this.loading = true;
 		this.inventoryService.updateItem(this.item, false)
 		.then((item: InventoryItem) => {
 			this.item = item;
+			this.loading = false;
 		});
 	}
 

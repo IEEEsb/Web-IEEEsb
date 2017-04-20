@@ -15,6 +15,7 @@ import { PostComponent }  from './post/post.component';
 import { PostsComponent }  from './posts/posts.component';
 
 import { PaginationModule } from 'ng2-bootstrap';
+import { LoaderModule }		from '../loader/loader.module';
 
 import { MainRoutingModule }	from './main.routing';
 
@@ -24,7 +25,8 @@ import { MainRoutingModule }	from './main.routing';
 		CommonModule,
 		FormsModule,
 		MainRoutingModule,
-		PaginationModule.forRoot()
+		PaginationModule.forRoot(),
+		LoaderModule
 	],
 	declarations: [
 		MainComponent,

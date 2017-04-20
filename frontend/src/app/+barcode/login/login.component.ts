@@ -18,6 +18,7 @@ export class BarcodeLoginComponent implements OnDestroy, OnInit, AfterViewInit {
 	inventorySubject: any = null;
 	password: string = "";
 	code: string = "";
+	private loading: boolean = false;
 
 	constructor(private router: Router, private userService: UserService) {
 		let cookies = document.cookie;
@@ -47,27 +48,33 @@ export class BarcodeLoginComponent implements OnDestroy, OnInit, AfterViewInit {
 	}
 
 	loginAdmin() {
+		this.loading = true;
 		this.userService.loginAdmin(this.password)
 		.then((ok) => {
 			let cookies = document.cookie;
 			if(cookies.indexOf('logged=') >= 0){
 				this.adminLogged = true;
 			}
+			this.loading = false;
 		})
 		.catch((error) => {
-			alert('Hubo un error al iniciar sesión')
+			alert('Hubo un error al iniciar sesión');
+			this.loading = false;
 		});
 	}
 
 	loginUser() {
+		this.loading = true;
 		let code = this.code;
 		this.code = "";
 		this.userService.login(code)
 		.then((user) => {
 			this.router.navigate(['/barcode/inventory']);
+			this.loading = false;
 		})
 		.catch((error) => {
-			alert('Hubo un error al iniciar sesión')
+			alert('Hubo un error al iniciar sesión');
+			this.loading = false;
 		});
 	}
 }

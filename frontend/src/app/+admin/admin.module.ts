@@ -17,6 +17,7 @@ import { UserEditorComponent }  from './users/editor/editor.component';
 import { CKEditorModule } from 'ng2-ckeditor';
 import { FileUploadModule } from 'ng2-file-upload';
 import { Ng2AutoCompleteModule } from 'ng2-auto-complete';
+import { LoaderModule }		from '../loader/loader.module';
 
 import { AdminRoutingModule }	from './admin.routing';
 
@@ -28,7 +29,8 @@ import { AdminRoutingModule }	from './admin.routing';
 		AdminRoutingModule,
 		CKEditorModule,
 		Ng2AutoCompleteModule,
-		FileUploadModule
+		FileUploadModule,
+		LoaderModule
 	],
 	declarations: [
 		AdminComponent,

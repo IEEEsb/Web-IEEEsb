@@ -9,12 +9,15 @@ import { BarcodeInventoryComponent }  from './inventory/inventory.component';
 import { BarcodeDetailsComponent }  from './details/details.component';
 import { BarcodeLoginComponent }  from './login/login.component';
 
+import { LoaderModule }		from '../loader/loader.module';
+
 @NgModule({
 	imports: [
 		CommonModule,
 		HttpModule,
 		FormsModule,
 		BarcodeRoutingModule,
+		LoaderModule
 	],
 	declarations: [
 		BarcodeComponent,

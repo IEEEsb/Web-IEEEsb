@@ -16,6 +16,7 @@ export class PostEditorComponent implements OnInit {
 
 	private post: PostData = new PostData();
 	private sub: any;
+	private loading: boolean = false;
 
 	constructor(private router: Router, private route: ActivatedRoute, private sanitizer: DomSanitizer, private contentService: ContentService) {}
 
@@ -43,8 +44,10 @@ export class PostEditorComponent implements OnInit {
 	}
 
 	save() {
+		this.loading = true;
 		this.contentService.savePost(this.post)
 		.then((post: PostData) => {
+			this.loading = false;
 			if(this.post._id){
 				this.contentService.getPost(this.post._id)
 				.then((post: PostData) => {
@@ -57,18 +60,22 @@ export class PostEditorComponent implements OnInit {
 	}
 
 	remove() {
+		this.loading = true;
 		this.contentService.removePost(this.post._id)
 		.then((post: PostData) => {
+			this.loading = false;
 			this.post = post;
 			this.router.navigate(["/admin/posts/"]);
 		});
 	}
 
 	publish() {
+		this.loading = true;
 		this.contentService.publishPost(this.post._id)
 		.then(() => {
 			this.contentService.getPost(this.post._id)
 			.then((post: PostData) => {
+				this.loading = false;
 				this.post = post;
 			});
 		});

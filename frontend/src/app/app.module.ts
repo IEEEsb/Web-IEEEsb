@@ -6,6 +6,7 @@ import { HttpModule }    from '@angular/http';
 import { AppComponent }		from './app.component';
 
 import { AppRoutingModule }	from './app.routing';
+import { LoaderModule }		from './loader/loader.module';
 
 import { UserService }  from './_services/user.service';
 import { ContentService }  from './_services/content.service';
@@ -21,8 +22,11 @@ import { IEEEGuard }  from './_guards/ieee.guard';
 		HttpModule,
 		FormsModule,
 		AppRoutingModule,
+		LoaderModule
 	],
-	declarations: [AppComponent],
+	declarations: [
+		AppComponent
+	],
 	bootstrap: [AppComponent],
 	providers: [UserService, ContentService, MediaService, InventoryService, LoggedGuard, IEEEGuard, AdminGuard]
 })

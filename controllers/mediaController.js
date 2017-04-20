@@ -24,7 +24,7 @@ exports.getAllMedia = function (req, res, next) {
 
 exports.uploadMedia = function (req, res, next) {
 
-	if (!req.files) return next(new CodedError("No files given", 400));
+	if (!req.files || req.files.length == 0) return next(new CodedError("No files given", 400));
 
 	let file = req.files[0];
 	console.log(file);

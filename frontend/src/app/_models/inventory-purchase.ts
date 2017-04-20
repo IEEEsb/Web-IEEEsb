@@ -4,12 +4,14 @@ export class InventoryPurchase {
 	public who: string;
 	public item: string;
 	public quantity: number;
+	public cancelled: boolean;
 
 	constructor() {
 		this._id = "";
 		this.who = "";
 		this.item = "";
 		this.quantity = 0;
+		this.cancelled = false;
 	}
 }
 

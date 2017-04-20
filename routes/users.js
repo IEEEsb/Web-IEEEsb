@@ -17,10 +17,10 @@ router.use(authController.auth);
 router.route('/').get(userController.getCurrentUser);
 router.route('/user/:user').get(userController.getUser);
 router.route('/changepassword').post(userAccountController.changePassword);
-router.route('/update').post(upload.fields([{ name: "image" }]), userAccountController.updateProfile);
 
 router.use(authController.authRole('admin'));
 
+router.route('/update').post(upload.fields([{ name: "image" }]), userAccountController.updateProfile);
 router.route('/addmoney').post(userAccountController.addMoney);
 router.route('/all').get(userController.getUsers);
 router.route('/toieee/:id').post(userAccountController.toIEEE);

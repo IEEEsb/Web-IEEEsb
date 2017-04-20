@@ -17,15 +17,18 @@ declare var $: any;
 export class InsertItemComponent {
 
 	private item: InventoryItem = new InventoryItem();
+	private loading: boolean = false;
 
 	constructor(private router: Router, private inventoryService: InventoryService) {}
 
 
 	save() {
+		this.loading = true;
 		this.inventoryService.insertItem(this.item)
 		.then((item: InventoryItem) => {
 			this.item = item;
 			this.router.navigate(["/admin/inventory/editor/" + item._id]);
+			this.loading = false;
 		});
 	}
 

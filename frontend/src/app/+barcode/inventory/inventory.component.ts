@@ -26,7 +26,7 @@ import { User } from '../../_models/user';
 })
 export class BarcodeInventoryComponent implements OnInit, OnDestroy, AfterViewInit {
 	@ViewChild("searchBar")
-    private _searchBar: ElementRef;
+	private _searchBar: ElementRef;
 
 	items: InventoryItem[] = [];
 	filteredItems: InventoryItem[] = [];
@@ -41,6 +41,7 @@ export class BarcodeInventoryComponent implements OnInit, OnDestroy, AfterViewIn
 	inventorySubject: any = null;
 	user: User = new User();
 	timer: any = null;
+	private loading: boolean = false;
 
 	constructor(private router: Router, private inventoryService: InventoryService, private userService: UserService) {}
 
@@ -61,10 +62,11 @@ export class BarcodeInventoryComponent implements OnInit, OnDestroy, AfterViewIn
 	}
 
 	ngAfterViewInit(): void {
-        this._searchBar.nativeElement.focus();
-    }
+		this._searchBar.nativeElement.focus();
+	}
 
 	ngOnDestroy() {
+		clearTimeout(this.timer);
 		if(this.userSubject){
 			this.userSubject.unsubscribe();
 			if(this.inventorySubject){
@@ -74,11 +76,14 @@ export class BarcodeInventoryComponent implements OnInit, OnDestroy, AfterViewIn
 	}
 
 	logoutUser(): void {
+		this.loading = true;
 		this.userService.logout()
 		.then((logout: boolean) => {
 			this.router.navigate(['/barcode']);
+			this.loading = false;
 		}).catch((error) => {
-			alert('Hubo un error al desconectarse')
+			alert('Hubo un error al desconectarse');
+			this.loading = false;
 
 		});
 	}
@@ -120,18 +125,20 @@ export class BarcodeInventoryComponent implements OnInit, OnDestroy, AfterViewIn
 	}
 
 	buy(item: any, quantity: any) {
+		this.loading = true;
 		this.inventoryService.buyItem(item, quantity)
-		.then(
-			(item: InventoryItem) => {
-				this.quantity = 1;
-				this.userService.update();
-				this.messages.push(item.name + ' comprado');
-				setTimeout(() => {
-					this.messages.shift();
-				}, 2500);
-			},
-			(error) => {
-				alert('No se ha podido realizar la compra')
-			});
-		}
+		.then((item: InventoryItem) => {
+			this.quantity = 1;
+			this.userService.update();
+			this.messages.push(item.name + ' comprado');
+			setTimeout(() => {
+				this.messages.shift();
+			}, 2500);
+			this.loading = false;
+		})
+		.catch(error => {
+			alert('No se ha podido realizar la compra');
+			this.loading = false;
+		});
 	}
+}

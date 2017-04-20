@@ -35,7 +35,6 @@ export class UserService {
 		.catch((error: any) => {
 			this.user = null;
 			this.userSubject.next(null);
-			return this.handleError(error, true);
 		});
 	}
 
@@ -56,8 +55,16 @@ export class UserService {
 		.toPromise()
 		.then((response: Response) => {
 			return response.json();
-		})
-		.catch(this.handleError);
+		});
+	}
+
+	updateUser(user: any): Promise<any>{
+
+		return this.http.post('api/users/update/', user)
+		.toPromise()
+		.then((response: Response) => {
+			return response.json();
+		});
 	}
 
 	getUser(id: string): Promise<User>{
@@ -66,8 +73,7 @@ export class UserService {
 		.toPromise()
 		.then((response: Response) => {
 			return response.json() as User;
-		})
-		.catch(this.handleError);
+		});
 	}
 
 	getAll(): Promise<User[]>{
@@ -76,8 +82,7 @@ export class UserService {
 		.toPromise()
 		.then((response: Response) => {
 			return response.json() as User[];
-		})
-		.catch(this.handleError);
+		});
 	}
 
 	register(regData: any): Promise<boolean> {
@@ -88,8 +93,7 @@ export class UserService {
 		.then((response: Response) => {
 			this.update();
 			return true;
-		})
-		.catch(this.handleError);
+		});
 	}
 
 	login(alias: string, password?: string): Promise<boolean> {
@@ -107,8 +111,7 @@ export class UserService {
 		.then((response: Response) => {
 			this.update();
 			return true;
-		})
-		.catch(this.handleError);
+		});
 	}
 
 	loginAdmin(password: any): Promise<boolean> {
@@ -127,8 +130,7 @@ export class UserService {
 		.then((response: Response) => {
 			this.update();
 			return true;
-		})
-		.catch(this.handleError);
+		});
 	}
 
 	addMoney(id: string, money: any): Promise<boolean> {
@@ -138,13 +140,6 @@ export class UserService {
 		.then((response: Response) => {
 			this.update();
 			return response.json();
-		})
-		.catch(this.handleError);
-	}
-
-	private handleError(error: any, notUpdate?: boolean): Promise<any> {
-		if(!notUpdate) this.update();
-		console.error('An error occurred', error); // for demo purposes only
-		return Promise.reject(error.message || error);
+		});
 	}
 }

@@ -24,6 +24,7 @@ function mapBasicUser(user) {
 		email: user.email,
 		money: user.money,
 		ieee: user.ieee,
+		code: user.code,
 		profilePic: baseFilesURL + user.slug + '/' + (user.profilePic || 'default.png'),
 	}
 }
@@ -31,7 +32,7 @@ function mapBasicUser(user) {
 exports.mapBasicUser = mapBasicUser;
 
 exports.addMoney = function (req, res, next) {
-	let money = req.body.money;
+	let money = parseFloat(req.body.money);
 	let user = req.body.user;
 	if(isNaN(money)) return next(new CodedError("Not a number", 403));
 
@@ -43,7 +44,6 @@ exports.addMoney = function (req, res, next) {
 	});
 };
 exports.regUser = function (req, res, next) {
-
 	var alias = req.body.alias ? req.body.alias : null;
 	if (!alias || alias == "") return next(new CodedError("Invalid alias", 400));
 
@@ -57,7 +57,7 @@ exports.regUser = function (req, res, next) {
 	var image = req.files && req.files.image ? req.files.image[0] : null;
 	var ieee = req.body.ieee && req.body.ieee != "" ? req.body.ieee : "";
 	authController.generateSaltedPassword(req.body.password.toLowerCase(), config.pwdIterations).then((saltedPassword) => {
-		user = {
+		user = new User({
 			alias: req.body.alias.toLowerCase(),
 			slug: slug(req.body.alias.toLowerCase()),
 			profilePic: image ? image.filename : undefined,
@@ -66,7 +66,7 @@ exports.regUser = function (req, res, next) {
 			pwd: saltedPassword,
 			hasPassword: true,
 			roles: ['user']
-		};
+		});
 
 		if(ieee !== ""){
 			user.ieee = ieee;
@@ -82,7 +82,7 @@ exports.regUser = function (req, res, next) {
 		return Promise.all(tasks);
 	}).then(() => {
 		var userToSend = mapBasicUser(user);
-		req.session.user = userToSend;
+		//req.session.user = userToSend;
 		logger.logRegister(user._id);
 		return res.status(200).send(userToSend);
 	}).catch((reason) => {
@@ -132,7 +132,7 @@ exports.logout = function (req, res, next) {
 exports.toIEEE = function (req, res, next) {
 	User.update({_id: req.params.id}, {$push: {roles: 'ieee'}}).then(() => {
 		return smartlock.registerUser(req.params.id)
-	}).then( () => {
+	}).then(() => {
 		res.status(200).send(true);
 	}).catch(reason => {
 		return next(new CodedError(reason, 400));
@@ -143,13 +143,14 @@ exports.toIEEE = function (req, res, next) {
 exports.updateProfile = function (req, res, next) {
 	User.findOne({ alias: req.body.alias.toLowerCase() }).then((storedUser) => {
 		user = storedUser;
-		if (!user) throw new CodedError("Alias not found", 400);
 		user.name = req.body.name;
 		user.email = req.body.email;
+		user.ieee = req.body.ieee;
+		user.code = req.body.code;
 		if (!user.name || user.name == "") user.name = user.alias;
 		return user.save();
 	}).then(() => {
-		return res.status(200).send("Profile updated");
+		return res.status(200).send(user);
 	}).catch(reason => {
 		return next(new CodedError(reason, 400));
 	});

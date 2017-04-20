@@ -14,7 +14,7 @@ exports.setUser = function (currentUser) {
 
 exports.logBuy = function (item, quantity) {
 
-	Promise.all([User.findById(user._id, "_id alias name ieee money email").exec(), Item.findById(item).exec()]).then(function(values) {
+	Promise.all([User.findById(user._id, "_id alias money").exec(), Item.findById(item, "_id name code buyPrice sellPrice").exec()]).then(values => {
 		let log = new Log({
 			action: "buy",
 			who: values[0],
@@ -33,7 +33,7 @@ exports.logBuy = function (item, quantity) {
 
 exports.logCancel = function (purchase) {
 
-	Promise.all([User.findById(user._id, "_id alias name ieee money email")]).then(function(values) {
+	User.findById(user._id, "_id alias money").then(values => {
 
 
 		let log = new Log({
@@ -50,7 +50,7 @@ exports.logCancel = function (purchase) {
 
 exports.logInsert = function (item) {
 
-	Promise.all([User.findById(user._id, "_id alias name ieee money email"), Item.findById(item)]).then(function(values) {
+	Promise.all([User.findById(user._id, "_id alias"), Item.findById(item)]).then(values => {
 		let log = new Log({
 			action: "insert",
 			who: values[0],
@@ -68,7 +68,7 @@ exports.logInsert = function (item) {
 
 exports.logUpdate = function (item, reset) {
 
-	Promise.all([User.findById(user._id, "_id alias name ieee money email"), Item.findById(item)]).then(function(values) {
+	Promise.all([User.findById(user._id, "_id alias"), Item.findById(item)]).then(values => {
 		let log = new Log({
 			action: "update",
 			who: values[0],
@@ -87,7 +87,7 @@ exports.logUpdate = function (item, reset) {
 
 exports.logRegister = function (who) {
 
-	Promise.all([User.findById(who, "_id alias name ieee money email")]).then(function(values) {
+	User.findById(who).then(values => {
 		let log = new Log({
 			action: "register",
 			who: values[0]
@@ -103,9 +103,7 @@ exports.logRegister = function (who) {
 }
 
 exports.logAddMoney = function (toUser, quantity) {
-	console.log(user);
-	console.log(toUser);
-	Promise.all([User.findById(user._id, "_id alias name ieee money email"), User.findById(toUser, "_id alias name ieee money email")]).then(function(values) {
+	Promise.all([User.findById(user._id, "_id alias"), User.findById(toUser, "_id alias name ieee money")]).then(values => {
 		let log = new Log({
 			action: "money",
 			who: values[0],

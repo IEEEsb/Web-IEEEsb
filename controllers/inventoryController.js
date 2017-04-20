@@ -200,6 +200,16 @@ exports.buyItem = function (req, res, next) {
 	});
 };
 
+function mapPurchase(purchase){
+	return {
+		_id: purchase._id,
+		date: purchase.date,
+		item: purchase.item,
+		cancelled: purchase.options.cancelled,
+		quantity: purchase.quantity
+	}
+}
+
 exports.getPurchases = function (req, res, next) {
 
 	let search = { action: 'buy' };
@@ -207,7 +217,11 @@ exports.getPurchases = function (req, res, next) {
 		search['who._id'] = mongoose.Types.ObjectId(req.params.id);
 	}
 	Log.find(search).exec().then((purchases) => {
-		return res.send(purchases);
+		let newPurchases = [];
+		for (purchase of purchases) {
+			newPurchases.push(mapPurchase(purchase));
+		}
+		return res.send(newPurchases);
 	}).catch((err) => {
 		return next(new CodedError(err, 400));
 	})

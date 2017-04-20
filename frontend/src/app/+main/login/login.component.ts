@@ -15,12 +15,19 @@ export class LoginComponent implements OnDestroy {
 	alias: string = "";
 	password: string = "";
 
-	error: any;
-
+	loading: boolean = false;
 	subscription: any = null;
 
 	login(): void {
-		this.userService.login(this.alias, this.password);
+		this.loading = true;
+		this.userService.login(this.alias, this.password)
+		.then((success: boolean) => {
+			this.loading = false;
+		})
+		.catch(reason => {
+			alert("Hubo un error");
+			this.loading = false;
+		});
 	}
 
 	constructor(private router: Router, private userService: UserService) {

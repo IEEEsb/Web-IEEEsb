@@ -28,7 +28,6 @@ export class InventoryAdminComponent {
 		this.inventoryService.itemsSubject.subscribe((items) => {
 			this.items = items;
 			this.filter();
-			this.loading = false;
 		});
 
 	}
@@ -45,6 +44,8 @@ export class InventoryAdminComponent {
 	}
 
 	remove(id: any) {
-		window.confirm('¿Seguro de que lo quieres borrar?') ? this.inventoryService.removeItem(id) : false;
+		if(window.confirm('¿Seguro de que lo quieres borrar?')){
+			this.inventoryService.removeItem(id);
+		}
 	}
 }

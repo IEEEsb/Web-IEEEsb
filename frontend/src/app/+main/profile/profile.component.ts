@@ -21,22 +21,25 @@ export class ProfileComponent {
 	private purchases: InventoryPurchase[] = [];
 	private sortedPurchases: InventoryPurchase[] = [];
 	private currentPage = 1;
+	private loading: boolean = false;
 
 	constructor(private router: Router, private userService: UserService, private inventoryService: InventoryService) {
 
 		userService.userSubject.subscribe((user) => {
 			if(user !== null){
 				this.user = user;
-
-				this.inventoryService.getPurchases(user._id).then((purchases) => {
-					this.purchases = purchases;
-					this.sort();
-				})
 			}
 		});
+
+		if(this.user !== new User()){
+			this.inventoryService.getPurchases(this.user._id).then((purchases) => {
+				this.purchases = purchases;
+				this.sort();
+			});
+		}
 	}
 
-	get displayPurchases() {
+	get filteredPurchases() {
 		return this.sortedPurchases.slice( (this.currentPage - 1) * this.perPage, this.currentPage * this.perPage);
 	}
 
@@ -49,8 +52,18 @@ export class ProfileComponent {
 	}
 
 	cancel(purchaseId: any) {
-		this.inventoryService.cancelPurchase(purchaseId).then((ok) => {
+		this.loading = true;
+		this.inventoryService.cancelPurchase(purchaseId)
+		.then((ok) => {
+			let index = this.purchases.findIndex(element => {
+				return element._id === purchaseId;
+			});
+			this.purchases[index].cancelled = true;
 			this.userService.update();
+			this.loading = false;
+		})
+		.catch(reason => {
+			this.loading = false;
 		});
 	}
 }

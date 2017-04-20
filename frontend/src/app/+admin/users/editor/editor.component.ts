@@ -45,6 +45,16 @@ export class UserEditorComponent implements OnInit {
 		});
 	}
 
+	updateUser() {
+		this.userService.updateUser(this.user)
+		.then((user: any) => {
+			alert("Usuario Actualizado");
+		})
+		.catch(() => {
+			alert("Hubo un error");
+		});
+	}
+
 	addMoney() {
 		this.userService.addMoney(this.user._id, this.money)
 		.then(() => {

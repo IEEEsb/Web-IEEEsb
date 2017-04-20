@@ -1,3 +1,4 @@
+<loader [enabled]="loading"></loader>
 <div class="container-fluid">
 	<div class="row">
 		<div class="col-xs-8 col-xs-offset-2">
@@ -36,8 +37,6 @@
 					</div>
 				</div>
 			</div>
-
-
 		</div>
 	</div>
 	<div *ngIf="user && user.roles.includes('ieee')" class="row history">
@@ -60,7 +59,7 @@
 					<p>Acciones</p>
 				</div>
 			</div>
-			<div *ngFor="let purchase of displayPurchases" class="row purchase"  [ngClass]="{'cancelled': (purchase.options && purchase.options.cancelled)}">
+			<div *ngFor="let purchase of filteredPurchases" class="row purchase"  [ngClass]="{'cancelled': (purchase.cancelled)}">
 				<div class="col-xs-3">
 					<a [href]="'/inventory/item/' + purchase.item._id" [routerLink]="['/inventory/item/' + purchase.item._id]">
 						<p>{{purchase.item.name}}</p>
@@ -76,7 +75,7 @@
 					<p>{{purchase.date | date:'y/MM/dd, HH:mm:ss'}}</p>
 				</div>
 				<div class="col-xs-2">
-					<a *ngIf="!(purchase.options && purchase.options.cancelled)" href="javascript:void(0)" (click)="cancel(purchase._id)">Cancelar</a>
+					<a *ngIf="!(purchase.cancelled)" href="javascript:void(0)" (click)="cancel(purchase._id)">Cancelar</a>
 				</div>
 			</div>
 		</div>

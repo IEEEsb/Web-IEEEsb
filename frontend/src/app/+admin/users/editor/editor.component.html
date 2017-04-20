@@ -9,47 +9,56 @@
 			</div>
 		</div>
 	</div>
-	<div class="row">
-		<div class="col-xs-10 col-xs-offset-1">
-			<div class="form-group row">
-				<label class="control-label col-xs-3">Alias:</label>
-				<div class="col-xs-9">
-					{{user.alias}}
+	<form (ngSubmit)="updateUser()">
+		<div class="row">
+			<div class="col-xs-10 col-xs-offset-1">
+				<div class="form-group row">
+					<label class="control-label col-xs-3">Alias:</label>
+					<div class="col-xs-9">
+						{{user.alias}}
+					</div>
 				</div>
-			</div>
-			<div class="form-group row">
-				<label class="control-label col-xs-3">Nombre:</label>
-				<div class="col-xs-9">
-					{{user.name}}
+				<div class="form-group row">
+					<label class="control-label col-xs-3">Nombre:</label>
+					<div class="col-xs-9">
+						<input [(ngModel)]='user.name' name='name' class='form-control'>
+					</div>
 				</div>
-			</div>
-			<div class="form-group row">
-				<label class="control-label col-xs-3">E-mail:</label>
-				<div class="col-xs-9">
-					{{user.email}}
+				<div class="form-group row">
+					<label class="control-label col-xs-3">E-mail:</label>
+					<div class="col-xs-9">
+						{{user.email}}
+					</div>
 				</div>
-			</div>
-			<div class="form-group row">
-				<label class="control-label col-xs-3">Código del IEEE:</label>
-				<div class="col-xs-9">
-					{{user.ieee}}
+				<div class="form-group row">
+					<label class="control-label col-xs-3">Código del IEEE:</label>
+					<div class="col-xs-9">
+						<input [(ngModel)]='user.ieee' name='ieee' class='form-control'>
+					</div>
 				</div>
-			</div>
-			<div class="form-group row" *ngIf="isIEEEuser()">
-				<label class="control-label col-xs-3">Dinero:</label>
-				<div class="col-xs-9">
-					{{user.money}}
+				<div class="form-group row">
+					<label class="control-label col-xs-3">Código Inventario:</label>
+					<div class="col-xs-9">
+						<input [(ngModel)]='user.code' name='code' class='form-control'>
+					</div>
 				</div>
-			</div>
-			<div class="form-group row">
-				<label class="control-label col-xs-3">Roles:</label>
-				<div class="col-xs-9">
-					{{user.roles}}
+				<div class="form-group row" *ngIf="isIEEEuser()">
+					<label class="control-label col-xs-3">Dinero:</label>
+					<div class="col-xs-9">
+						{{user.money}}
+					</div>
 				</div>
+				<div class="form-group row">
+					<label class="control-label col-xs-3">Roles:</label>
+					<div class="col-xs-9">
+						{{user.roles}}
+					</div>
+				</div>
+				<button class="btn btn-md btn-primary" type='submit'>Actualizar Usuario</button>
 			</div>
 		</div>
-	</div>
-	<div class="row">
+	</form>
+	<div class="row" *ngIf="isIEEEuser()">
 		<div class="col-xs-12">
 			<h4>Insertar dinero</h4>
 			<form (ngSubmit)="addMoney()">

@@ -1,9 +1,7 @@
+<loader [enabled]="loading"></loader>
 <div class="row block">
 	<div class="jumbotron col-xs-12 col-lg-3 center-block">
 		<h3 class="title">Registrarse</h3>
-		<div *ngIf='error' class="alert alert-danger">
-			<strong>{{error.status}}</strong> {{error._body}}.
-		</div>
 		<form class="" role="form" (ngSubmit)="register()" #registerForm="ngForm">
 			<div class="form-group">
 				<input required [(ngModel)]='data.alias' name='alias' class='form-control' placeholder="Alias*">
@@ -25,10 +23,8 @@
 			</div>
 			<div *ngIf="!confirmPassword()">Las contraseñas no coinciden</div>
 
-			<button type="submit" class="btn btn-lg" [disabled]="!confirmPassword()">Registrarse</button>
+			<button type="submit" class="submit" [ngClass]="{'disabled': !confirmPassword()}" [disabled]="!confirmPassword()">Registrarse</button>
             <div class="row separator"></div>
-
 		</form>
-
 	</div>
 </div>

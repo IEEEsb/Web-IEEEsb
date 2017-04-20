@@ -1,9 +1,7 @@
+<loader [enabled]="loading"></loader>
 <div class="row block">
     <div class="jumbotron col-xs-12 col-lg-3 center-block">
         <h3 class="title">Login</h3>
-        <div *ngIf='error' class="alert alert-danger">
-            <strong>{{error.status}}</strong> {{error._body}}.
-        </div>
         <form class="" role="form" (ngSubmit)="login()" #loginForm="ngForm">
             <div class="form-group">
                 <input [(ngModel)]='alias' name='alias' class='form-control' placeholder="Alias o E-mail">
@@ -11,7 +9,7 @@
             <div class="form-group" style="margin-bottom:10px">
                 <input type='password' [(ngModel)]="password" name='password' class='form-control' placeholder="Contraseña">
             </div>
-            <a type="submit" href="javascript:void(0)" (click)="login()" class="submit">Acceder</a>
+			<button type="submit" class="submit">Acceder</button>
             <div class="row separator"></div>
 
             <div class="row">
