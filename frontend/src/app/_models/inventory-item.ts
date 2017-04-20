@@ -26,7 +26,7 @@ export class InventoryItem {
 		this.buyPrice = 0.00;
 		this.sellPrice = 0.00;
 		this.quantity = 0;
-		this.icon = "";
+		this.icon = "./images/profile_icon.png";
 		this.files = [];
 	}
 }

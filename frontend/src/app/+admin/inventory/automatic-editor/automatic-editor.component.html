@@ -13,7 +13,7 @@
 	</div>
 	<div class="row" *ngIf="!newItem">
 		<div class="col-xs-12 col-sm-3">
-			<img [src]="'./' + item.icon" class="img-responsive">
+			<img [src]="item.icon" class="img-responsive">
 		</div>
 		<div class="col-xs-12 col-sm-9">
 			<form class="form-horizontal" role="form">
@@ -59,9 +59,9 @@
 	</div>
 	<div class="row" *ngIf="newItem">
 		<div class="col-xs-12 col-sm-3">
-			<img [src]="icon" class="img-responsive">
+			<img *ngIf="item.icon !== ''" [src]="item.icon" class="img-responsive">
 			<br>
-			<a (click)="selectMedia()" href='javascript:void(0)' class="edit">Editar</a>
+			<a (click)="selectMedia()" href='javascript:void(0)' class="edit">Editar Imagen</a>
 		</div>
 		<div class="col-xs-12 col-sm-9">
 			<form class="form-horizontal" role="form" (ngSubmit)="save()" #itemForm="ngForm">

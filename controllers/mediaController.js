@@ -28,13 +28,16 @@ exports.uploadMedia = function (req, res, next) {
 
 	let file = req.files[0];
 	console.log(file);
+	let id = new mongoose.Types.ObjectId;
 	let media = new Media({
-		name: file.filename,
+		_id: id,
+		name: file.originalname,
+		url: config.fileServer + "/media/" + id,
 		createdOn: Date.now(),
 		mimeType: file.mimetype
 	});
 
-	media.save().then(function(err) {
+	media.save().then(() =>  {
 		services.fileUtils.ensureExists(mediaPath);
 	}).then(() => {
 		return services.fileUtils.moveFile(config.uploadedBase + '/tmp/' + file.filename, mediaPath + '/' + media._id.toString());

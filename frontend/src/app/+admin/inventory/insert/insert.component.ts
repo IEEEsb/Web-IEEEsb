@@ -40,7 +40,7 @@ export class InsertItemComponent {
 	}
 
 	selectedMedia(files: any) {
-		this.item.icon = files[0]._id;
+		this.item.icon = files[0].url;
 		$('#media').modal('hide');
 	}
 }

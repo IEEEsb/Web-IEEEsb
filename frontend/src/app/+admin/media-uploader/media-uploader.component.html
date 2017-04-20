@@ -45,7 +45,7 @@
 				<div *ngFor="let file of media" class="col-xs-4 item">
 					<div (click)='file.selected = !file.selected' class="responsive-square"  [ngClass]="{'selected': file.selected}">
 						<div class="square-content">
-							<img class="img-responsive" [src]="'./' + file.icon">
+							<img class="img-responsive" [src]="fileImage(file)">
 						</div>
 						<div *ngIf="!isImage(file.mimeType)" class="file-name">
 							{{file.name}}

@@ -117,8 +117,7 @@ exports.insertItem = function (req, res, next) {
 	let item = getBasicItem(req.body);
 
 	item._id = new mongoose.Types.ObjectId;
-
-	item.icon = req.body.icon && req.body.icon !== "" ? "media/" + req.body.icon : "images/profile_icon.png";
+	item.icon = req.body.icon && req.body.icon !== "" ? req.body.icon : config.fileServer + "/images/profile_icon.png";
 
 	Item.distinct('code').then(result => {
 		let initial = 100000;

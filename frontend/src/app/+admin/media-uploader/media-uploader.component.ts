@@ -66,6 +66,13 @@ export class MediaUploaderComponent implements OnInit {
 		return /image.*/.test(type);
 	}
 
+	fileImage(file){
+		if (this.isImage(file.mimeType) ) {
+			return file.url;
+		}
+		return './images/profile_icon.png';
+	}
+
 	get uploaderImage(){
 		if (this.isImage(this.uploader.queue[0].file.type) ) {
 			return this.sanitizer.bypassSecurityTrustUrl(window.URL.createObjectURL(this.uploader.queue[0]._file));

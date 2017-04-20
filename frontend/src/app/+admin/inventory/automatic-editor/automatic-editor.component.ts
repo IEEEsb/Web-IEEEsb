@@ -40,20 +40,20 @@ export class ItemAutomaticEditorComponent implements OnInit {
 
 	search(event: any) {
 		let code = this.item.code;
+		this.newItem = true;
 		for (let item of this.items) {
-			if(item.code == code){
+			if(item.code === code){
 				this.newItem = false;
-				this.inventoryService.getItem(item._id)
-				.then((item: InventoryItem) => {
-					this.item = item;
-				});
 				break;
-			} else {
-				let code = this.item.code;
-				this.item = new InventoryItem();
-				this.item.code = code;
-				this.newItem = true
 			}
+		}
+		if(this.newItem) {
+			this.item = new InventoryItem();
+		} else {
+			this.inventoryService.getItem(item._id)
+			.then((item: InventoryItem) => {
+				this.item = item;
+			});
 		}
 		this.disabled = false;
 		this.next(event);
@@ -86,8 +86,6 @@ export class ItemAutomaticEditorComponent implements OnInit {
 	}
 
 	next(event: any){
-		console.log("holaa");
-		console.log(event.currentTarget.id);
 		document.getElementById((parseInt(event.currentTarget.id) + 1) + '').focus();
 	}
 
@@ -96,7 +94,7 @@ export class ItemAutomaticEditorComponent implements OnInit {
 	}
 
 	selectedMedia(files: any[]) {
-		this.item.icon = files[0]._id;
+		this.item.icon = files[0].url;
 		$('#media').modal('hide');
 	}
 }
