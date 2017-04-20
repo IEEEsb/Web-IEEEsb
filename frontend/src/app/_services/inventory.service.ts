@@ -89,7 +89,6 @@ export class InventoryService {
 	}
 
 	update() {
-
 		this.http.get('api/inventory/all')
 		.toPromise()
 		.then((response: Response) => {

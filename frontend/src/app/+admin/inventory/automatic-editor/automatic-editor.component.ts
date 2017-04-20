@@ -27,6 +27,7 @@ export class ItemAutomaticEditorComponent implements OnInit {
 
 	ngOnInit() {
 		this.inventoryService.itemsSubject.subscribe((items) => {
+			console.log(items);
 			this.items = items;
 		});
 	}

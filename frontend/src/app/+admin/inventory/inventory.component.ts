@@ -15,7 +15,7 @@ export class InventoryAdminComponent {
 
 	items: InventoryItem[] = [];
 	filteredItems: InventoryItem[] = [];
-	loading: boolean = true;
+	loading: boolean = false;
 	params: any = {
 		search: "",
 		order: "asc"
@@ -24,10 +24,11 @@ export class InventoryAdminComponent {
 	constructor(private inventoryService: InventoryService) {}
 
 	ngOnInit() {
-
+		this.loading = true;
 		this.inventoryService.itemsSubject.subscribe((items) => {
 			this.items = items;
 			this.filter();
+			this.loading = false;
 		});
 
 	}
@@ -35,8 +36,7 @@ export class InventoryAdminComponent {
 	filter() {
 		console.log(this.params.search);
 		this.filteredItems = [];
-		for (let index in this.items) {
-			let item = this.items[index];
+		for (let item of this.items) {
 			if (item.name.match(new RegExp(this.params.search, "i"))) {
 				this.filteredItems.push(item);
 			}

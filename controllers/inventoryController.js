@@ -122,7 +122,7 @@ exports.insertItem = function (req, res, next) {
 
 	Item.distinct('code').then(result => {
 		let initial = 100000;
-		if (req.body.code) {
+		if (req.body.code && req.body.code !== "") {
 			item.code = req.body.code;
 		} else {
 			if (result.length === 0) {

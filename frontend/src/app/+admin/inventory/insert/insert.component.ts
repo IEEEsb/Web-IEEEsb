@@ -29,6 +29,9 @@ export class InsertItemComponent {
 			this.item = item;
 			this.router.navigate(["/admin/inventory/editor/" + item._id]);
 			this.loading = false;
+		}).catch(reason => {
+			alert("Hubo un error");
+			this.loading = false;
 		});
 	}
 
