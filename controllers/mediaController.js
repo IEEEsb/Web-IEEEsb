@@ -32,7 +32,7 @@ exports.uploadMedia = function (req, res, next) {
 	let media = new Media({
 		_id: id,
 		name: file.originalname,
-		url: config.fileServer + "/media/" + id,
+		url: config.fileServer + "/media/" + file.originalname,
 		createdOn: Date.now(),
 		mimeType: file.mimetype
 	});
