@@ -40,7 +40,7 @@ exports.getPost = function (req, res, next) {
 
 exports.getPosts = function (req, res, next) {
 
-	Post.find().populate('author', 'alias').exec().then(posts => {
+	Post.find().sort({publishedDate: -1}).populate('author', 'alias').exec().then(posts => {
 		return res.send(posts);
 	}).catch(reason => {
 		return next(new CodedError(reason, 500));
