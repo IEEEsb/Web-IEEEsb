@@ -40,7 +40,7 @@ exports.uploadMedia = function (req, res, next) {
 	media.save().then(() =>  {
 		services.fileUtils.ensureExists(mediaPath);
 	}).then(() => {
-		return services.fileUtils.moveFile(config.uploadedBase + '/tmp/' + file.filename, mediaPath + '/' + media._id.toString());
+		return services.fileUtils.moveFile(config.uploadedBase + '/tmp/' + file.filename, mediaPath + '/' + media.name.toString());
 	}).then(() => {
 		return res.status(200).send(media);
 	}).catch(reason => {
