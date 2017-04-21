@@ -32,7 +32,7 @@ export class BarcodeLoginComponent implements OnDestroy, OnInit, AfterViewInit {
 	ngOnInit() {
 		this.userSubject = this.userService.userSubject.subscribe((user) => {
 			if(user){
-				this.router.navigate(['/barcode']);
+				this.router.navigate(['/barcode/inventory']);
 			}
 		});
 	}

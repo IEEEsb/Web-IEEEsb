@@ -50,7 +50,7 @@ export class ItemAutomaticEditorComponent implements OnInit {
 		if(this.newItem) {
 			this.item = new InventoryItem();
 		} else {
-			this.inventoryService.getItem(item._id)
+			this.inventoryService.getItem(this.item._id)
 			.then((item: InventoryItem) => {
 				this.item = item;
 			});
