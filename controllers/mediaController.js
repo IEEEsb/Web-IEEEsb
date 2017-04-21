@@ -32,7 +32,7 @@ exports.uploadMedia = function (req, res, next) {
 	let media = new Media({
 		_id: id,
 		name: file.originalname,
-		url: config.fileServer + "/media/" + id + '.' + file.mimetype.split("/").pop(),
+		url: config.fileServer + "/media/" + id + '.' + file.originalname.split(".").pop(),
 		createdOn: Date.now(),
 		mimeType: file.mimetype
 	});
@@ -41,7 +41,7 @@ exports.uploadMedia = function (req, res, next) {
 		services.fileUtils.ensureExists(mediaPath);
 	}).then(() => {
 		console.log(media);
-		return services.fileUtils.moveFile(config.uploadedBase + '/tmp/' + file.filename, mediaPath + '/' + media._id.toString() + '.' + media.mimeType.split("/").pop());
+		return services.fileUtils.moveFile(config.uploadedBase + '/tmp/' + file.filename, mediaPath + '/' + media._id.toString() + '.' + media.name.split(".").pop());
 	}).then(() => {
 		return res.status(200).send(media);
 	}).catch(reason => {
@@ -52,7 +52,7 @@ exports.uploadMedia = function (req, res, next) {
 exports.removeMedia = function (req, res, next) {
 
 	Media.findOneAndRemove({_id: req.params.id}).exec().then(file => {
-		return fs.unlink(mediaPath + "/" + file._id + '.' + file.mimeType.split("/").pop());
+		return fs.unlink(mediaPath + "/" + file._id + '.' + file.name.split(".").pop());
 	}).then(() => {
 		res.status(200).send(true);
 	}).catch(reason => {

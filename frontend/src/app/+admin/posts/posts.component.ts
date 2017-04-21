@@ -28,7 +28,7 @@ export class PostsAdminComponent implements OnInit {
 		.then((posts: PostData) => {
 			this.contentService.getPosts()
 			.then((posts: PostData[]) => {
-				this.loading = true;
+				this.loading = false;
 				this.posts = posts;
 			});
 		});
