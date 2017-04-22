@@ -13,6 +13,7 @@ import { ItemDetailsComponent }  from './inventory/details/details.component';
 import { NavBarComponent }  from './navbar/navbar.component';
 import { PostComponent }  from './post/post.component';
 import { PostsComponent }  from './posts/posts.component';
+import { RestorePasswordComponent }  from './restore-password/restore-password.component';
 
 import { PaginationModule } from 'ng2-bootstrap';
 import { LoaderModule }		from '../loader/loader.module';
@@ -39,7 +40,8 @@ import { MainRoutingModule }	from './main.routing';
 		ItemDetailsComponent,
 		NavBarComponent,
 		PostComponent,
-		PostsComponent
+		PostsComponent,
+		RestorePasswordComponent
 	]
 })
 export class MainModule { }

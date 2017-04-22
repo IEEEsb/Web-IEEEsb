@@ -144,7 +144,7 @@ exports.insertItem = function (req, res, next) {
 
 		return Item.findOneAndUpdate({ _id: item._id }, { $set: item }, { upsert: true, new: true, setDefaultsOnInsert: true }).exec();
 	}).then(item => {
-		logger.logInsert(item._id);
+		logger.logInsert(req.session.user._id, item._id);
 		return res.send(mapBasicItem(item));
 	}).catch(reason => {
 		return next(new CodedError(reason, 400));
@@ -155,7 +155,7 @@ exports.updateItem = function (req, res, next) {
 
 	let item = getBasicItem(req.body);
 	Item.findOneAndUpdate({ _id: req.body._id }, { $set: item }, { new: true }).exec().then(item => {
-		logger.logUpdate(item._id, req.body.reset ? true : false);
+		logger.logUpdate(req.session.user._id, item._id, req.body.reset ? true : false);
 		return res.send(item);
 	}).catch(reason => {
 		return next(new CodedError(reason, 400));
@@ -190,7 +190,7 @@ exports.buyItem = function (req, res, next) {
 	}).then(values => {
 		item = values[0];
 		user = values[1];
-		logger.logBuy(item._id, quantity);
+		logger.logBuy(req.session.user._id, item._id, quantity);
 		return res.send(item);
 	}).catch(reason => {
 		return next(new CodedError(reason, 400));
@@ -234,7 +234,7 @@ exports.cancelPurchase = function (req, res, next) {
 			Item.update({ _id: log.item._id }, { $inc: { quantity: log.quantity } }).exec()
 		])
 	}).then(()=> {
-		logger.logCancel(req.params.id);
+		logger.logCancel(req.session.user._id, req.params.id);
 		return res.send(true);
 	}).catch(reason => {
 		return next(new CodedError(reason, 400));

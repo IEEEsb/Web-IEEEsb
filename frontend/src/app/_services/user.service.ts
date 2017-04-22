@@ -142,4 +142,13 @@ export class UserService {
 			return response.json();
 		});
 	}
+
+	restorePassword(alias: string, email: string): Promise<boolean>{
+
+		return this.http.post('api/users/restorepassword/', {alias: alias, email: email})
+		.toPromise()
+		.then((response: Response) => {
+			return true;
+		});
+	}
 }

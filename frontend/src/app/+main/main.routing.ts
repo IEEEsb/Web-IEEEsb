@@ -9,6 +9,7 @@ import { HomeComponent }		from './home/home.component';
 import { InventoryComponent }		from './inventory/inventory.component';
 import { ItemDetailsComponent }		from './inventory/details/details.component';
 import { PostComponent }		from './post/post.component';
+import { RestorePasswordComponent }  from './restore-password/restore-password.component';
 
 import { LoggedGuard }  from '../_guards/logged.guard';
 import { IEEEGuard }  from '../_guards/ieee.guard';
@@ -23,6 +24,7 @@ const routes: Routes = [
 			{ path: 'post/:id', component: PostComponent },
 			{ path: 'login', component: LoginComponent },
 			{ path: 'register', component: RegisterComponent },
+			{ path: 'restorepassword', component: RestorePasswordComponent },
 			{ path: 'profile', component: ProfileComponent, canActivate: [LoggedGuard] },
 		]
 	},

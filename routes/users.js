@@ -11,6 +11,7 @@ router.route('/restorepassword').post(userAccountController.restoreUserPassword)
 router.route('/register').post(upload.fields([{ name: "image" }]), userAccountController.regUser);
 router.route('/login').post(userAccountController.login);
 router.route('/logout').post(userAccountController.logout);
+router.route('/update').post(upload.fields([{ name: "image" }]), userAccountController.updateProfile);
 
 router.use(authController.auth);
 
@@ -20,7 +21,6 @@ router.route('/changepassword').post(userAccountController.changePassword);
 
 router.use(authController.authRole('admin'));
 
-router.route('/update').post(upload.fields([{ name: "image" }]), userAccountController.updateProfile);
 router.route('/addmoney').post(userAccountController.addMoney);
 router.route('/all').get(userController.getUsers);
 router.route('/toieee/:id').post(userAccountController.toIEEE);

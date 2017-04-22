@@ -29,7 +29,6 @@ services.init().then(() => {
 			var user = req.session.user;
 			var logLine = "[" + user.alias + "] " + req.originalUrl;
 			systemLogger.debug(logLine);
-			services.inventoryLogger.setUser(user);
 			next();
 		});
 	}

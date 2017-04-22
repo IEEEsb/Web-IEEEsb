@@ -37,7 +37,7 @@ exports.addMoney = function (req, res, next) {
 	if(isNaN(money)) return next(new CodedError("Not a number", 403));
 
 	User.update({ _id: user }, { $inc: { money: money } }).exec().then(() => {
-		logger.logAddMoney(user, money);
+		logger.logAddMoney(req.session.user._id, user, money);
 		return res.status(200).send(true);
 	}).catch(reason => {
 		return next(new CodedError(reason, 400));
@@ -83,7 +83,7 @@ exports.regUser = function (req, res, next) {
 	}).then(() => {
 		var userToSend = mapBasicUser(user);
 		//req.session.user = userToSend;
-		logger.logRegister(user._id);
+		logger.logRegister(req.session.user._id, user._id);
 		return res.status(200).send(userToSend);
 	}).catch((reason) => {
 		return next(new CodedError(reason, 400));
@@ -141,6 +141,7 @@ exports.toIEEE = function (req, res, next) {
 };
 
 exports.updateProfile = function (req, res, next) {
+	if((req.body.alias != req.session.user.alias) && (!req.session.user.roles.includes('admin'))) return next(new CodedError("Not authorized", 403));
 	User.findOne({ alias: req.body.alias.toLowerCase() }).then((storedUser) => {
 		user = storedUser;
 		user.name = req.body.name;
@@ -160,7 +161,7 @@ exports.changePassword = function (req, res, next) {
 	var user;
 	User.find({ alias: req.body.alias }).exec().then((result) => {
 		user = result;
-		if (user.hasPassword && !req.body.oldPassword) throw new CodedError("No old password", 403);
+		if (!req.body.oldPassword) throw new CodedError("No old password", 403);
 		return authController.validateSaltedPassword(req.body.oldPassword, user.pwd.salt, user.pwd.hash, user.pwd.iterations);
 	}).then((result) => {
 		if (!result) throw new CodedError("Bad old password", 403);
@@ -168,7 +169,6 @@ exports.changePassword = function (req, res, next) {
 		return authController.generateSaltedPassword(req.body.password, config.pwdIterations);
 	}).then((saltedPassword) => {
 		user.pwd = saltedPassword;
-		user.hasPassword = true;
 		return user.save();
 	}).then(() => {
 		return res.status(200).send("Password updated");
@@ -179,11 +179,12 @@ exports.changePassword = function (req, res, next) {
 
 exports.restoreUserPassword = function (req, res, next) {
 	var user;
+	var newPassword;
 	User.findOne({ alias: req.body.alias.toLowerCase() }).exec().then((storedUser) => {
 		user = storedUser;
 		if (!user) throw new CodedError("Not found", 404);
 		if (user.email != req.body.email) throw new CodedError("Not valid email", 400);
-		var newPassword = authController.generatePassword();
+		newPassword = authController.generateRandomPassword();
 		return authController.SHA256(newPassword);
 	}).then((hash) => {
 		return authController.generateSaltedPassword(hash, config.pwdIterations);
@@ -191,7 +192,7 @@ exports.restoreUserPassword = function (req, res, next) {
 		user.pwd = saltedPassword;
 		return user.save();
 	}).then(() => {
-		return services.email.sendRecoverPasswordEmail(mailOptions);
+		return services.email.sendRecoverPasswordEmail(user, newPassword);
 	}).then((info) => {
 		systemLogger.info("Message sent: " + info.response);
 		return res.status(200).send("Success");
