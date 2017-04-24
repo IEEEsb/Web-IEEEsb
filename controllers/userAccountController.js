@@ -159,8 +159,10 @@ exports.updateProfile = function (req, res, next) {
 
 exports.changePassword = function (req, res, next) {
 	var user;
-	User.find({ alias: req.body.alias }).exec().then((result) => {
+	console.log(req.body);
+	User.findOne({ alias: req.body.alias }).exec().then((result) => {
 		user = result;
+		console.log(user.pwd);
 		if (!req.body.oldPassword) throw new CodedError("No old password", 403);
 		return authController.validateSaltedPassword(req.body.oldPassword, user.pwd.salt, user.pwd.hash, user.pwd.iterations);
 	}).then((result) => {

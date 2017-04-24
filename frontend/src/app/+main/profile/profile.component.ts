@@ -22,6 +22,8 @@ export class ProfileComponent {
 	private sortedPurchases: InventoryPurchase[] = [];
 	private currentPage = 1;
 	private loading: boolean = false;
+	private oldPassword: string = "";
+	private newPassword: string = "";
 
 	constructor(private router: Router, private userService: UserService, private inventoryService: InventoryService) {
 
@@ -37,6 +39,32 @@ export class ProfileComponent {
 				this.sort();
 			});
 		}
+	}
+
+	updateUser() {
+		this.loading = true;
+		this.userService.updateUser(this.user)
+		.then((user: any) => {
+			this.loading = false;
+			alert("Usuario Actualizado");
+		})
+		.catch(() => {
+			this.loading = false;
+			alert("Hubo un error");
+		});
+	}
+
+	changePassword() {
+		this.loading = true;
+		this.userService.changePassword(this.user.alias, this.oldPassword, this.newPassword)
+		.then(() => {
+			this.loading = false;
+			alert("Contraseña Actualizada");
+		})
+		.catch(() => {
+			this.loading = false;
+			alert("Hubo un error");
+		});
 	}
 
 	get filteredPurchases() {

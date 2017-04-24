@@ -63,6 +63,7 @@ export class UserService {
 		return this.http.post('api/users/update/', user)
 		.toPromise()
 		.then((response: Response) => {
+			this.update();
 			return response.json();
 		});
 	}
@@ -91,7 +92,6 @@ export class UserService {
 		return this.http.post('api/users/register', data)
 		.toPromise()
 		.then((response: Response) => {
-			this.update();
 			return true;
 		});
 	}
@@ -140,6 +140,16 @@ export class UserService {
 		.then((response: Response) => {
 			this.update();
 			return response.json();
+		});
+	}
+
+	changePassword(alias: string, oldPassword: string, newPassword: string): Promise<any>{
+		oldPassword = CryptoJS.SHA256(oldPassword).toString();
+		newPassword = CryptoJS.SHA256(newPassword).toString();
+		return this.http.post('api/users/changepassword', {alias: alias, oldPassword: oldPassword, password: newPassword})
+		.toPromise()
+		.then((response: Response) => {
+			return response;
 		});
 	}
 
