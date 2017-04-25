@@ -16,7 +16,7 @@
 			<img [src]="item.icon" class="img-responsive">
 		</div>
 		<div class="col-xs-12 col-sm-9">
-			<form class="form-horizontal" role="form">
+			<div class="form-horizontal">
 				<div class="form-group">
 					<label class="control-label col-xs-3" for="code">Código:</label>
 					<div class="col-xs-9">
@@ -54,7 +54,7 @@
 					</label>
 				</div>
 				<button id="5" class="btn btn-lg btn-primary" (click)='update($event)' (keyup.enter)="update($event)" (keyup.control.enter)="back($event)" [disabled]="disabled">Guardar</button>
-			</form>
+			</div>
 		</div>
 	</div>
 	<div class="row" *ngIf="newItem">

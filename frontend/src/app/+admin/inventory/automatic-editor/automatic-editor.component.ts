@@ -43,6 +43,7 @@ export class ItemAutomaticEditorComponent implements OnInit {
 		this.newItem = true;
 		for (let item of this.items) {
 			if(item.code === code){
+				this.item = item;
 				this.newItem = false;
 				break;
 			}
@@ -75,8 +76,8 @@ export class ItemAutomaticEditorComponent implements OnInit {
 			this.inventoryService.updateItem(this.item, this.reset)
 			.then((item: InventoryItem) => {
 				this.clean();
-				document.getElementById('0').focus();
 				this.loading = false;
+				document.getElementById('0').focus();
 			});
 		}
 	}
