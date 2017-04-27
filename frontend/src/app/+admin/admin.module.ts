@@ -19,6 +19,7 @@ import { FileUploadModule } from 'ng2-file-upload';
 import { Ng2AutoCompleteModule } from 'ng2-auto-complete';
 import { LoaderModule }		from '../loader/loader.module';
 
+import { PaginationModule } from 'ng2-bootstrap';
 import { AdminRoutingModule }	from './admin.routing';
 
 @NgModule({
@@ -30,7 +31,8 @@ import { AdminRoutingModule }	from './admin.routing';
 		CKEditorModule,
 		Ng2AutoCompleteModule,
 		FileUploadModule,
-		LoaderModule
+		LoaderModule,
+		PaginationModule.forRoot(),
 	],
 	declarations: [
 		AdminComponent,

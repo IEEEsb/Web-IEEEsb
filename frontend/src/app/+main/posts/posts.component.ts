@@ -5,6 +5,8 @@ import { ContentService } from '../../_services/content.service';
 
 import { PostData } from '../../_models/post';
 
+
+
 @Component({
 	moduleId: module.id,
 	selector: 'posts',

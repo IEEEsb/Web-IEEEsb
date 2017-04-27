@@ -71,38 +71,38 @@
 				<div class="col-xs-12">
 					<span class="title">Historial de Compras</span>
 					<div class="row header">
-						<div class="col-xs-3">
+						<div class="col-xs-2">
 							<p>Nombre</p>
 						</div>
-						<div class="col-xs-1">
+						<div class="col-xs-1 hidden-xs">
 							<p>Precio</p>
 						</div>
-						<div class="col-xs-2">
+						<div class="col-xs-3">
 							<p>Cantidad</p>
 						</div>
 						<div class="col-xs-4">
 							<p>Fecha</p>
 						</div>
-						<div class="col-xs-2">
+						<div class="col-xs-3 col-sm-2">
 							<p>Acciones</p>
 						</div>
 					</div>
 					<div *ngFor="let purchase of filteredPurchases" class="row purchase"  [ngClass]="{'cancelled': (purchase.cancelled)}">
-						<div class="col-xs-3">
+						<div class="col-xs-2">
 							<a [href]="'/inventory/item/' + purchase.item._id" [routerLink]="['/inventory/item/' + purchase.item._id]">
 								<p>{{purchase.item.name}}</p>
 							</a>
 						</div>
-						<div class="col-xs-1">
+						<div class="col-xs-1 hidden-xs">
 							<p>{{purchase.item.sellPrice | currency:'EUR':true:'1.2-2'}}</p>
 						</div>
-						<div class="col-xs-2">
+						<div class="col-xs-3">
 							<p>{{purchase.quantity}}</p>
 						</div>
 						<div class="col-xs-4">
-							<p>{{purchase.date | date:'y/MM/dd, HH:mm:ss'}}</p>
+							<p>{{purchase.date | date:'dd/MM HH:mm'}}</p>
 						</div>
-						<div class="col-xs-2">
+						<div class="col-xs-3 col-sm-2">
 							<a *ngIf="!(purchase.cancelled)" href="javascript:void(0)" (click)="cancel(purchase._id)">Cancelar</a>
 						</div>
 					</div>

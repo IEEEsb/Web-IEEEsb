@@ -1,4 +1,4 @@
-<div class="container-fluid">
+<div class="container-fluid profile">
 	<div class="row top">
 		<div class="col-xs-12">
 			<div class="title">
@@ -9,9 +9,10 @@
 			</div>
 		</div>
 	</div>
-	<form (ngSubmit)="updateUser()">
-		<div class="row">
-			<div class="col-xs-10 col-xs-offset-1">
+	<div class="col-xs-12 col-md-10 col-md-offset-1">
+		<div class="row section">
+			<div class="col-xs-12">
+				<span class="title">Actualizar Usuario</span>
 				<div class="form-group row">
 					<label class="control-label col-xs-3">Alias:</label>
 					<div class="col-xs-9">
@@ -44,42 +45,75 @@
 				</div>
 				<div class="form-group row" *ngIf="isIEEEuser()">
 					<label class="control-label col-xs-3">Dinero:</label>
-					<div class="col-xs-9">
+					<div class="col-xs-9 text-left">
 						{{user.money}}
 					</div>
 				</div>
 				<div class="form-group row">
 					<label class="control-label col-xs-3">Roles:</label>
-					<div class="col-xs-9">
+					<div class="col-xs-9 text-left">
 						{{user.roles}}
 					</div>
 				</div>
-				<button class="btn btn-md btn-primary" type='submit'>Actualizar Usuario</button>
+				<button class="btn btn-md btn-primary" (click)='updateUser()'>Actualizar Usuario</button>
 			</div>
 		</div>
-	</form>
-	<div class="row" *ngIf="isIEEEuser()">
-		<div class="col-xs-12">
-			<h4>Insertar dinero</h4>
-			<form (ngSubmit)="addMoney()">
-				<div class="form-group">
-					<label class="control-label col-xs-1" for="money">Dinero:</label>
-					<div class="col-xs-3">
+		<div class="row section" *ngIf="isIEEEuser()">
+			<div class="col-xs-12">
+				<span class="title">Insertar dinero</span>
+				<div class="form-group row">
+					<label class="control-label col-xs-3" for="money">Dinero:</label>
+					<div class="col-xs-9">
 						<input type="number" step="0.01" min="0.01" [(ngModel)]='money' name='money' class='form-control'>
 					</div>
-					<button class="btn btn-md btn-primary" type='submit'>Insertar</button>
 				</div>
-			</form>
-
-		</div>
-	</div>
-	<div *ngIf="!isIEEEuser()" class="row">
-		<div class="col-xs-12">
-			<h4>Pasar a usuario del IEEE</h4>
-			<div class="form-group">
-				<button class="btn btn-md btn-primary" type='submit' (click)="toIEEE(user._id)">Pasar</button>
+				<button class="btn btn-md btn-primary" (click)='addMoney()'>Insertar</button>
 			</div>
+		</div>
+		<div *ngIf="!isIEEEuser()" class="row section">
+			<div class="col-xs-12">
+				<span class="title">Pasar a usuario del IEEE</span>
+				<div class="form-group">
+					<button class="btn btn-md btn-primary" (click)="toIEEE(user._id)">Pasar</button>
+				</div>
 
+			</div>
+		</div>
+		<div *ngIf="user && user.roles.includes('ieee')" class="row section history">
+			<div class="col-xs-12">
+				<span class="title">Historial de Compras</span>
+				<div class="row header">
+					<div class="col-xs-3">
+						<p>Nombre</p>
+					</div>
+					<div class="col-xs-2">
+						<p>Precio</p>
+					</div>
+					<div class="col-xs-3">
+						<p>Cantidad</p>
+					</div>
+					<div class="col-xs-4">
+						<p>Fecha</p>
+					</div>
+				</div>
+				<div *ngFor="let purchase of filteredPurchases" class="row purchase"  [ngClass]="{'cancelled': (purchase.cancelled)}">
+					<div class="col-xs-3">
+						<a [href]="'/inventory/item/' + purchase.item._id" [routerLink]="['/inventory/item/' + purchase.item._id]">
+							<p>{{purchase.item.name}}</p>
+						</a>
+					</div>
+					<div class="col-xs-2">
+						<p>{{purchase.item.sellPrice | currency:'EUR':true:'1.2-2'}}</p>
+					</div>
+					<div class="col-xs-3">
+						<p>{{purchase.quantity}}</p>
+					</div>
+					<div class="col-xs-4">
+						<p>{{purchase.date | date:'dd/MM HH:mm'}}</p>
+					</div>
+				</div>
+			</div>
+			<pagination [itemsPerPage]="perPage" [totalItems]="sortedPurchases.length" [(ngModel)]="currentPage" [boundaryLinks]="true" [maxSize]="5" ellipses="true" previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;"></pagination>
 		</div>
 	</div>
 </div>

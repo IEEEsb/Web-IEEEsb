@@ -18,8 +18,9 @@ import { RestorePasswordComponent }  from './restore-password/restore-password.c
 import { PaginationModule } from 'ng2-bootstrap';
 import { LoaderModule }		from '../loader/loader.module';
 
-import { MainRoutingModule }	from './main.routing';
+import { SafeUrlPipe } from '../_pipes/safeurl.pipe'
 
+import { MainRoutingModule }	from './main.routing';
 
 @NgModule({
 	imports: [
@@ -41,7 +42,8 @@ import { MainRoutingModule }	from './main.routing';
 		NavBarComponent,
 		PostComponent,
 		PostsComponent,
-		RestorePasswordComponent
+		RestorePasswordComponent,
+		SafeUrlPipe
 	]
 })
 export class MainModule { }
