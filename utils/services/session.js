@@ -23,7 +23,7 @@ exports.init = function () {
         sessionStore = session({
             secret: config.sessionSecret,
             store: store,
-            resave: false,
+            resave: true,
             saveUninitialized: false,
             proxy: true,
             name: "test",

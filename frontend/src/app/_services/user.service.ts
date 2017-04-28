@@ -26,7 +26,13 @@ export class UserService {
 	}
 
 	update() {
-		this.http.get('api/users/')
+
+		let headers = new Headers();
+		headers.append('Cache-Control', 'no-cache, no-store, must-revalidate');
+
+		let options = new RequestOptions({ headers: headers });
+
+		this.http.get('api/users/', options)
 		.toPromise()
 		.then((response: Response) => {
 			this.user = response.json() as User;
