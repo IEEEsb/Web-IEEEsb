@@ -1,8 +1,9 @@
 <header class="header">
-	<video class="video" autoplay="autoplay" loop="loop" preload="auto" >
+	<video  *ngIf="width>768" class="video" autoplay="autoplay" loop="loop" preload="auto" >
 		<source src="./videos/intro.mp4" type="video/mp4" />
 		Your browser does not support HTML5 video.
 	</video>
+	 <img *ngIf="width<=768" class="wallpaper" src="./images/wallpaper.jpg">
 	<div class="header-content">
 		Rama Universitaria Del IEEE de Madrid
 	</div>
