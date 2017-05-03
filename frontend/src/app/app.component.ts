@@ -2,14 +2,13 @@ import { Component } from '@angular/core';
 import { Router, Event as RouterEvent, NavigationStart, NavigationEnd, NavigationCancel, NavigationError } from '@angular/router';
 
 @Component({
-	moduleId: module.id,
 	selector: 'app',
 	templateUrl: './app.component.html',
-	styleUrls: ['./app.component.css']
+	styleUrls: ['./app.component.less']
 })
 export class AppComponent{
 
-	private loading: boolean = true;
+	loading: boolean = true;
 
 	constructor(private router: Router) {
 		router.events.subscribe((event: RouterEvent) => {

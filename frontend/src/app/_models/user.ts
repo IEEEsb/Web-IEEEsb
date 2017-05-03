@@ -1,6 +1,7 @@
 export class User {
 	public _id: string;
 	public alias: string;
+	public code: string;
 	public roles: string[];
 	public name: string;
 	public email: string;
@@ -11,6 +12,7 @@ export class User {
 	constructor() {
 		this._id = "";
 		this.alias = "";
+		this.code = "";
 		this.roles = [""];
         this.name = "";
         this.email = "";

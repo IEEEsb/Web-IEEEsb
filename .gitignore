@@ -35,3 +35,4 @@ example_config.cnf
 uploaded/*
 typings/
 frontend/src/typings
+frontend/src/index.html

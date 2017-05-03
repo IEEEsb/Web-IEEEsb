@@ -10,7 +10,7 @@ import 'rxjs/add/operator/toPromise';
 import { User } from '../_models/user';
 import { RegisterData } from '../_models/regdata';
 
-declare var CryptoJS: any;
+import * as CryptoJS from '../../../../node_modules/crypto-js';
 
 @Injectable()
 export class UserService {

@@ -1,10 +1,9 @@
 import { Component, Input } from '@angular/core';
 
 @Component({
-	moduleId: module.id,
 	selector: 'loader',
 	templateUrl: './loader.component.html',
-	styleUrls: ['./loader.component.css']
+	styleUrls: ['./loader.component.less']
 })
 export class LoaderComponent{
 	@Input() enabled: boolean = true;

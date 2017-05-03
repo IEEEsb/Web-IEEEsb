@@ -1,0 +1,76 @@
+<div class="container-fluid">
+	<div class="row top">
+		<div class="col-xs-12">
+			<div class="title">
+				<b>Detalles</b>
+			</div>
+			<div class="back">
+				<a href="./barcode" [routerLink]="['/barcode']">Atrás</a>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-xs-12 col-sm-3">
+			<img [src]="item.icon" class="img-responsive">
+		</div>
+		<div class="col-xs-12 col-sm-9">
+			<div class="form-horizontal">
+				<div class="form-group">
+					<label class="control-label col-xs-3" for="code">Código:</label>
+					<div class="col-xs-9">
+						{{item.code}}
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label col-xs-3" for="name">Nombre:</label>
+					<div class="col-xs-9">
+						{{item.name}}
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label col-xs-3" for="location">Localización:</label>
+					<div class="col-xs-9">
+						{{item.location.main}}
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label col-xs-3" for="sublocation">Sublocalización:</label>
+					<div class="col-xs-9">
+						{{item.location.sub}}
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-3" for="goodState">En Buen Estado: </label>
+					<div class="col-xs-9">
+						{{item.goodState ? 'En Buen Estado' : 'En Mal Estado'}}
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label col-xs-12">Precio:</label>
+					<div class="col-xs-12">
+						<div class="form-group">
+							<label class="control-label col-xs-offset-1 col-xs-2" for="buyPrice">Compra:</label>
+							<div class="col-xs-7">
+								{{item.buyPrice}}
+							</div>
+						</div>
+					</div>
+					<div class="col-xs-12">
+						<div class="form-group">
+							<label class="control-label col-xs-offset-1 col-xs-2" for="sellPrice">Venta:</label>
+							<div class="col-xs-7">
+								{{item.sellPrice}}
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label col-xs-3" for="quantity">Cantidad:</label>
+					<div class="col-xs-9">
+						{{item.quantity}}
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

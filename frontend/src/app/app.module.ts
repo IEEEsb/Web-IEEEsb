@@ -17,12 +17,19 @@ import { AdminGuard }  from './_guards/admin.guard';
 import { LoggedGuard }  from './_guards/logged.guard';
 import { IEEEGuard }  from './_guards/ieee.guard';
 
+import { MainModule } from './main/main.module';
+import { BarcodeModule } from './barcode/barcode.module';
+import { AdminModule } from './admin/admin.module';
+
 @NgModule({
 	imports: [BrowserModule,
 		HttpModule,
 		FormsModule,
 		AppRoutingModule,
-		LoaderModule
+		LoaderModule,
+		MainModule,
+		BarcodeModule,
+		AdminModule
 	],
 	declarations: [
 		AppComponent
