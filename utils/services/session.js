@@ -16,10 +16,10 @@ exports.init = function () {
         const store = new MongoStore({
             mongooseConnection: services.dbLoader.connection
         });
-        store.clear((err) => {
+        /*store.clear((err) => {
             if (err) return sessionLogger.error(err.message);
             else return sessionLogger.info("Sessions cleared");
-        });
+        });*/
         sessionStore = session({
             secret: config.sessionSecret,
             store: store,
@@ -29,7 +29,7 @@ exports.init = function () {
             name: "test",
             cookie: {
                 secure: false,
-                maxAge: null
+                maxAge: 20*365*24*60*60*1000
             }
         });
         exports.store = sessionStore;

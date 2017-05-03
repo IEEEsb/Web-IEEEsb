@@ -27,14 +27,14 @@ export class NavBarComponent {
 				$(function(){
 					var current = location.href ;
 					$('nav li a').each(function(){
-						$('#navbar').collapse('hide');
 						var $this = $(this);
 						if($this.prop("href") === current ){
 							$this.parent().addClass('active');
 						} else {
 							$this.parent().removeClass('active');
 						}
-					})
+					});
+					$('#navbar').collapse('hide');
 				});
 			}
 		});
