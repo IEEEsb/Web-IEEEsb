@@ -13,7 +13,7 @@ exports.savePost = function (req, res, next) {
 	let post = {};
 	let id = req.body._id && req.body._id !== "" ? req.body._id : new mongoose.Types.ObjectId;
 	post.title = req.body.title ? req.body.title : "";
-	post.author = req.body.author ? req.body.author : req.session.user;
+	post.author = req.session.user;
 	post.content = req.body.content ? req.body.content : "";
 	post.excerpt = req.body.excerpt ? req.body.excerpt : "";
 	post.published = req.body.published ? req.body.published : false;
