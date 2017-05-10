@@ -149,8 +149,8 @@ gulp.task('compile:dev', (cb) => {
 });
 
 gulp.task('compile:prod', (cb) => {
-	let languajes = config.languajes;
-	for (let lng of languajes) {
+	let languages = config.languages;
+	for (let lng of languages) {
 		let watch = spawn('ng', ['build', '--prod', '--aot', '--output-path=frontend/dist/' + lng, '--bh', config.mountPoint + '/', '--i18n-file=frontend/src/locale/messages.' + lng + '.xlf', '--i18n-format=xlf', '--locale=' + lng]);
 		watch.stdout.on('data', function (data) {
 			console.log(data.toString());
