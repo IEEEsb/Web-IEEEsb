@@ -1,6 +1,8 @@
 var express = require("express"),
 cookieParser = require('cookie-parser'),
 app = express(),
+requestLanguage = require('express-request-language'),
+cookieParser = require('cookie-parser'),
 CodedError = require('./utils/CodedError.js'),
 bodyParser = require("body-parser"),
 services = require("./utils/services.js"),
@@ -17,6 +19,17 @@ services.init().then(() => {
 	});
 
 	app.use(bodyParser.json({ limit: '50mb' }));
+	app.use(bodyParser.urlencoded({ extended: true }));
+
+	let languajes = config.languajes;
+	app.use(cookieParser());
+	app.use(requestLanguage({
+		languages: languajes,
+		cookie: {
+			name: 'language',
+			options: { maxAge: 365*24*3600*1000 }
+		}
+	}));
 
 	app.use(services.session.store);
 
@@ -33,15 +46,19 @@ services.init().then(() => {
 		});
 	}
 
+	let regExpLng = languajes.map((lng) => {
+		return '/' + lng;
+	}).join('|');
+	regExpLng = '(' + regExpLng + ')?';
 	services.fileUtils.listFiles('./routes').then((routes) => {
 		routes.forEach((route) => {
-			app.use(config.mountPoint + '/api/' + route.replace('.js', ''), require('./routes/' + route));
+			app.use(config.mountPoint + regExpLng + '/api/' + route.replace('.js', ''), require('./routes/' + route));
 		});
 
 		return services.fileUtils.listFiles(config.uploadedBase);
 	}).then((dirs) => {
 		dirs.forEach((dir) => {
-			app.get(config.mountPoint + '/' + dir + '/:file', (req, res, next) => {
+			app.get(config.mountPoint + regExpLng + '/' + dir + '/:file', (req, res, next) => {
 				var location = __dirname + '/' + config.uploadedBase + '/' + dir + '/' + req.params.file;
 				services.fileUtils.access(location).then(() => {
 					return res.sendFile(location);
@@ -51,12 +68,15 @@ services.init().then(() => {
 			});
 		});
 	}).then(()=>{
-		app.use(config.mountPoint + "/", express.static(__dirname + "/frontend/dist", {fallthrough: false}));
-
-		app.use(function (err, req, res, next) {
-			if (!(err && err.code === "ENOENT" && !(/\/(\w+\.)+[a-zA-Z]+$/g.test(req.path))))
-			return next(err);
-			res.sendFile('frontend/dist/index.html', { "root": __dirname });
+		app.get(config.mountPoint + "/*", (req, res, next) => {
+			console.log(req.language);
+			let location = __dirname + "/frontend/dist/" + req.language + (req.path === '/' ? '/index.html' : req.path);
+			console.log(location);
+			services.fileUtils.access(location).then(() => {
+				return res.sendFile(location);
+			}).catch((err) => {
+				return next(new CodedError("Not found", 404));
+			});
 		});
 
 		var resultController = require('./controllers/resultController.js');
@@ -69,7 +89,8 @@ services.init().then(() => {
 	});
 
 	//copy();
-}, (err) => {
+})
+.catch((err) => {
 	console.error(err.message);
 	process.exit(-1);
 });

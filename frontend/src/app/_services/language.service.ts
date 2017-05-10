@@ -5,16 +5,16 @@ import { BehaviorSubject }    from 'rxjs/BehaviorSubject';
 import 'rxjs/add/operator/toPromise';
 
 @Injectable()
-export class LanguajeService {
+export class LanguageService {
 
-	languajeSubject: BehaviorSubject<string> = new BehaviorSubject<string>('');
+	languageSubject: BehaviorSubject<string> = new BehaviorSubject<string>('');
 
 	constructor(private http: Http) {
 		this.update();
 	}
 
-	setLanguaje(languaje: string): void {
-		document.cookie = "languaje=" + languaje;
+	setLanguage(language: string): void {
+		document.cookie = "language=" + language;
 		this.update();
 	}
 
@@ -31,10 +31,10 @@ export class LanguajeService {
 
 	update() {
 		let cookies = this.getCookies();
-		if(cookies.languaje){
-			this.languajeSubject.next(cookies.languaje);
+		if(cookies.language){
+			this.languageSubject.next(cookies.language);
 		} else {
-			this.languajeSubject.next("es");
+			this.languageSubject.next("es");
 		}
 	}
 

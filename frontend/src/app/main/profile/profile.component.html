@@ -67,6 +67,24 @@
 					</div>
 				</div>
 			</form>
+			<div *ngIf="user && user.roles.includes('ieee')" class="row section paypal">
+				<div class="col-xs-12">
+					<span class="title">Insertar Dinero</span>
+					<div class="form-group row">
+						<label class="control-label col-xs-4" for="amount">Dinero:</label>
+						<div class="col-xs-8">
+							<input type="number" step="1" min="0.01" [(ngModel)]='amount' name='amount' class='form-control'>
+						</div>
+					</div>
+					<div class="row amount">
+						<div class="col-xs-12">
+							<span>Tarifa: {{fee}} <b>Total: </b>{{totalAmount}}</span>
+						</div>
+					</div>
+
+					<div class="paypal-button"></div>
+				</div>
+			</div>
 			<div *ngIf="user && user.roles.includes('ieee')" class="row section history">
 				<div class="col-xs-12">
 					<span class="title">Historial de Compras</span>

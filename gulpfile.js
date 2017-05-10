@@ -19,6 +19,12 @@ slug = require('slug');
 fileUtils = require('./utils/services/fileUtils.js'),
 tscConfig = require('./tsconfig.json');
 
+try {
+	var config = JSON.parse(fs.readFileSync('./config.cnf', 'utf8').toString());
+} catch (err) {
+	console.error("No config");
+}
+
 function ensureExists(path) {
 	return new Promise(function (resolve, reject) {
 		mkdirp(path, function (err) {
@@ -104,22 +110,6 @@ gulp.task('config:mail', () => {
 	return gulp.src('initialData/mail/**/*').pipe(gulp.dest('uploaded/mail'));
 });
 
-gulp.task('ejs', function () {
-	try {
-		var config = JSON.parse(fs.readFileSync('./config.cnf', 'utf8').toString());
-	} catch (err) {
-		console.error("No config");
-		process.exit(-1);
-	}
-
-	return gulp.src("frontend/src/**/*.ejs")
-	.pipe(ejs({
-		mountPoint: config.mountPoint + '/'
-	}, {}, {ext: ".html"}))
-	.pipe(gulp.dest("frontend/src"))
-});
-
-
 gulp.task('watch:frontend', (cb) => {
 	let watch = spawn('ng', ['build', '--watch']);
 	watch.stdout.on('data', function (data) {
@@ -159,25 +149,28 @@ gulp.task('compile:dev', (cb) => {
 });
 
 gulp.task('compile:prod', (cb) => {
-	let watch = spawn('ng', ['build', '--prod']);
-	watch.stdout.on('data', function (data) {
-		console.log(data.toString());
-	});
+	let languajes = config.languajes;
+	for (let lng of languajes) {
+		let watch = spawn('ng', ['build', '--prod', '--aot', '--output-path=frontend/dist/' + lng, '--bh', config.mountPoint + '/', '--i18n-file=frontend/src/locale/messages.' + lng + '.xlf', '--i18n-format=xlf', '--locale=' + lng]);
+		watch.stdout.on('data', function (data) {
+			console.log(data.toString());
+		});
 
-	watch.stderr.on('data', function (data) {
-		console.log(data.toString());
-	});
+		watch.stderr.on('data', function (data) {
+			console.log(data.toString());
+		});
 
-	watch.on('error', function (err) {
-		cb(code.toString());
-	});
+		watch.on('error', function (err) {
+			cb(code.toString());
+		});
 
-	watch.on('exit', function (code) {
-		cb();
-	});
+		watch.on('exit', function (code) {
+			cb();
+		});
+	}
 });
 
 
-gulp.task('build:dev', gulp.series('ejs', 'compile:dev'));
+gulp.task('build:dev', gulp.series('compile:dev'));
 
-gulp.task('build:prod', gulp.series('ejs', 'compile:prod'));
+gulp.task('build:prod', gulp.series('compile:prod'));

@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, AfterViewInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 
 import { UserService } from '../../_services/user.service';
@@ -7,6 +7,8 @@ import { InventoryService } from '../../_services/inventory.service';
 import { User } from '../../_models/user';
 import { InventoryPurchase } from '../../_models/inventory-purchase';
 
+declare var paypal: any;
+
 @Component({
 
 	selector: 'profile',
@@ -14,13 +16,14 @@ import { InventoryPurchase } from '../../_models/inventory-purchase';
 	styleUrls: ['./profile.component.less'],
 
 })
-export class ProfileComponent {
+export class ProfileComponent implements AfterViewInit{
 
 	perPage = 10;
 	user: User = new User();
 	purchases: InventoryPurchase[] = [];
 	sortedPurchases: InventoryPurchase[] = [];
 	currentPage = 1;
+	amount = 0;
 	loading: boolean = false;
 	oldPassword: string = "";
 	newPassword: string = "";
@@ -39,6 +42,10 @@ export class ProfileComponent {
 				this.sort();
 			});
 		}
+	}
+
+	ngAfterViewInit() {
+		this.paypalButton();
 	}
 
 	updateUser() {
@@ -79,6 +86,16 @@ export class ProfileComponent {
 		return new Date(b.date).getTime() - new Date(a.date).getTime();
 	}
 
+	get fee() {
+		let fee = 0.034;
+		let fix = 0.35;
+		return Math.round(((this.amount * fee + fix) / (1 - fee)) * 100) / 100;
+	}
+
+	get totalAmount() {
+		return Math.round((this.amount + this.fee) * 100) / 100;
+	}
+
 	cancel(purchaseId: any) {
 		this.loading = true;
 		this.inventoryService.cancelPurchase(purchaseId)
@@ -93,5 +110,46 @@ export class ProfileComponent {
 		.catch(reason => {
 			this.loading = false;
 		});
+	}
+
+	paypalButton(){
+		paypal.Button.render({
+
+			// Set your environment
+
+			env: 'production', // sandbox | production
+
+			// Specify the style of the button
+
+			style: {
+				label: 'checkout', // checkout || credit
+				size:  'medium',    // tiny | small | medium
+				shape: 'rect',     // pill | rect
+				color: 'silver'      // gold | blue | silver
+			},
+			// Wait for the PayPal button to be clicked
+
+			payment: () => {
+
+				// Make a call to the merchant server to set up the payment
+				return paypal.request.post('/api/paypal/createpayment/' + this.totalAmount).then(function(res) {
+					return res.id;
+				});
+			},
+
+			// Wait for the payment to be authorized by the customer
+
+			onAuthorize: (data, actions) => {
+
+				// Make a call to the merchant server to execute the payment
+				return paypal.request.post('/api/paypal/executepayment', {
+					paymentID: data.paymentID,
+					payerID: data.payerID
+				}).then((res) => {
+					this.userService.update();
+				});
+			}
+
+		}, '.paypal-button');
 	}
 }

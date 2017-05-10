@@ -21,7 +21,7 @@
 					<a href="http://ieeesb.es/wiki" target="_blank">Wiki</a>
 				</li>
 				<li *ngIf="user && user.roles.includes('ieee')">
-					<a href="./inventory" [routerLink]="['/inventory']">Inventario</a>
+					<a href="./inventory" [routerLink]="['/inventory']" i18n>Inventory</a>
 				</li>
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
