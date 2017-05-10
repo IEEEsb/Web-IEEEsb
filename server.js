@@ -21,10 +21,10 @@ services.init().then(() => {
 	app.use(bodyParser.json({ limit: '50mb' }));
 	app.use(bodyParser.urlencoded({ extended: true }));
 
-	let languajes = config.languajes;
+	let languages = config.languages;
 	app.use(cookieParser());
 	app.use(requestLanguage({
-		languages: languajes,
+		languages: languages,
 		cookie: {
 			name: 'language',
 			options: { maxAge: 365*24*3600*1000 }
@@ -46,7 +46,7 @@ services.init().then(() => {
 		});
 	}
 
-	let regExpLng = languajes.map((lng) => {
+	let regExpLng = languages.map((lng) => {
 		return '/' + lng;
 	}).join('|');
 	regExpLng = '(' + regExpLng + ')?';
