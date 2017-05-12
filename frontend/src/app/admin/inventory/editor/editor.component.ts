@@ -46,8 +46,8 @@ export class ItemEditorComponent implements OnInit {
 		$('#media').modal('show');
 	}
 
-	selectedMedia(files: any) {
-		this.item.icon = files[0].url;
+	selectedMedia(file: any) {
+		this.item.icon = file.url;
 		$('#media').modal('hide');
 	}
 }

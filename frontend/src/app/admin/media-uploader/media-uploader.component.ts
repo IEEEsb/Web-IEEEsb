@@ -1,5 +1,5 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-import { Router, NavigationEnd } from '@angular/router';
+import { Component, OnInit, Output, EventEmitter, NgZone } from '@angular/core';
+import { Router, NavigationEnd, UrlTree } from '@angular/router';
 import { FileUploader } from 'ng2-file-upload';
 import { DomSanitizer, SafeHtml} from '@angular/platform-browser';
 
@@ -20,15 +20,17 @@ export class MediaUploaderComponent implements OnInit {
 	public uploader:FileUploader;
 	public hasBaseDropZoneOver:boolean = false;
 	media: any[];
+	params: {[key: string]: string};
+	progress: number = 0;
 
-	constructor(private sanitizer: DomSanitizer, private mediaService: MediaService) {}
+	constructor(private sanitizer: DomSanitizer, private mediaService: MediaService, private router: Router, private _ngZone: NgZone) {}
 
 	ngOnInit() {
 		var bases = document.getElementsByTagName('base');
 		var baseHref = null;
 
 		if (bases.length > 0) {
-		    baseHref = bases[0].href;
+			baseHref = bases[0].href;
 		}
 		this.url = baseHref + 'api/media/';
 		console.log(this.url);
@@ -38,18 +40,46 @@ export class MediaUploaderComponent implements OnInit {
 		});
 		this.uploader.onCompleteItem = (item:any, response:any, status:any, headers:any) => {
 			this.mediaService.update();
-            this.tab = 2;
-        };
+			this.clear();
+			this.tab = 2;
+		};
+		this.uploader.onProgressItem = (item:any, progress:any) => {
+			this._ngZone.run(()=>{
+				this.progress = progress;
+			})
+		};
+		this.params = this.router.parseUrl(this.router.url).queryParams;
+	}
+
+	clear(){
+		this.uploader.queue = [];
 	}
 
 	select() {
-		let selected = [];
+		let selected;
 		for(let i = 0; i < this.media.length; i++){
 			if(this.media[i].selected){
-				selected.push(this.media[i]);
+				selected = this.media[i];
+				break;
 			}
 		}
-		this.onSelect.emit(selected);
+		if(this.params.CKEditor){
+			window.opener.CKEDITOR.tools.callFunction(this.params.CKEditorFuncNum, selected.url);
+			window.close();
+		} else {
+			this.onSelect.emit(selected);
+		}
+
+	}
+
+	selected(id) {
+		for (let index in this.media) {
+			if(this.media[index]._id === id){
+				this.media[index].selected = true;
+			} else {
+				this.media[index].selected = false;
+			}
+		}
 	}
 
 	selectTab(id: any) {

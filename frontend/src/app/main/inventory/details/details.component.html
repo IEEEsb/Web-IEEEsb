@@ -71,6 +71,16 @@
 					</div>
 				</div>
 			</div>
+			<div class="row">
+				<div class="col-xs-12">
+					<div class="input-group">
+						<input type="number" [(ngModel)]="quantity" class="form-control" [max]="item.quantity" min="0">
+						<span class="input-group-btn">
+							<button *ngIf="item.type === 'consumable'" class="btn btn-primary" type='submit' (click)='buy(item._id, quantity)' [disabled]='item.quantity <= 0'>Comprar</button>
+						</span>
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
 </div>

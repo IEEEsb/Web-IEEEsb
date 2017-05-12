@@ -4,7 +4,7 @@
 		Your browser does not support HTML5 video.
 	</video>
 	<img *ngIf="width<=768" class="wallpaper" src="./images/wallpaper.jpg">
-	<div class="header-content">
+	<div class="header-content" i18n>
 		Rama Universitaria Del IEEE de Madrid
 	</div>
 </header>
@@ -13,7 +13,7 @@
 		<div class="col-xs-12 col-md-10 col-md-offset-1 col-lg-8 col-lg-offset-2">
 			<div class="row">
 				<div class="col-xs-12 col-sm-4 col-md-3 col-lg-4">
-					<h1 class="line-up">Noticias</h1>
+					<h1 class="line-up" i18n>Noticias</h1>
 				</div>
 				<div class="col-xs-12 col-sm-8 col-md-9 col-lg-8">
 					<posts perPage="5"></posts>
@@ -22,15 +22,16 @@
 		</div>
 	</div>
 	<div class="row who">
-		<div class="col-xs-12 col-sm-7 col-md-8 col-lg-6 col-lg-offset-2 who-text">
+		<div class="col-xs-12 col-sm-7 col-md-8 col-lg-6 col-lg-offset-2 who-text" i18n>
 			Fundada en 1965, la rama de estudiantes del IEEE de la Escuela Técnica Superior de Telecomunicaciones de la UPM tiene por objetivo el acercamiento de los estudiantes a la tecnología eléctrica, electrónica y del software, y el desarrollo de la creatividad e innovación para solventar problemas cotidianos haciendo uso de lo aprendido.
-			<div></div>
+			<div>
+			</div>
 			<div>Ensayo y error! ese es el espíritu del IEEE. En los últimos 5 años se han hecho más de 3 prototipos tecnológicos por año; pasando por tricópteros diseñados en madera, ABS o fibra de vidrio, impresoras 3D, lentes de realidad virtual... hasta sistemas de apertura via App de cerraduras.</div>
 			<div>Y siempre queda el reto de legar a cada nueva generación lo aprendido. Con cursos impartidos por alumnos y para alumnos, el club ha conseguido convertirse en uno de los más prolíficos y antiguos de toda Europa haciendo del IEEE una orgullosa filosofía de aprendizaje</div>
 			<div></div>
 		</div>
 		<div class="col-xs-12 col-sm-5 col-md-4 col-lg-4 who-title">
-			<h1 class="line-up">Quiénes Somos</h1>
+			<h1 class="line-up" i18n>Quiénes Somos</h1>
 		</div>
 	</div>
 	<div class="row where">
@@ -41,7 +42,7 @@
 						<agm-marker [latitude]="location.lat" [longitude]="location.lng"></agm-marker>
 					</agm-map>
 				</div>
-				<div class="col-xs-12 col-sm-8 col-md-9 col-lg-6 col-lg-offset-1 where-text">
+				<div class="col-xs-12 col-sm-8 col-md-9 col-lg-6 col-lg-offset-1 where-text" i18n>
 					Puedes encontrarnos en la ETSIT-UPM en el pasillo de clubes.
 					<div></div>
 					Avenida Complutense 30, 28040, Madrid.
@@ -51,7 +52,7 @@
 			</div>
 			<div class="row">
 				<div class="col-xs-12 col-sm-4 col-md-3 col-lg-5  where-title">
-					<h1 class="line-up-white">Dónde Estamos</h1>
+					<h1 class="line-up-white" i18n>Dónde Estamos</h1>
 				</div>
 			</div>
 		</div>

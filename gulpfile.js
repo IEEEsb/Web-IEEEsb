@@ -111,41 +111,47 @@ gulp.task('config:mail', () => {
 });
 
 gulp.task('watch:frontend', (cb) => {
-	let watch = spawn('ng', ['build', '--watch']);
-	watch.stdout.on('data', function (data) {
-		console.log(data.toString());
-	});
+	let languages = config.languages;
+	for (let lng of languages) {
+		let watch = spawn('ng', ['build', '--watch', '--output-path=frontend/dist/' + lng, '--bh', config.mountPoint + '/']);
+		watch.stdout.on('data', function (data) {
+			console.log(data.toString());
+		});
 
-	watch.stderr.on('data', function (data) {
-		console.log(data.toString());
-	});
+		watch.stderr.on('data', function (data) {
+			console.log(data.toString());
+		});
 
-	watch.on('error', function (err) {
-		cb(code.toString());
-	});
+		watch.on('error', function (err) {
+			cb(code.toString());
+		});
 
-	watch.on('exit', function (code) {
-		cb();
-	});
+		watch.on('exit', function (code) {
+			cb();
+		});
+	}
 });
 
 gulp.task('compile:dev', (cb) => {
-	let watch = spawn('ng', ['build', '--dev']);
-	watch.stdout.on('data', function (data) {
-		console.log(data.toString());
-	});
+	let languages = config.languages;
+	for (let lng of languages) {
+		let watch = spawn('ng', ['build', '--dev', '--output-path=frontend/dist/' + lng, '--bh', config.mountPoint + '/', '--i18n-file=frontend/src/locale/messages.' + lng + '.xlf', '--i18n-format=xlf', '--locale=' + lng]);
+		watch.stdout.on('data', function (data) {
+			console.log(data.toString());
+		});
 
-	watch.stderr.on('data', function (data) {
-		console.log(data.toString());
-	});
+		watch.stderr.on('data', function (data) {
+			console.log(data.toString());
+		});
 
-	watch.on('error', function (err) {
-		cb(code.toString());
-	});
+		watch.on('error', function (err) {
+			cb(code.toString());
+		});
 
-	watch.on('exit', function (code) {
-		cb();
-	});
+		watch.on('exit', function (code) {
+			cb();
+		});
+	}
 });
 
 gulp.task('compile:prod', (cb) => {

@@ -13,7 +13,7 @@
 			</div>
 			<div class="form-group">
 				<label for="content">Content:</label>
-				<ckeditor id="content" [(ngModel)]="post.content" [config]="{language: 'es', uiColor: '#4285f4', allowedContent: true}">
+				<ckeditor id="content" [(ngModel)]="post.content" [config]="{language: 'es', uiColor: '#4285f4', allowedContent: true,filebrowserBrowseUrl: '/#/uploader'}">
 				</ckeditor>
 			</div>
 			<div class="form-group">

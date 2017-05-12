@@ -5,65 +5,65 @@
 			<header class="row top">
 				<div class="col-xs-12">
 					<div class="header-title">
-						<b>Mi Perfil</b>
+						<b i18n>Mi Perfil</b>
 					</div>
 				</div>
 			</header>
 			<form (ngSubmit)="updateUser()">
 				<div class="row section">
 					<div class="col-xs-12">
-						<span class="title">Actualizar Usuario</span>
+						<span class="title" i18n>Actualizar Usuario</span>
 						<div class="form-group row">
-							<label class="control-label col-xs-4" for="sellPrice">Alias:</label>
+							<label class="control-label col-xs-4" for="sellPrice" i18n>Alias:</label>
 							<div class="col-xs-8">
 								<input [(ngModel)]='user.alias' name='alias' class='form-control'>
 							</div>
 						</div>
 						<div class="form-group row">
-							<label class="control-label col-xs-4" for="sellPrice">Nombre:</label>
+							<label class="control-label col-xs-4" for="sellPrice" i18n>Nombre:</label>
 							<div class="col-xs-8">
 								<input [(ngModel)]='user.name' name='name' class='form-control'>
 							</div>
 						</div>
 						<div class="form-group row">
-							<label class="control-label col-xs-4" for="sellPrice">E-mail:</label>
+							<label class="control-label col-xs-4" for="sellPrice" i18n>E-mail:</label>
 							<div class="col-xs-8">
 								<input [(ngModel)]='user.email' name='email' class='form-control'>
 							</div>
 						</div>
 						<div class="form-group row" *ngIf="user.roles.indexOf('ieee') > 0">
-							<label class="control-label col-xs-4" for="sellPrice">Código del IEEE:</label>
+							<label class="control-label col-xs-4" for="sellPrice" i18n>Código del IEEE:</label>
 							<div class="col-xs-8">
 								<input [(ngModel)]='user.ieee' name='ieee' class='form-control'>
 							</div>
 						</div>
 						<div class="form-group row" *ngIf="user.roles.indexOf('ieee') > 0">
-							<label class="control-label col-xs-4" for="sellPrice">Código del Inventario:</label>
+							<label class="control-label col-xs-4" for="sellPrice" i18n>Código del Inventario:</label>
 							<div class="col-xs-8">
 								<input [(ngModel)]='user.code' name='code' class='form-control'>
 							</div>
 						</div>
-						<button class="btn btn-md btn-primary" type='submit'>Actualizar Usuario</button>
+						<button class="btn btn-md btn-primary" type='submit' i18n>Actualizar Usuario</button>
 					</div>
 				</div>
 			</form>
 			<form (ngSubmit)="changePassword()">
 				<div class="row section">
 					<div class="col-xs-12">
-						<span class="title">Actualizar Contraseña</span>
+						<span class="title" i18n>Actualizar Contraseña</span>
 						<div class="form-group row">
-							<label class="control-label col-xs-4" for="sellPrice">Contraseña Antigua:</label>
+							<label class="control-label col-xs-4" for="sellPrice" i18n>Contraseña Antigua:</label>
 							<div class="col-xs-8">
 								<input type='password' [(ngModel)]='oldPassword' name='oldPassword' class='form-control'>
 							</div>
 						</div>
 						<div class="form-group row">
-							<label class="control-label col-xs-4" for="sellPrice">Contraseña Nueva:</label>
+							<label class="control-label col-xs-4" for="sellPrice" i18n>Contraseña Nueva:</label>
 							<div class="col-xs-8">
 								<input type='password' [(ngModel)]='newPassword' name='newPassword' class='form-control'>
 							</div>
 						</div>
-						<button class="btn btn-md btn-primary" type='submit'>Actualizar Contraseña</button>
+						<button class="btn btn-md btn-primary" type='submit' i18n>Actualizar Contraseña</button>
 					</div>
 				</div>
 			</form>
@@ -71,14 +71,14 @@
 				<div class="col-xs-12">
 					<span class="title">Insertar Dinero</span>
 					<div class="form-group row">
-						<label class="control-label col-xs-4" for="amount">Dinero:</label>
+						<label class="control-label col-xs-4" for="amount" i18n>Dinero:</label>
 						<div class="col-xs-8">
-							<input type="number" step="1" min="0.01" [(ngModel)]='amount' name='amount' class='form-control'>
+							<input type="number" step="1" min="0" [(ngModel)]='amount' name='amount' class='form-control'>
 						</div>
 					</div>
 					<div class="row amount">
 						<div class="col-xs-12">
-							<span>Tarifa: {{fee}} <b>Total: </b>{{totalAmount}}</span>
+							<span i18n>Tarifa: {{fee}} <b>Total: </b>{{totalAmount}}</span>
 						</div>
 					</div>
 
@@ -87,22 +87,22 @@
 			</div>
 			<div *ngIf="user && user.roles.includes('ieee')" class="row section history">
 				<div class="col-xs-12">
-					<span class="title">Historial de Compras</span>
+					<span class="title" i18n>Historial de Compras</span>
 					<div class="row header">
 						<div class="col-xs-2">
-							<p>Nombre</p>
+							<p i18n>Nombre</p>
 						</div>
 						<div class="col-xs-1 hidden-xs">
-							<p>Precio</p>
+							<p i18n>Precio</p>
 						</div>
 						<div class="col-xs-3">
-							<p>Cantidad</p>
+							<p i18n>Cantidad</p>
 						</div>
 						<div class="col-xs-4">
-							<p>Fecha</p>
+							<p i18n>Fecha</p>
 						</div>
 						<div class="col-xs-3 col-sm-2">
-							<p>Acciones</p>
+							<p i18n>Acciones</p>
 						</div>
 					</div>
 					<div *ngFor="let purchase of filteredPurchases" class="row purchase"  [ngClass]="{'cancelled': (purchase.cancelled)}">
@@ -121,7 +121,7 @@
 							<p>{{purchase.date | date:'dd/MM HH:mm'}}</p>
 						</div>
 						<div class="col-xs-3 col-sm-2">
-							<a *ngIf="!(purchase.cancelled)" href="javascript:void(0)" (click)="cancel(purchase._id)">Cancelar</a>
+							<a *ngIf="!(purchase.cancelled)" href="javascript:void(0)" (click)="cancel(purchase._id)" i18n>Cancelar</a>
 						</div>
 					</div>
 				</div>

@@ -6,7 +6,7 @@ import { UserService } from '../../_services/user.service';
 import { InventoryItem } from '../../_models/inventory-item';
 
 @Component({
-	
+
 	selector: 'inventory',
 	templateUrl: './inventory.component.html',
 	styleUrls: ['./inventory.component.less'],
@@ -26,16 +26,16 @@ export class InventoryComponent implements OnInit {
 
 	items: InventoryItem[] = [];
 	filteredItems: InventoryItem[] = [];
-	params: any = {
-		search: "",
-		order: "asc"
-	}
+	params: any;
 	quantity: number = 1;
 	messages: string[] = [];
 	loading: boolean = false;
 
 	constructor(private inventoryService: InventoryService, private userService: UserService) {
-
+		this.params = {
+			search: "",
+			order: "asc"
+		};
 	}
 	ngOnInit() {
 		this.inventoryService.itemsSubject.subscribe((items) => {
@@ -43,7 +43,6 @@ export class InventoryComponent implements OnInit {
 			this.filter();
 			this.loading = false;
 		});
-
 	}
 
 	filter() {

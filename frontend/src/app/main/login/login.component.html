@@ -1,25 +1,25 @@
 <loader [enabled]="loading"></loader>
 <div class="row block">
     <div class="jumbotron col-xs-12 col-lg-3 center-block">
-        <h3 class="title">Login</h3>
+        <h3 class="title" i18n>Login</h3>
         <form class="" role="form" (ngSubmit)="login()" #loginForm="ngForm">
             <div class="form-group">
-                <input [(ngModel)]='alias' name='alias' class='form-control' placeholder="Alias o E-mail">
+                <input [(ngModel)]='alias' name='alias' class='form-control' i18n-placeholder placeholder="Alias">
             </div>
             <div class="form-group" style="margin-bottom:10px">
-                <input type='password' [(ngModel)]="password" name='password' class='form-control' placeholder="Contraseña">
+                <input type='password' [(ngModel)]="password" name='password' class='form-control' i18n-placeholder placeholder="Contraseña">
             </div>
-			<button type="submit" class="submit">Acceder</button>
+			<button type="submit" class="submit" i18n>Acceder</button>
             <div class="row separator"></div>
 
             <div class="row">
                 <div class="col-xs-12">
-                    <a class="pull-right" href="#" [routerLink]="['/register']">Register</a>
+                    <a class="pull-right" href="#" [routerLink]="['/register']" i18n>Registrarse</a>
                 </div>
             </div>
             <div class="row">
                 <div class="col-xs-12">
-                    <a class="pull-right" href="#" [routerLink]="['/restorepassword']">¿Has olvidado la contraseña?</a>
+                    <a class="pull-right" href="#" [routerLink]="['/restorepassword']" i18n>¿Has olvidado la contraseña?</a>
                 </div>
             </div>
         </form>
