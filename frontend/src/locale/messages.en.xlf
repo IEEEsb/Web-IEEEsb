@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
-	<file source-language="es" datatype="plaintext" original="ng2.template">
+	<file source-language="en" datatype="plaintext" original="ng2.template">
 		<body>
 			<trans-unit id="6765b4c916060f6bc42d9bb69e80377dbcb5e4e9" datatype="html">
 				<source>Login</source>
-				<target/>
+				<target>Login</target>
 				<context-group purpose="location">
 					<context context-type="sourcefile">app/main/login/login.component.ts</context>
 					<context context-type="linenumber">4</context>
@@ -20,7 +20,7 @@
 			</trans-unit>
 			<trans-unit id="fbaaeb297e70b9a800acf841b9d26c19d60651ef" datatype="html">
 				<source>Alias</source>
-				<target/>
+				<target>Alias</target>
 				<context-group purpose="location">
 					<context context-type="sourcefile">app/main/login/login.component.ts</context>
 					<context context-type="linenumber">7</context>
@@ -32,7 +32,7 @@
 			</trans-unit>
 			<trans-unit id="e369e13629132e32dcd958b82261059243f21d58" datatype="html">
 				<source>Contraseña</source>
-				<target/>
+				<target>Contraseña</target>
 				<context-group purpose="location">
 					<context context-type="sourcefile">app/main/login/login.component.ts</context>
 					<context context-type="linenumber">10</context>
@@ -40,7 +40,7 @@
 			</trans-unit>
 			<trans-unit id="c126b8c77eea68e2ae2bca21e2948c486abfa080" datatype="html">
 				<source>Acceder</source>
-				<target/>
+				<target>Acceder</target>
 				<context-group purpose="location">
 					<context context-type="sourcefile">app/main/login/login.component.ts</context>
 					<context context-type="linenumber">12</context>
@@ -48,7 +48,7 @@
 			</trans-unit>
 			<trans-unit id="28c0f4e51cd46c99c0eb24ace953b810f9392691" datatype="html">
 				<source>Registrarse</source>
-				<target/>
+				<target>Registrarse</target>
 				<context-group purpose="location">
 					<context context-type="sourcefile">app/main/login/login.component.ts</context>
 					<context context-type="linenumber">17</context>
@@ -64,7 +64,7 @@
 			</trans-unit>
 			<trans-unit id="147b4015fb17b8dcd56939fe2ed7034d7ff5a23f" datatype="html">
 				<source>¿Has olvidado la contraseña?</source>
-				<target/>
+				<target>¿Has olvidado la contraseña?</target>
 				<context-group purpose="location">
 					<context context-type="sourcefile">app/main/login/login.component.ts</context>
 					<context context-type="linenumber">22</context>
@@ -72,7 +72,7 @@
 			</trans-unit>
 			<trans-unit id="3bfaea1551e789869530282fee6c00b72a52670a" datatype="html">
 				<source>Alias*</source>
-				<target/>
+				<target>Alias*</target>
 				<context-group purpose="location">
 					<context context-type="sourcefile">app/main/register/register.component.ts</context>
 					<context context-type="linenumber">7</context>
@@ -80,7 +80,7 @@
 			</trans-unit>
 			<trans-unit id="59e04a46766ec1772409c085a8f42abfff080a47" datatype="html">
 				<source>Nombre*</source>
-				<target/>
+				<target>Nombre*</target>
 				<context-group purpose="location">
 					<context context-type="sourcefile">app/main/register/register.component.ts</context>
 					<context context-type="linenumber">10</context>
@@ -88,7 +88,7 @@
 			</trans-unit>
 			<trans-unit id="c5ae5f919bc8ae4ccd9f48781fc73ede335a3da4" datatype="html">
 				<source>E-mail*</source>
-				<target/>
+				<target>E-mail*</target>
 				<context-group purpose="location">
 					<context context-type="sourcefile">app/main/register/register.component.ts</context>
 					<context context-type="linenumber">13</context>
@@ -96,7 +96,7 @@
 			</trans-unit>
 			<trans-unit id="6a876fbf287afa5ff6bbaab542e202f23715f988" datatype="html">
 				<source>Contraseña*</source>
-				<target/>
+				<target>Contraseña*</target>
 				<context-group purpose="location">
 					<context context-type="sourcefile">app/main/register/register.component.ts</context>
 					<context context-type="linenumber">16</context>
@@ -104,7 +104,7 @@
 			</trans-unit>
 			<trans-unit id="8fc4d3bf84d92e353bebdce4b7ded2aabe124f77" datatype="html">
 				<source>Repetir Contraseña*</source>
-				<target/>
+				<target>Repetir Contraseña*</target>
 				<context-group purpose="location">
 					<context context-type="sourcefile">app/main/register/register.component.ts</context>
 					<context context-type="linenumber">19</context>
@@ -112,7 +112,7 @@
 			</trans-unit>
 			<trans-unit id="a35752785348376acdce43a23eb753abfe3af3cd" datatype="html">
 				<source>Nº IEEE</source>
-				<target/>
+				<target>Nº IEEE</target>
 				<context-group purpose="location">
 					<context context-type="sourcefile">app/main/register/register.component.ts</context>
 					<context context-type="linenumber">22</context>
@@ -120,7 +120,7 @@
 			</trans-unit>
 			<trans-unit id="08aea027c2a307e37d98399343c9df9194e5b4f0" datatype="html">
 				<source>Las contraseñas no coinciden</source>
-				<target/>
+				<target>Las contraseñas no coinciden</target>
 				<context-group purpose="location">
 					<context context-type="sourcefile">app/main/register/register.component.ts</context>
 					<context context-type="linenumber">24</context>
@@ -128,7 +128,7 @@
 			</trans-unit>
 			<trans-unit id="a8368cd745bbe532549dab8acdde87502869d9b4" datatype="html">
 				<source>Mi Perfil</source>
-				<target/>
+				<target>Mi Perfil</target>
 				<context-group purpose="location">
 					<context context-type="sourcefile">app/main/profile/profile.component.ts</context>
 					<context context-type="linenumber">8</context>
@@ -136,7 +136,7 @@
 			</trans-unit>
 			<trans-unit id="ede5fd8dddbeaa24567a74535270feb2a3f2fa1e" datatype="html">
 				<source>Actualizar Usuario</source>
-				<target/>
+				<target>Actualizar Usuario</target>
 				<context-group purpose="location">
 					<context context-type="sourcefile">app/main/profile/profile.component.ts</context>
 					<context context-type="linenumber">15</context>
@@ -148,7 +148,7 @@
 			</trans-unit>
 			<trans-unit id="ed054b9d43762200e9917ef657bfbf026b2b6cfb" datatype="html">
 				<source>Alias:</source>
-				<target/>
+				<target>Alias:</target>
 				<context-group purpose="location">
 					<context context-type="sourcefile">app/main/profile/profile.component.ts</context>
 					<context context-type="linenumber">17</context>
@@ -156,7 +156,7 @@
 			</trans-unit>
 			<trans-unit id="20de7814985da87fe6648630d9e14b67324ddd2b" datatype="html">
 				<source>Nombre:</source>
-				<target/>
+				<target>Nombre:</target>
 				<context-group purpose="location">
 					<context context-type="sourcefile">app/main/profile/profile.component.ts</context>
 					<context context-type="linenumber">23</context>
@@ -164,7 +164,7 @@
 			</trans-unit>
 			<trans-unit id="485aea92f94ccf8d3176304df626aedd25aca92b" datatype="html">
 				<source>E-mail:</source>
-				<target/>
+				<target>E-mail:</target>
 				<context-group purpose="location">
 					<context context-type="sourcefile">app/main/profile/profile.component.ts</context>
 					<context context-type="linenumber">29</context>
@@ -172,7 +172,7 @@
 			</trans-unit>
 			<trans-unit id="259c0e70a891a4e2964a9c87efb2e1363d50fe24" datatype="html">
 				<source>Código del IEEE:</source>
-				<target/>
+				<target>Código del IEEE:</target>
 				<context-group purpose="location">
 					<context context-type="sourcefile">app/main/profile/profile.component.ts</context>
 					<context context-type="linenumber">35</context>
@@ -180,7 +180,7 @@
 			</trans-unit>
 			<trans-unit id="3f66658ec75828dbe13a900f69a57a04397589d2" datatype="html">
 				<source>Código del Inventario:</source>
-				<target/>
+				<target>Código del Inventario:</target>
 				<context-group purpose="location">
 					<context context-type="sourcefile">app/main/profile/profile.component.ts</context>
 					<context context-type="linenumber">41</context>
@@ -188,7 +188,7 @@
 			</trans-unit>
 			<trans-unit id="ac4d9e48d60f7d290fb54d5555f902df08c7b2c6" datatype="html">
 				<source>Actualizar Contraseña</source>
-				<target/>
+				<target>Actualizar Contraseña</target>
 				<context-group purpose="location">
 					<context context-type="sourcefile">app/main/profile/profile.component.ts</context>
 					<context context-type="linenumber">53</context>
@@ -200,7 +200,7 @@
 			</trans-unit>
 			<trans-unit id="056e6deecd1d32fa3cab31e9d7b7977346a7f6eb" datatype="html">
 				<source>Contraseña Antigua:</source>
-				<target/>
+				<target>Contraseña Antigua:</target>
 				<context-group purpose="location">
 					<context context-type="sourcefile">app/main/profile/profile.component.ts</context>
 					<context context-type="linenumber">55</context>
@@ -208,7 +208,7 @@
 			</trans-unit>
 			<trans-unit id="d67885133892b5ddbd9b55d37501331191e76134" datatype="html">
 				<source>Contraseña Nueva:</source>
-				<target/>
+				<target>Contraseña Nueva:</target>
 				<context-group purpose="location">
 					<context context-type="sourcefile">app/main/profile/profile.component.ts</context>
 					<context context-type="linenumber">61</context>
@@ -216,7 +216,7 @@
 			</trans-unit>
 			<trans-unit id="e64903a3193504aba35b676382503f8e100b32d4" datatype="html">
 				<source>Dinero:</source>
-				<target/>
+				<target>Dinero:</target>
 				<context-group purpose="location">
 					<context context-type="sourcefile">app/main/profile/profile.component.ts</context>
 					<context context-type="linenumber">74</context>
@@ -224,7 +224,7 @@
 			</trans-unit>
 			<trans-unit id="b68fa23bc8bfd17058ea3e8e35324b0c6c9640f3" datatype="html">
 				<source>Tarifa: <x id="INTERPOLATION"/> <x id="START_BOLD_TEXT" ctype="x-b"/>Total: <x id="CLOSE_BOLD_TEXT" ctype="x-b"/><x id="INTERPOLATION_1"/></source>
-				<target/>
+				<target>Tarifa: <x id="INTERPOLATION"/> <x id="START_BOLD_TEXT" ctype="x-b"/>Total: <x id="CLOSE_BOLD_TEXT" ctype="x-b"/><x id="INTERPOLATION_1"/></target>
 				<context-group purpose="location">
 					<context context-type="sourcefile">app/main/profile/profile.component.ts</context>
 					<context context-type="linenumber">81</context>
@@ -232,7 +232,7 @@
 			</trans-unit>
 			<trans-unit id="f185c4bfc10ba7d308d75ba19ce3330fcfc4aac0" datatype="html">
 				<source>Historial de Compras</source>
-				<target/>
+				<target>Historial de Compras</target>
 				<context-group purpose="location">
 					<context context-type="sourcefile">app/main/profile/profile.component.ts</context>
 					<context context-type="linenumber">90</context>
@@ -240,7 +240,7 @@
 			</trans-unit>
 			<trans-unit id="dd2a11ebc737589080ed400dacc33a8c8c84728b" datatype="html">
 				<source>Nombre</source>
-				<target/>
+				<target>Nombre</target>
 				<context-group purpose="location">
 					<context context-type="sourcefile">app/main/profile/profile.component.ts</context>
 					<context context-type="linenumber">93</context>
@@ -248,7 +248,7 @@
 			</trans-unit>
 			<trans-unit id="d57ce960cceac0877b71d11a9931887f9c86ec73" datatype="html">
 				<source>Precio</source>
-				<target/>
+				<target>Precio</target>
 				<context-group purpose="location">
 					<context context-type="sourcefile">app/main/profile/profile.component.ts</context>
 					<context context-type="linenumber">96</context>
@@ -256,7 +256,7 @@
 			</trans-unit>
 			<trans-unit id="bb8ccf3bdc23c22953aa91cab264f4346195f579" datatype="html">
 				<source>Cantidad</source>
-				<target/>
+				<target>Cantidad</target>
 				<context-group purpose="location">
 					<context context-type="sourcefile">app/main/profile/profile.component.ts</context>
 					<context context-type="linenumber">99</context>
@@ -264,7 +264,7 @@
 			</trans-unit>
 			<trans-unit id="b173ec5192470d6b2da768338bc24a965d7e001c" datatype="html">
 				<source>Fecha</source>
-				<target/>
+				<target>Fecha</target>
 				<context-group purpose="location">
 					<context context-type="sourcefile">app/main/profile/profile.component.ts</context>
 					<context context-type="linenumber">102</context>
@@ -272,7 +272,7 @@
 			</trans-unit>
 			<trans-unit id="9922c762b7c572b56dfa01bece905c0e07e41fb6" datatype="html">
 				<source>Acciones</source>
-				<target/>
+				<target>Acciones</target>
 				<context-group purpose="location">
 					<context context-type="sourcefile">app/main/profile/profile.component.ts</context>
 					<context context-type="linenumber">105</context>
@@ -280,7 +280,7 @@
 			</trans-unit>
 			<trans-unit id="e8d22cdef9f5780e31395340125d873f9df518c3" datatype="html">
 				<source>Cancelar</source>
-				<target/>
+				<target>Cancelar</target>
 				<context-group purpose="location">
 					<context context-type="sourcefile">app/main/profile/profile.component.ts</context>
 					<context context-type="linenumber">124</context>
@@ -298,7 +298,7 @@
 			</trans-unit>
 			<trans-unit id="aff2a14efb6b1fbd06cde12c84bd2f76f1fe7bb8" datatype="html">
 				<source>Noticias</source>
-				<target/>
+				<target>Noticias</target>
 				<context-group purpose="location">
 					<context context-type="sourcefile">app/main/home/home.component.ts</context>
 					<context context-type="linenumber">16</context>
@@ -321,7 +321,7 @@
 			</trans-unit>
 			<trans-unit id="e0f350fb5e2644cfe51b2956a77aa824e0d657e4" datatype="html">
 				<source>Quiénes Somos</source>
-				<target/>
+				<target>Quiénes Somos</target>
 				<context-group purpose="location">
 					<context context-type="sourcefile">app/main/home/home.component.ts</context>
 					<context context-type="linenumber">34</context>
@@ -343,7 +343,7 @@
 			</trans-unit>
 			<trans-unit id="92f58985169e0521e00404c8c0aebe0060548d4f" datatype="html">
 				<source>Dónde Estamos</source>
-				<target/>
+				<target>Dónde Estamos</target>
 				<context-group purpose="location">
 					<context context-type="sourcefile">app/main/home/home.component.ts</context>
 					<context context-type="linenumber">55</context>
@@ -351,7 +351,7 @@
 			</trans-unit>
 			<trans-unit id="2080cf06087e6e4458d9f9fac35a51adc83baa3c" datatype="html">
 				<source>Resetear Contraseña</source>
-				<target/>
+				<target>Resetear Contraseña</target>
 				<context-group purpose="location">
 					<context context-type="sourcefile">app/main/restore-password/restore-password.component.ts</context>
 					<context context-type="linenumber">4</context>
@@ -359,7 +359,7 @@
 			</trans-unit>
 			<trans-unit id="f85dc01e7aab1a5c282d14b74650255ae4042fe0" datatype="html">
 				<source>E-mail</source>
-				<target/>
+				<target>E-mail</target>
 				<context-group purpose="location">
 					<context context-type="sourcefile">app/main/restore-password/restore-password.component.ts</context>
 					<context context-type="linenumber">10</context>
@@ -367,7 +367,7 @@
 			</trans-unit>
 			<trans-unit id="3580a2aad3b43b1906a08580976f6c3d6ea89112" datatype="html">
 				<source>Resetear</source>
-				<target/>
+				<target>Resetear</target>
 				<context-group purpose="location">
 					<context context-type="sourcefile">app/main/restore-password/restore-password.component.ts</context>
 					<context context-type="linenumber">12</context>
@@ -375,7 +375,7 @@
 			</trans-unit>
 			<trans-unit id="977c8f110479c225579e66c5aefba3be7f9ede49" datatype="html">
 				<source><x id="START_TAG_SPAN" ctype="x-span"/><x id="CLOSE_TAG_SPAN" ctype="x-span"/> Inicio</source>
-				<target/>
+				<target><x id="START_TAG_SPAN" ctype="x-span"/><x id="CLOSE_TAG_SPAN" ctype="x-span"/> Inicio</target>
 				<context-group purpose="location">
 					<context context-type="sourcefile">app/main/navbar/navbar.component.ts</context>
 					<context context-type="linenumber">18</context>
@@ -383,7 +383,7 @@
 			</trans-unit>
 			<trans-unit id="ffdb3da71b9cddecb524c46a8c341e1823d55b1f" datatype="html">
 				<source>Wiki</source>
-				<target/>
+				<target>Wiki</target>
 				<context-group purpose="location">
 					<context context-type="sourcefile">app/main/navbar/navbar.component.ts</context>
 					<context context-type="linenumber">21</context>
@@ -391,7 +391,7 @@
 			</trans-unit>
 			<trans-unit id="695a88465e615e6ce67a952d4dd3ed154f48ed0b" datatype="html">
 				<source>Inventario</source>
-				<target>Inventory</target>
+				<target>Inventario</target>
 				<context-group purpose="location">
 					<context context-type="sourcefile">app/main/navbar/navbar.component.ts</context>
 					<context context-type="linenumber">24</context>
@@ -399,7 +399,7 @@
 			</trans-unit>
 			<trans-unit id="aa0a7914ddc1c8d8a990a87e6373cbd8a865cc18" datatype="html">
 				<source>Saldo: <x id="INTERPOLATION"/></source>
-				<target/>
+				<target>Saldo: <x id="INTERPOLATION"/></target>
 				<context-group purpose="location">
 					<context context-type="sourcefile">app/main/navbar/navbar.component.ts</context>
 					<context context-type="linenumber">29</context>
@@ -407,7 +407,7 @@
 			</trans-unit>
 			<trans-unit id="412209b9cfe738093946bc2706ff80c1ae5cab02" datatype="html">
 				<source>Regístrate</source>
-				<target/>
+				<target>Regístrate</target>
 				<context-group purpose="location">
 					<context context-type="sourcefile">app/main/navbar/navbar.component.ts</context>
 					<context context-type="linenumber">35</context>
@@ -415,7 +415,7 @@
 			</trans-unit>
 			<trans-unit id="40474e657728c6946a751b2ac7d744d1d2b146c9" datatype="html">
 				<source>Perfil</source>
-				<target/>
+				<target>Perfil</target>
 				<context-group purpose="location">
 					<context context-type="sourcefile">app/main/navbar/navbar.component.ts</context>
 					<context context-type="linenumber">38</context>
@@ -423,7 +423,7 @@
 			</trans-unit>
 			<trans-unit id="83afe594e89c88aaa6009e0258d77b12a0d2af63" datatype="html">
 				<source>Administrar</source>
-				<target/>
+				<target>Administrar</target>
 				<context-group purpose="location">
 					<context context-type="sourcefile">app/main/navbar/navbar.component.ts</context>
 					<context context-type="linenumber">41</context>
@@ -431,7 +431,7 @@
 			</trans-unit>
 			<trans-unit id="bb694b49d408265c91c62799c2b3a7e3151c824d" datatype="html">
 				<source>Logout</source>
-				<target/>
+				<target>Logout</target>
 				<context-group purpose="location">
 					<context context-type="sourcefile">app/main/navbar/navbar.component.ts</context>
 					<context context-type="linenumber">44</context>
