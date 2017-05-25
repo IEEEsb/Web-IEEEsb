@@ -290,7 +290,9 @@
 				<source>
 					Rama Universitaria Del IEEE de Madrid
 				</source>
-				<target/>
+				<target>
+					Rama Universitaria Del IEEE de Madrid
+				</target>
 				<context-group purpose="location">
 					<context context-type="sourcefile">app/main/home/home.component.ts</context>
 					<context context-type="linenumber">7</context>
@@ -313,7 +315,14 @@
 					<x id="START_TAG_DIV" ctype="x-div"/>Y siempre queda el reto de legar a cada nueva generación lo aprendido. Con cursos impartidos por alumnos y para alumnos, el club ha conseguido convertirse en uno de los más prolíficos y antiguos de toda Europa haciendo del IEEE una orgullosa filosofía de aprendizaje<x id="CLOSE_TAG_DIV" ctype="x-div"/>
 					<x id="START_TAG_DIV" ctype="x-div"/><x id="CLOSE_TAG_DIV" ctype="x-div"/>
 				</source>
-				<target/>
+				<target>
+					Fundada en 1965, la rama de estudiantes del IEEE de la Escuela Técnica Superior de Telecomunicaciones de la UPM tiene por objetivo el acercamiento de los estudiantes a la tecnología eléctrica, electrónica y del software, y el desarrollo de la creatividad e innovación para solventar problemas cotidianos haciendo uso de lo aprendido.
+					<x id="START_TAG_DIV" ctype="x-div"/>
+					<x id="CLOSE_TAG_DIV" ctype="x-div"/>
+					<x id="START_TAG_DIV" ctype="x-div"/>Ensayo y error! ese es el espíritu del IEEE. En los últimos 5 años se han hecho más de 3 prototipos tecnológicos por año; pasando por tricópteros diseñados en madera, ABS o fibra de vidrio, impresoras 3D, lentes de realidad virtual... hasta sistemas de apertura via App de cerraduras.<x id="CLOSE_TAG_DIV" ctype="x-div"/>
+					<x id="START_TAG_DIV" ctype="x-div"/>Y siempre queda el reto de legar a cada nueva generación lo aprendido. Con cursos impartidos por alumnos y para alumnos, el club ha conseguido convertirse en uno de los más prolíficos y antiguos de toda Europa haciendo del IEEE una orgullosa filosofía de aprendizaje<x id="CLOSE_TAG_DIV" ctype="x-div"/>
+					<x id="START_TAG_DIV" ctype="x-div"/><x id="CLOSE_TAG_DIV" ctype="x-div"/>
+				</target>
 				<context-group purpose="location">
 					<context context-type="sourcefile">app/main/home/home.component.ts</context>
 					<context context-type="linenumber">25</context>
@@ -335,7 +344,13 @@
 					<x id="START_TAG_DIV" ctype="x-div"/><x id="CLOSE_TAG_DIV" ctype="x-div"/>
 					Escuela de Telecomunicaciones, Edificio A 101.4L
 				</source>
-				<target/>
+				<target>
+					Puedes encontrarnos en la ETSIT-UPM en el pasillo de clubes.
+					<x id="START_TAG_DIV" ctype="x-div"/><x id="CLOSE_TAG_DIV" ctype="x-div"/>
+					Avenida Complutense 30, 28040, Madrid.
+					<x id="START_TAG_DIV" ctype="x-div"/><x id="CLOSE_TAG_DIV" ctype="x-div"/>
+					Escuela de Telecomunicaciones, Edificio A 101.4L
+				</target>
 				<context-group purpose="location">
 					<context context-type="sourcefile">app/main/home/home.component.ts</context>
 					<context context-type="linenumber">45</context>
