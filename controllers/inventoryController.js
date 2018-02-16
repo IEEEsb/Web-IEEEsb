@@ -92,11 +92,26 @@ function getBasicItem(item) {
 	return formatItem;
 }
 
-
-
 exports.getItems = function (req, res, next) {
+	let pageSize = Number(req.query.pagesize);
+	let page = Number(req.query.page);
 
-	Item.find().exec().then((items) => {
+	if ((pageSize || page) && !(pageSize && page)) {  // The pagination parameters are invalid
+		return next(new CodedError('If using pagination, both "pagesize" and "page" must be valid', 400));
+	}
+
+	// Default values (to avoid working on undefined ones)
+	pageSize = pageSize || 0;  // 0 = unlimited
+	page = page || 1;  // The first page is #1
+
+	let skip = pageSize * (page - 1);
+
+	Item.find()
+	.limit(pageSize)
+	.skip(skip)
+	.sort('name')
+	.exec()
+	.then((items) => {
 		return res.status(200).send(items);
 	}).catch((reason) => {
 		return next(reason);
