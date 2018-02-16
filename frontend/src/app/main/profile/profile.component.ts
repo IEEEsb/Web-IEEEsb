@@ -125,7 +125,7 @@ export class ProfileComponent implements AfterViewInit{
 				label: 'checkout', // checkout || credit
 				size:  'medium',    // tiny | small | medium
 				shape: 'rect',     // pill | rect
-				color: 'silver'      // gold | blue | silver
+				color: 'blue'      // gold | blue | silver
 			},
 			// Wait for the PayPal button to be clicked
 
