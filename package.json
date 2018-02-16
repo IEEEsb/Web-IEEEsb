@@ -64,7 +64,7 @@
     "slug": "^0.9.1",
     "swipebox": "^1.4.6",
     "systemjs": "0.20.12",
-    "typescript": "^2.3.2",
+    "typescript": "2.3.2",
     "winston": "^2.3.1",
     "zone.js": "^0.8.9"
   },
@@ -78,7 +78,6 @@
     "rollup-plugin-commonjs": "^8.0.2",
     "rollup-plugin-node-resolve": "^3.0.0",
     "rollup-plugin-uglify": "^1.0.2",
-    "typescript": "^2.2.1",
     "typings": "^2.1.0",
     "yargs": "^7.0.1",
     "webpack-dev-server": "~2.4.2",
