@@ -2,13 +2,22 @@ var Promise = require('bluebird'),
 services = require('../services.js'),
 config = services.config,
 winston = require('winston'),
-mailcomposer = require('mailcomposer');
-
-var mailgun = require('mailgun-js')({ apiKey: config.mailApiKey, domain: config.mailDomain });
+mailcomposer = require('mailcomposer'),
+nodemailer = require('nodemailer');
 
 const servicesLogger = winston.loggers.get('services');
 
 servicesLogger.info("Loading email services");
+
+let transporter = nodemailer.createTransport({
+	host: config.email.host,
+	port: config.email.port,
+	secure: config.email.secure,
+	auth: {
+		user: config.email.user,
+		pass: config.email.pass
+	}
+});
 
 exports.sendRecoverPasswordEmail = function (user, password) {
 	return new Promise((resolve, reject) => {
@@ -19,11 +28,12 @@ exports.sendRecoverPasswordEmail = function (user, password) {
 			subject: 'Password recovery',
 			html: '<p style="font-size: 12px; margin-left: 20px; line-height: 60%;">' + password + "</p>"
 		};
-
-		mailgun.messages().send(data, function (err, body) {
-			console.log(body);
-			if (err) return reject(err);
-			else return resolve(body);
+		
+		// send mail with defined transport object
+		transporter.sendMail(data, (error, info) => {
+			console.log(info);
+			if (error) return reject(error);
+			else return resolve(info);
 		});
 	});
 }
