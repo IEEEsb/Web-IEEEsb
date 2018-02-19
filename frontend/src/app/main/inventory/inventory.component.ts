@@ -52,8 +52,6 @@ export class InventoryComponent implements OnInit {
 	arrayFilter(element: any) {
 		let find = false;
 		for(let key in element) {
-			console.log(element);
-			console.log(key);
 			if(['code', 'name'].indexOf(key) >= 0) {
 				if(element[key].toString().match(new RegExp(this.params.search, "i"))){
 					find = true;
