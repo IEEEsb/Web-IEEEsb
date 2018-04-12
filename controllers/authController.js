@@ -72,8 +72,8 @@ function auth(req, res, next) {
 function authRole(role) {
 
     return function(req, res, next) {
-        if(!req.session.user && role !== req.session.user.role) return next(new CodedError("Not authorized", 403));
-        return next();
+        if(req.session.user && req.session.user.roles.includes(role)) return next();
+        return next(new CodedError("Not authorized", 403));
     };
 };
 
