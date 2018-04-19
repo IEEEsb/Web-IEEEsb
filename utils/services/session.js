@@ -26,7 +26,7 @@ exports.init = function () {
             resave: true,
             saveUninitialized: false,
             proxy: true,
-            name: "test",
+            name: "auth",
             cookie: {
                 secure: false,
                 maxAge: 20*365*24*60*60*1000
