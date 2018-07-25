@@ -21,5 +21,11 @@ pipeline {
         sh 'sudo service web start'
       }
     }
+    stage('PWD') {
+      steps {
+        sh '''pwd
+'''
+      }
+    }
   }
 }
