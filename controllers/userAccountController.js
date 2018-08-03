@@ -130,7 +130,7 @@ exports.logout = function (req, res, next) {
 };
 
 exports.toIEEE = function (req, res, next) {
-	User.update({_id: req.params.id}, {$push: {roles: 'ieee'}}).then(() => {
+	User.update({ _id: req.params.id }, { $addToSet: { roles: 'ieee' } }).then(() => {
 		return smartlock.registerUser(req.params.id)
 	}).then(() => {
 		res.status(200).send(true);
