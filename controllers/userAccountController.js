@@ -140,6 +140,15 @@ exports.toIEEE = function (req, res, next) {
 
 };
 
+exports.addRole = function(req, res, next) {
+	User.update({ alias: req.params.alias },
+		{ $addToSet: { roles: req.params.role }})
+		.then((result) => {
+			if (result.nModified === 0) return next(new CodedError('User already has that role', 409));
+			return res.sendStatus(200);
+		});
+};
+
 exports.updateProfile = function (req, res, next) {
 	if((req.body.alias != req.session.user.alias) && (!req.session.user.roles.includes('admin'))) return next(new CodedError("Not authorized", 403));
 	User.findOne({ alias: req.body.alias.toLowerCase() }).then((storedUser) => {

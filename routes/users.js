@@ -24,6 +24,6 @@ router.use(authController.authRole('admin'));
 router.route('/addmoney').post(userAccountController.addMoney);
 router.route('/all').get(userController.getUsers);
 router.route('/toieee/:id').post(userAccountController.toIEEE);
-
+router.route('/:alias/roles/:role').post(userAccountController.addRole);
 
 module.exports = router;
