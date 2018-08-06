@@ -3,6 +3,7 @@ config = services.config,
 logger = services.inventoryLogger,
 smartlock = services.smartlock,
 mongoose = require('mongoose'),
+Log = mongoose.model('LogModel'),
 User = mongoose.model('UserModel'),
 authController = require('./authController.js'),
 moment = require('moment'),
@@ -141,12 +142,23 @@ exports.toIEEE = function (req, res, next) {
 };
 
 exports.addRole = function(req, res, next) {
-	User.update({ alias: req.params.alias },
-		{ $addToSet: { roles: req.params.role }})
-		.then((result) => {
-			if (result.nModified === 0) return next(new CodedError('User already has that role', 409));
-			return res.sendStatus(200);
+	User.update({ alias: req.params.alias }, { $addToSet: { roles: req.params.role } })
+	.then((result) => {
+		if (result.nModified === 0) throw new CodedError('User already has that role', 409)	;
+		return User.find({ alias: req.params.alias }, "_id alias name")
+	}).then(to => {
+		let log = new Log({
+			action: "addRole",
+			who: { _id: req.session.user._id, alias: req.session.user.alias },
+			to: to,
+			options: {role: req.params.role}
 		});
+		return log.save()
+	}).then(() => {
+		return res.sendStatus(200);
+	}).catch(reason => {
+		return next(reason);
+	});
 };
 
 exports.updateProfile = function (req, res, next) {
