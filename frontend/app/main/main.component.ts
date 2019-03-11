@@ -16,6 +16,10 @@ export class MainComponent implements OnInit {
 
 
 	menuItems = {
+		logo: {
+			type: 'router',
+			link: '/',
+		},
 		left: [
 			{
 				text: 'Inventario',
@@ -32,8 +36,8 @@ export class MainComponent implements OnInit {
 			},
 			{
 				text: 'Perfil',
-				type: 'router',
-				link: '/profile',
+				type: 'link',
+				link: `${config.inventoryHost}/#/profile`,
 				roles: [],
 			},
 			{
