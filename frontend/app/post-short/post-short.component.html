@@ -1,0 +1,14 @@
+<div class="row my-2 main">
+	<div class="d-none d-sm-block float-left avatar">
+		<object [attr.data]="'./assets/avatars/avatar' + (index + 1) + '.svg' | safeUrl" type="image/svg+xml"></object>
+	</div>
+	<div class="col post h-100">
+		<div class="row h-100">
+			<div class="col">
+				<a [routerLink]="['/post/' + post._id]"><h4>{{post.title}}</h4></a>
+				<p class="excerpt" [innerHTML]="sanitizer.bypassSecurityTrustHtml(post.excerpt)"></p>
+			</div>
+		</div>
+	</div>
+</div>
+<hr/>

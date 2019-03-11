@@ -1,98 +1,70 @@
-var express = require("express"),
-cookieParser = require('cookie-parser'),
-app = express(),
-requestLanguage = require('express-request-language'),
-cookieParser = require('cookie-parser'),
-CodedError = require('./utils/CodedError.js'),
-bodyParser = require("body-parser"),
-services = require("./utils/services.js"),
-winston = require('winston');
+const express = require('express');
+const fs = require('fs');
+const mongoose = require('mongoose');
+const morgan = require('morgan');
+const path = require('path');
+const session = require('express-session');
+const MongoStore = require('connect-mongo')(session);
 
-services.init().then(() => {
+const app = express();
 
-	var systemLogger = winston.loggers.get('system');
-	let config = services.config;
+// eslint-disable-next-line import/no-unresolved
+const config = require('./config.json');
+const routes = require('./routes');
+const { globalErrorHandler } = require('./common/errors');
 
-	services.fileUtils.ensureExists('./logs').then((err) => {
-		if (err)
-		systemLogger.error(err.message)
-	});
+// Load the Mongoose model for user profiles
+require('./models/User');
 
-	app.use(bodyParser.json({ limit: '50mb' }));
-	app.use(bodyParser.urlencoded({ extended: true }));
 
-	let languages = config.languages;
-	app.use(cookieParser());
-	app.use(requestLanguage({
-		languages: languages,
-		cookie: {
-			name: 'language',
-			options: { maxAge: 365*24*3600*1000 }
-		}
-	}));
+console.log('===================================');
+console.log('     >>> WebIEEEsb <<<');
+console.log('     IEEE Student Branch web');
+console.log('===================================\n');
 
-	app.use(services.session.store);
+// Connect to the MongoDB database
+mongoose.connect(config.mongo.serverUrl, {
+	user: config.mongo.user,
+	pass: config.mongo.pass,
+	useNewUrlParser: true,
+}).then(() => {
+	console.log(`Connected to MongoDB instance at ${config.mongo.serverUrl}`);
 
-	if (services.config.logLevel == "debug") {
-		app.use((req, res, next) => {
-			var user = {
-				username: "unknown"
-			};
-			if (req.session && req.session.user)
-			var user = req.session.user;
-			var logLine = "[" + user.alias + "] " + req.originalUrl;
-			systemLogger.debug(logLine);
-			next();
+	// Development request logger
+	if (process.env.NODE_ENV !== 'production') app.use(morgan('dev'));
+	// Request logger stored in a file, mostly for production
+	if (config.logFile) {
+		// Create stream for writing to the logs file. The "a" flag stands for
+		// "append", and will create the file (not the parent dir!) if it
+		// doesn't exist
+		const stream = fs.createWriteStream(config.logFile, { flags: 'a' });
+		morgan.token('user', (req) => {
+			if (req.session) return req.session.userId;
+			return 'not loggged in';
 		});
+		app.use(morgan('[:date[iso]] :remote-addr (:user) :method :url :status'
+			+ ':res[content-length] B - :response-time ms', { stream }));
 	}
+	// Parser for the requests' body
+	app.use(express.json({ limit: '50mb' }));
+	app.use(express.urlencoded({ extended: false }));
 
-	let regExpLng = languages.map((lng) => {
-		return '/' + lng;
-	}).join('|');
-	regExpLng = '(' + regExpLng + ')?';
-	services.fileUtils.listFiles('./routes').then((routes) => {
-		routes.forEach((route) => {
-			app.use(config.mountPoint + regExpLng + '/api/' + route.replace('.js', ''), require('./routes/' + route));
-		});
+	app.use(session({
+		name: config.store.name,
+		secret: config.store.secret,
+		store: new MongoStore({ mongooseConnection: mongoose.connection }),
+		resave: false,
+		cookie: { secure: 'auto' },
+		saveUninitialized: false,
+	}));
+	// Static Angular distributables
+	app.use(express.static(path.join(__dirname, 'dist')));
+	// Routing middleware
+	app.use(routes);
+	// Global error handling for custom responses on validation errors
+	app.use(globalErrorHandler);
 
-		return services.fileUtils.listFiles(config.uploadedBase);
-	}).then((dirs) => {
-		dirs.forEach((dir) => {
-			app.get(config.mountPoint + regExpLng + '/' + dir + '/:file', (req, res, next) => {
-				var location = __dirname + '/' + config.uploadedBase + '/' + dir + '/' + req.params.file;
-				services.fileUtils.access(location).then(() => {
-					return res.sendFile(location);
-				}, (err) => {
-					return next(new CodedError("Not found", 404));
-				});
-			});
-		});
-	}).then(()=>{
-		app.get(config.mountPoint + "/*", (req, res, next) => {
-			console.log(req.language);
-			let location = __dirname + "/frontend/dist/" + req.language + (req.path === '/' ? '/index.html' : req.path);
-			console.log(location);
-			services.fileUtils.access(location).then(() => {
-				return res.sendFile(location);
-			}).catch((err) => {
-				return next(new CodedError("Not found", 404));
-			});
-		});
-
-		var resultController = require('./controllers/resultController.js');
-
-		app.use(resultController.genericErrorHandler);
-
-		app.listen(services.config.port, () => {
-			systemLogger.info(services.config.serverName + " worker running");
-		});
-	});
-
-	//copy();
-})
-.catch((err) => {
-	console.error(err.message);
-	process.exit(-1);
+	// Start listening to requests
+	app.listen(config.serverPort,
+		() => console.log('Listening for requests on port', config.serverPort));
 });
-
-

@@ -1,0 +1,73 @@
+<div class="container-fluid p-5 h-100">
+	<div class="row title mb-3">
+		<div class="col-12">
+			<span class="h2" *ngIf="!editing">Crear Noticia</span>
+			<span class="h2" *ngIf="editing">Editar Noticia</span>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-12 col-md-8">
+			<mat-form-field class="w-100">
+				<input matInput [(ngModel)]="post.title" type="text" placeholder="Título">
+			</mat-form-field>
+			<div class="form-group">
+				<label for="content">Content:</label>
+				<ckeditor id="content" [(ngModel)]="post.content" [config]="ckeditorConfig"></ckeditor>
+			</div>
+			<mat-form-field class="w-100">
+				<mat-label>Excerpt</mat-label>
+				<textarea matInput [(ngModel)]="excerpt" cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="3" cdkAutosizeMaxRows="5"></textarea>
+			</mat-form-field>
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-12">
+						<h1>{{post.title}}</h1>
+						<div [innerHTML]="content" class="viewer"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-12 col-md-4">
+			<div class="panel panel-default">
+				<div class="panel-body">
+					<div class="row">
+					</div>
+					<div class="row meta">
+						<div class="col-12" *ngIf="editing">
+							<label for="exampleInputName2">Autor: </label>
+							{{post.author.name}}
+						</div>
+						<div class="col-12" *ngIf="editing">
+							<label for="exampleInputName2">Fecha de mod.: </label>
+							{{post.modifiedDate | date}}
+						</div>
+						<div *ngIf="post.publishedDate" class="col-12">
+							<label for="exampleInputName2">Fecha de pub.: </label>
+							{{post.publishedDate | date}}
+						</div>
+					</div>
+				</div>
+				<div class="panel-footer">
+					<div class="row">
+						<div class="col-6" *ngIf="!editing">
+							<a href="javascript:void(0)" (click)="addPost()">Crear</a>
+						</div>
+						<div class="col-6" *ngIf="editing">
+							<a href="javascript:void(0)" (click)="updatePost()">Actualizar</a>
+						</div>
+						<div *ngIf="!post.published && editing" class="col-6">
+							<a href="javascript:void(0)" (click)="publishPost()">Publicar</a>
+						</div>
+
+						<div *ngIf="post.published && editing" class="col-6">
+							<a [href]="'/#/post/' + post._id" target="_blank">Preview</a>
+						</div>
+						<div *ngIf="editing" class="col-6">
+							<a href="javascript:void(0)" (click)="removePost()">Eliminar</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

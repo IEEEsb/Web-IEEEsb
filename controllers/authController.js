@@ -1,87 +1,91 @@
-const crypto = require("crypto"),
-    async = require('async'),
-    config = require('../utils/services.js').config,
-    mongoose = require('mongoose'),
-    User = mongoose.model('UserModel'),
-    moment = require('moment'),
-    CodedError = require('../utils/CodedError.js'),
-    Promise = require('bluebird'),
-    winston = require('winston');
+const axios = require('axios');
+const config = require('../config.json');
+const User = require('../models/User');
 
-const systemLogger = winston.loggers.get("system");
-const sessionLogger = winston.loggers.get("session");
+const {
+	AuthenticationRequiredError, InvalidSessionError, InvalidScopeError, UnknownObjectError, AdminRequiredError,
+} = require('../common/errors');
 
-const pickFrom = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789=-+#%&";
-
-function computeSHA256Hash(data) {
-    return crypto.createHash('sha256').update(data).digest('hex');
-}
-
-function SHA256(data) {
-    return new Promise((resolve, reject) => {
-        let computeHashAsync = async.asyncify(computeSHA256Hash);
-        computeHashAsync(data, (err, hash) => {
-            if(err) return reject(err);
-            return resolve(hash);
-        });
-    });
+module.exports.getServiceData = async (req, res, next) => {
+	try {
+		return res.status(200).json({ service: config.auth.service, scope: config.auth.scope, server: config.auth.server });
+	} catch (e) {
+		return next(e);
+	}
 };
 
-function generateRandomPassword() {
-    let password = "";
-    for (let i = 0; i < 8; i++) {
-        password += pickFrom.charAt(Math.random() * 59);
-    }
-    return password;
+module.exports.login = async (req, res, next) => {
+	try {
+		const response = await axios.get(`${config.auth.server}/api/service/user`, { params: { token: req.body.token, secret: config.auth.secret } });
+		const { data } = response;
+		if (!data.name) throw new InvalidScopeError();
+
+		const user = await User.findOneAndUpdate({ authId: data._id }, { $setOnInsert: { name: data.name } }, { upsert: true, new: true, fields: '_id name roles' });
+
+		req.session.token = req.body.token;
+		req.session.userId = user._id;
+		return res.status(200).json({ user });
+	} catch (e) {
+		return next(e);
+	}
 };
 
-function generateToken() {
-    let token = "";
-    for (let i = 0; i < 40; i++) {
-        token += pickFrom.charAt(Math.random() * 59);
-    }
-    return token;
+module.exports.logout = async (req, res, next) => {
+	try {
+		return req.session.destroy((e) => {
+			if (e) throw e;
+			return res.sendStatus(204);
+		});
+	} catch (e) {
+		return next(e);
+	}
 };
 
-function generateSaltedPassword(password, iterations) {
-    const salt = generateToken();
-    return new Promise((resolve, reject) => {
-        crypto.pbkdf2(password.toLowerCase(), salt, iterations, 256, 'sha256', (err, key) => {
-            if (err) return reject(err);
-            const hash = key.toString('hex');
-            return resolve({ salt: salt, hash: hash, iterations: iterations });
-        });
-    });
+module.exports.addRole = async (req, res, next) => {
+	try {
+		const user = await User.findOneAndUpdate({ _id: req.params.userId }, { $addToSet: { roles: req.body.role } }, { new: true, fields: '_id name roles' });
+		if (!user) throw new UnknownObjectError('User');
+
+		return res.status(200).send({ user });
+	} catch (e) {
+		return next(e);
+	}
 };
 
-function validateSaltedPassword(password, salt, hash, iterations) {
-    return new Promise((resolve, reject) => {
-        crypto.pbkdf2(password.toLowerCase(), salt, iterations, 256, 'sha256', (err, key) => {
-            if (err) return reject(err);
-            const calculatedHash = key.toString('hex');
-            return resolve(calculatedHash === hash);
-        });
-    });
+module.exports.getAllUsers = async (req, res, next) => {
+	try {
+		const users = await User.find({ }, '_id name roles');
+
+		return res.status(200).json({ users });
+	} catch (e) {
+		return next(e);
+	}
 };
 
-function auth(req, res, next) {
-    if(!req.session.user) return next(new CodedError("Not authorized", 403));
-    return next();
+module.exports.getUser = async (req, res, next) => {
+	try {
+		const user = await User.findOne({ _id: req.params.userId }, '_id name roles');
+
+		return res.status(200).json({ user });
+	} catch (e) {
+		return next(e);
+	}
 };
 
-function authRole(role) {
+module.exports.authRequired = async (req, res, next) => {
+	if (!req.session.userId) return next(new AuthenticationRequiredError());
 
-    return function(req, res, next) {
-        if(req.session.user && req.session.user.roles.includes(role)) return next();
-        return next(new CodedError("Not authorized", 403));
-    };
+	return next();
 };
 
+module.exports.adminRequired = async (req, res, next) => {
+	try {
+		const user = await User.findById(req.session.userId);
+		if (!user) throw new InvalidSessionError();
+		if (!user.roles || !user.roles.includes(config.adminRole)) throw new AdminRequiredError();
 
-exports.SHA256 = SHA256;
-exports.generateSaltedPassword = generateSaltedPassword;
-exports.generateRandomPassword = generateRandomPassword;
-exports.generateToken = generateToken;
-exports.validateSaltedPassword = validateSaltedPassword;
-exports.auth = auth;
-exports.authRole = authRole;
+		return next();
+	} catch (e) {
+		return next(e);
+	}
+};
