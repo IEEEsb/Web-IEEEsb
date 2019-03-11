@@ -17,7 +17,7 @@ module.exports.getPost = async (req, res, next) => {
 
 module.exports.getPosts = async (req, res, next) => {
 	try {
-		const posts = await Post.find({ }).sort('-creationDate').populate('author', '_id name');
+		const posts = await Post.find({ }).sort('creationDate').populate('author', '_id name');
 
 		return res.status(200).send({ posts });
 	} catch (e) {
@@ -37,7 +37,7 @@ module.exports.getPublishedPost = async (req, res, next) => {
 
 module.exports.getPublishedPosts = async (req, res, next) => {
 	try {
-		const posts = await Post.find({ published: true }).sort('-creationDate').populate('author', '_id name');
+		const posts = await Post.find({ published: true }).sort('creationDate').populate('author', '_id name');
 
 		return res.status(200).send({ posts });
 	} catch (e) {
